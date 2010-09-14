@@ -28,7 +28,7 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "JSON.h"
+#import "json/JSON.h"
 #import "ZWGallery.h"
 #import "ZWGalleryAlbum.h"
 #import "NSString+misc.h"
