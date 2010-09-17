@@ -1,0 +1,655 @@
+// !$*UTF8*$!
+{
+	089C1669FE841209C02AAC07 /* Project object */ = {
+		activeArchitecturePreference = i386;
+		activeBuildConfigurationName = Release;
+		activeTarget = FF50DA410863D122005E37D9 /* iPhotoToGallery3 Install */;
+		addToTargets = (
+			8D5B49AC048680CD000E48DA /* iPhotoToGallery3 */,
+		);
+		codeSenseManager = E2F26A251229B46900459857 /* Code sense */;
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					842,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFindDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFindDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					200,
+					856,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFindDataSource_MessageID,
+					PBXFindDataSource_LocationID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXSymbolsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXSymbolsDataSource_SymbolNameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					16,
+					200,
+					50,
+					782,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXSymbolsDataSource_SymbolTypeIconID,
+					PBXSymbolsDataSource_SymbolNameID,
+					PBXSymbolsDataSource_SymbolTypeID,
+					PBXSymbolsDataSource_ReferenceNameID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					802,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 306409715;
+			PBXWorkspaceStateSaveDate = 306409715;
+		};
+		perUserProjectItems = {
+			E21A7DBC122AF50F009789E3 = E21A7DBC122AF50F009789E3 /* PBXTextBookmark */;
+			E2211FB8123FFA8B00EED2BB = E2211FB8123FFA8B00EED2BB /* PBXTextBookmark */;
+			E228D21D12435B8F001A7495 = E228D21D12435B8F001A7495 /* PBXTextBookmark */;
+			E228D21F12435B8F001A7495 = E228D21F12435B8F001A7495 /* PBXTextBookmark */;
+			E228D2B212436342001A7495 = E228D2B212436342001A7495 /* PBXTextBookmark */;
+			E23EC1FD124370F7003E17D7 /* PBXTextBookmark */ = E23EC1FD124370F7003E17D7 /* PBXTextBookmark */;
+			E23EC20712437481003E17D7 /* PBXTextBookmark */ = E23EC20712437481003E17D7 /* PBXTextBookmark */;
+			E23EC20812437481003E17D7 /* PBXTextBookmark */ = E23EC20812437481003E17D7 /* PBXTextBookmark */;
+			E23EC20912437481003E17D7 /* PBXTextBookmark */ = E23EC20912437481003E17D7 /* PBXTextBookmark */;
+			E23EC20F124374AA003E17D7 /* PBXTextBookmark */ = E23EC20F124374AA003E17D7 /* PBXTextBookmark */;
+			E23EC21C12437545003E17D7 /* PBXTextBookmark */ = E23EC21C12437545003E17D7 /* PBXTextBookmark */;
+			E23EC21E12437545003E17D7 /* PBXTextBookmark */ = E23EC21E12437545003E17D7 /* PBXTextBookmark */;
+			E23EC21F12437545003E17D7 /* PBXTextBookmark */ = E23EC21F12437545003E17D7 /* PBXTextBookmark */;
+			E23EC22412437566003E17D7 /* PBXTextBookmark */ = E23EC22412437566003E17D7 /* PBXTextBookmark */;
+			E23EC227124376B6003E17D7 /* PBXBookmark */ = E23EC227124376B6003E17D7 /* PBXBookmark */;
+			E23EC22E1243781C003E17D7 /* PBXTextBookmark */ = E23EC22E1243781C003E17D7 /* PBXTextBookmark */;
+			E23EC2311243781C003E17D7 /* PBXTextBookmark */ = E23EC2311243781C003E17D7 /* PBXTextBookmark */;
+			E23EC236124378A2003E17D7 /* PBXTextBookmark */ = E23EC236124378A2003E17D7 /* PBXTextBookmark */;
+			E23EC237124378A2003E17D7 /* PBXTextBookmark */ = E23EC237124378A2003E17D7 /* PBXTextBookmark */;
+			E23EC23A12437922003E17D7 /* PBXTextBookmark */ = E23EC23A12437922003E17D7 /* PBXTextBookmark */;
+			E23EC23B12437922003E17D7 /* PBXTextBookmark */ = E23EC23B12437922003E17D7 /* PBXTextBookmark */;
+			E23EC2401243798B003E17D7 /* PBXTextBookmark */ = E23EC2401243798B003E17D7 /* PBXTextBookmark */;
+			E23EC2411243798B003E17D7 /* PBXTextBookmark */ = E23EC2411243798B003E17D7 /* PBXTextBookmark */;
+			E24A8B131243659700278359 = E24A8B131243659700278359 /* PlistBookmark */;
+			E24BFB4212400B0F005EA922 = E24BFB4212400B0F005EA922 /* PBXTextBookmark */;
+			E24BFBDA12429D1C005EA922 = E24BFBDA12429D1C005EA922 /* PBXTextBookmark */;
+			E24BFBEB1242A0C5005EA922 = E24BFBEB1242A0C5005EA922 /* PBXTextBookmark */;
+			E24BFBEF1242A479005EA922 = E24BFBEF1242A479005EA922 /* PBXTextBookmark */;
+			E2C934E812436EE600B882AE = E2C934E812436EE600B882AE /* PBXTextBookmark */;
+			E2C93502124370B300B882AE = E2C93502124370B300B882AE /* PBXTextBookmark */;
+			E2C93503124370B300B882AE = E2C93503124370B300B882AE /* PBXTextBookmark */;
+			E2C93504124370B300B882AE = E2C93504124370B300B882AE /* PBXTextBookmark */;
+			E2C93507124370DD00B882AE = E2C93507124370DD00B882AE /* PBXTextBookmark */;
+			E2E68572123FD8D00027913D = E2E68572123FD8D00027913D /* PBXTextBookmark */;
+			E2F26A45122A806900459857 = E2F26A45122A806900459857 /* PBXTextBookmark */;
+		};
+		sourceControlManager = E2F26A241229B46900459857 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	8D5B49AC048680CD000E48DA /* iPhotoToGallery3 */ = {
+		activeExec = 0;
+	};
+	E21A7DBC122AF50F009789E3 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF22CE0904F838CC0094E114 /* iPhotoToGallery.h */;
+		name = "iPhotoToGallery.h: 51";
+		rLen = 0;
+		rLoc = 2178;
+		rType = 0;
+		vrLen = 1847;
+		vrLoc = 4799;
+	};
+	E2211FA5123FFA6900EED2BB /* JSON.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2070, 806}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 2594}";
+		};
+	};
+	E2211FB8123FFA8B00EED2BB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF1578F005DAEB31009C952D /* iPhotoExporter.h */;
+		name = "iPhotoExporter.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 2625;
+		vrLoc = 0;
+	};
+	E228D21D12435B8F001A7495 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF702FB505703ED600C63511 /* ZWGalleryAlbum.h */;
+		name = "ZWGalleryAlbum.h: 85";
+		rLen = 0;
+		rLoc = 3132;
+		rType = 0;
+		vrLen = 1669;
+		vrLoc = 1988;
+	};
+	E228D21F12435B8F001A7495 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF702FAF05703EC200C63511 /* ZWGallery.h */;
+		name = "ZWGallery.h: 89";
+		rLen = 0;
+		rLoc = 4485;
+		rType = 0;
+		vrLen = 1863;
+		vrLoc = 4134;
+	};
+	E228D2B212436342001A7495 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFC4012433AEB005EA922 /* ZWGallery.m */;
+		name = "ZWGallery.m: 60";
+		rLen = 0;
+		rLoc = 2396;
+		rType = 0;
+		vrLen = 1057;
+		vrLoc = 3573;
+	};
+	E23EC1FD124370F7003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2C93505124370B300B882AE /* iPhotoToGallery.m */;
+		name = "iPhotoToGallery.m: 437";
+		rLen = 3;
+		rLoc = 15557;
+		rType = 0;
+		vrLen = 2169;
+		vrLoc = 14420;
+	};
+	E23EC20712437481003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2C93505124370B300B882AE /* iPhotoToGallery.m */;
+		name = "iPhotoToGallery.m: 437";
+		rLen = 3;
+		rLoc = 15557;
+		rType = 0;
+		vrLen = 2169;
+		vrLoc = 14420;
+	};
+	E23EC20812437481003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF702FB605703ED600C63511 /* ZWGalleryAlbum.m */;
+		name = "ZWGalleryAlbum.m: 299";
+		rLen = 10;
+		rLoc = 7703;
+		rType = 0;
+		vrLen = 2338;
+		vrLoc = 11444;
+	};
+	E23EC20912437481003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFC4012433AEB005EA922 /* ZWGallery.m */;
+		name = "ZWGallery.m: 723";
+		rLen = 0;
+		rLoc = 23585;
+		rType = 0;
+		vrLen = 2566;
+		vrLoc = 22492;
+	};
+	E23EC20F124374AA003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFC4012433AEB005EA922 /* ZWGallery.m */;
+		name = "ZWGallery.m: 738";
+		rLen = 0;
+		rLoc = 24704;
+		rType = 0;
+		vrLen = 2556;
+		vrLoc = 22492;
+	};
+	E23EC21C12437545003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E23EC21D12437545003E17D7 /* ZWMutableURLRequest.m */;
+		name = "ZWMutableURLRequest.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 2379;
+		vrLoc = 664;
+	};
+	E23EC21D12437545003E17D7 /* ZWMutableURLRequest.m */ = {
+		isa = PBXFileReference;
+		name = ZWMutableURLRequest.m;
+		path = "/Users/lescoste/dev/zwily-iphototogallery-ca5ded5_original/Source/ZWMutableURLRequest.m";
+		sourceTree = "<absolute>";
+	};
+	E23EC21E12437545003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFC4012433AEB005EA922 /* ZWGallery.m */;
+		name = "ZWGallery.m: 738";
+		rLen = 0;
+		rLoc = 24704;
+		rType = 0;
+		vrLen = 2546;
+		vrLoc = 22502;
+	};
+	E23EC21F12437545003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFC4012433AEB005EA922 /* ZWGallery.m */;
+		name = "ZWGallery.m: 723";
+		rLen = 197;
+		rLoc = 23647;
+		rType = 0;
+		vrLen = 2550;
+		vrLoc = 22502;
+	};
+	E23EC22412437566003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFC4012433AEB005EA922 /* ZWGallery.m */;
+		name = "ZWGallery.m: 723";
+		rLen = 197;
+		rLoc = 23647;
+		rType = 0;
+		vrLen = 2550;
+		vrLoc = 22502;
+	};
+	E23EC227124376B6003E17D7 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = FF22CE0804F838CC0094E114 /* iPhotoToGallery.m */;
+	};
+	E23EC22E1243781C003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFC4012433AEB005EA922 /* ZWGallery.m */;
+		name = "ZWGallery.m: 711";
+		rLen = 0;
+		rLoc = 23109;
+		rType = 0;
+		vrLen = 2554;
+		vrLoc = 22740;
+	};
+	E23EC2311243781C003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2C93505124370B300B882AE /* iPhotoToGallery.m */;
+		name = "iPhotoToGallery.m: 437";
+		rLen = 3;
+		rLoc = 15557;
+		rType = 0;
+		vrLen = 1148;
+		vrLoc = 40701;
+	};
+	E23EC236124378A2003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFC4012433AEB005EA922 /* ZWGallery.m */;
+		name = "ZWGallery.m: 715";
+		rLen = 0;
+		rLoc = 23294;
+		rType = 0;
+		vrLen = 2595;
+		vrLoc = 22740;
+	};
+	E23EC237124378A2003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2C93505124370B300B882AE /* iPhotoToGallery.m */;
+		name = "iPhotoToGallery.m: 437";
+		rLen = 3;
+		rLoc = 15557;
+		rType = 0;
+		vrLen = 1148;
+		vrLoc = 40701;
+	};
+	E23EC23A12437922003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFC4012433AEB005EA922 /* ZWGallery.m */;
+		name = "ZWGallery.m: 730";
+		rLen = 0;
+		rLoc = 24108;
+		rType = 0;
+		vrLen = 2778;
+		vrLoc = 22740;
+	};
+	E23EC23B12437922003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2C93505124370B300B882AE /* iPhotoToGallery.m */;
+		name = "iPhotoToGallery.m: 437";
+		rLen = 3;
+		rLoc = 15557;
+		rType = 0;
+		vrLen = 1148;
+		vrLoc = 40701;
+	};
+	E23EC2401243798B003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFC4012433AEB005EA922 /* ZWGallery.m */;
+		name = "ZWGallery.m: 724";
+		rLen = 0;
+		rLoc = 23688;
+		rType = 0;
+		vrLen = 2779;
+		vrLoc = 22740;
+	};
+	E23EC2411243798B003E17D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2C93505124370B300B882AE /* iPhotoToGallery.m */;
+		name = "iPhotoToGallery.m: 437";
+		rLen = 3;
+		rLoc = 15557;
+		rType = 0;
+		vrLen = 1148;
+		vrLoc = 40701;
+	};
+	E24A8B131243659700278359 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D5B49B7048680CD000E48DA /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/lescoste/dev/iphototogallery3/Info.plist;
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	E24BFB4212400B0F005EA922 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2211FA5123FFA6900EED2BB /* JSON.h */;
+		name = "JSON.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 2594;
+		vrLoc = 0;
+	};
+	E24BFB5F12414E15005EA922 /* ZWGalleryAlbum.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = ZWGalleryAlbum.m;
+		path = "/Users/lescoste/dev/zwily-iphototogallery-ca5ded5_original/Source/ZWGalleryAlbum.m";
+		sourceTree = "<absolute>";
+	};
+	E24BFBDA12429D1C005EA922 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E24BFB5F12414E15005EA922 /* ZWGalleryAlbum.m */;
+		name = "ZWGalleryAlbum.m: 338";
+		rLen = 8;
+		rLoc = 12143;
+		rType = 0;
+		vrLen = 3805;
+		vrLoc = 10156;
+	};
+	E24BFBEB1242A0C5005EA922 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF702FBC05703EEA00C63511 /* ZWGalleryItem.m */;
+		name = "ZWGalleryItem.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 2068;
+		vrLoc = 0;
+	};
+	E24BFBEF1242A479005EA922 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF64F7340875FEA00057A0FC /* ZWMutableURLRequest.m */;
+		name = "ZWMutableURLRequest.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1610;
+		vrLoc = 266;
+	};
+	E24BFC4012433AEB005EA922 /* ZWGallery.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = ZWGallery.m;
+		path = /Users/lescoste/dev/iphototogallery3/Source/ZWGallery.m;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1069, 9841}}";
+			sepNavSelRange = "{23688, 0}";
+			sepNavVisRange = "{22740, 2779}";
+		};
+	};
+	E2C934E812436EE600B882AE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF640A61086220F70013291B /* LICENSE */;
+		name = "LICENSE: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1483;
+		vrLoc = 0;
+	};
+	E2C934EF12436F7800B882AE /* iPhotoToGallery3_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 776}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1796}";
+		};
+	};
+	E2C93502124370B300B882AE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2C934EF12436F7800B882AE /* iPhotoToGallery3_Prefix.pch */;
+		name = "iPhotoToGallery3_Prefix.pch: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1796;
+		vrLoc = 0;
+	};
+	E2C93503124370B300B882AE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF702FB605703ED600C63511 /* ZWGalleryAlbum.m */;
+		name = "ZWGalleryAlbum.m: 299";
+		rLen = 10;
+		rLoc = 7703;
+		rType = 0;
+		vrLen = 2201;
+		vrLoc = 11581;
+	};
+	E2C93504124370B300B882AE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2C93505124370B300B882AE /* iPhotoToGallery.m */;
+		rLen = 3;
+		rLoc = 15557;
+		rType = 0;
+	};
+	E2C93505124370B300B882AE /* iPhotoToGallery.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = iPhotoToGallery.m;
+		path = /Users/lescoste/dev/iphototogallery3/Source/iPhotoToGallery.m;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1405, 16354}}";
+			sepNavSelRange = "{15557, 3}";
+			sepNavVisRange = "{40701, 1148}";
+		};
+	};
+	E2C93507124370DD00B882AE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF22CE0804F838CC0094E114 /* iPhotoToGallery.m */;
+		name = "iPhotoToGallery.m: 437";
+		rLen = 3;
+		rLoc = 15557;
+		rType = 0;
+		vrLen = 2076;
+		vrLoc = 14450;
+	};
+	E2E68572123FD8D00027913D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2E68573123FD8D00027913D /* ZWGallery.m */;
+		name = "ZWGallery.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 3048;
+		vrLoc = 19153;
+	};
+	E2E68573123FD8D00027913D /* ZWGallery.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = ZWGallery.m;
+		path = "/Users/lescoste/dev/zwily-iphototogallery-ca5ded5_original/Source/ZWGallery.m";
+		sourceTree = "<absolute>";
+	};
+	E2F26A241229B46900459857 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	E2F26A251229B46900459857 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	E2F26A45122A806900459857 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FF22CE0A04F838CC0094E114 /* iPhotoToGalleryExportPluginBox.m */;
+		name = "iPhotoToGalleryExportPluginBox.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1741;
+		vrLoc = 0;
+	};
+	FF1578F005DAEB31009C952D /* iPhotoExporter.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1069, 2704}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 2625}";
+		};
+	};
+	FF22CE0804F838CC0094E114 /* iPhotoToGallery.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1258, 16250}}";
+			sepNavSelRange = "{15557, 3}";
+			sepNavVisRange = "{14450, 2076}";
+			sepNavWindowFrame = "{{966, 256}, {750, 558}}";
+		};
+	};
+	FF22CE0904F838CC0094E114 /* iPhotoToGallery.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {740, 2392}}";
+			sepNavSelRange = "{1838, 0}";
+			sepNavVisRange = "{1523, 865}";
+			sepNavWindowFrame = "{{856, 517}, {750, 558}}";
+		};
+	};
+	FF22CE0A04F838CC0094E114 /* iPhotoToGalleryExportPluginBox.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1525, 807}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1741}";
+		};
+	};
+	FF34F89D085B41D6001B1421 /* InterThreadMessaging.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {926, 5876}}";
+			sepNavSelRange = "{4442, 20}";
+			sepNavVisRange = "{4211, 878}";
+		};
+	};
+	FF50DA410863D122005E37D9 /* iPhotoToGallery3 Install */ = {
+		activeExec = 0;
+	};
+	FF640A61086220F70013291B /* LICENSE */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 776}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1483}";
+			sepNavWindowFrame = "{{38, 594}, {750, 558}}";
+		};
+	};
+	FF64F5EA0874F2CD0057A0FC /* English */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {691, 430}}";
+			sepNavSelRange = "{77, 0}";
+			sepNavVisRange = "{0, 283}";
+			sepNavWindowFrame = "{{15, 615}, {750, 558}}";
+		};
+	};
+	FF64F7340875FEA00057A0FC /* ZWMutableURLRequest.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 1378}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{266, 1610}";
+		};
+	};
+	FF702FAF05703EC200C63511 /* ZWGallery.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1286, 1781}}";
+			sepNavSelRange = "{4485, 0}";
+			sepNavVisRange = "{4134, 1863}";
+			sepNavWindowFrame = "{{1067, 315}, {750, 558}}";
+		};
+	};
+	FF702FB005703EC200C63511 /* ZWGallery.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {873, 9906}}";
+			sepNavSelRange = "{9124, 23}";
+			sepNavVisRange = "{18872, 1287}";
+			sepNavWindowFrame = "{{15, 615}, {750, 558}}";
+		};
+	};
+	FF702FB505703ED600C63511 /* ZWGalleryAlbum.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1279, 1417}}";
+			sepNavSelRange = "{3132, 0}";
+			sepNavVisRange = "{1988, 1669}";
+			sepNavWindowFrame = "{{15, 615}, {750, 558}}";
+		};
+	};
+	FF702FB605703ED600C63511 /* ZWGalleryAlbum.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {2119, 4732}}";
+			sepNavSelRange = "{7703, 10}";
+			sepNavVisRange = "{11542, 1546}";
+			sepNavWindowFrame = "{{61, 573}, {750, 558}}";
+		};
+	};
+	FF702FBC05703EEA00C63511 /* ZWGalleryItem.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 1638}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 2068}";
+		};
+	};
+	FFD91B4D0858CC930018CA10 /* ZWURLConnection.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {691, 1326}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{1196, 898}";
+			sepNavWindowFrame = "{{84, 552}, {750, 558}}";
+		};
+	};
+}
