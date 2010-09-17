@@ -1,0 +1,12 @@
+Welcome to the iphototogallery3 wiki!
+
+The first working version of the iPhotoToGallery3 plugin has been release today september 17 2010.
+
+You can download it from the Download section.
+
+To install it, you need to :
+
+1) decompress the zip file
+2) copy the "iPhotoToGallery3.iPhotoExporter" folder to the "~/Library/Application Support/iPhoto/Plugins" folder. If this folder doesn't exist then create it.
+
+That's it. Enjoy !
