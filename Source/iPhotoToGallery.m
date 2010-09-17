@@ -39,7 +39,6 @@
 
 #include <Security/Security.h>
 #include <CoreFoundation/CoreFoundation.h>
-#include <Growl/Growl.h>
 
 @interface iPhotoToGallery (PrivateStuff)
 
@@ -59,8 +58,7 @@ static int loggingIn;
     
     exportManager = exportMgr; // weak reference - we don't expect our ExportManager to disappear on us
 
-    [GrowlApplicationBridge setGrowlDelegate:self];
-    
+  
     preferences = [[NSMutableDictionary alloc] init];
     NSDictionary *userDefaultsPreferences = [[NSUserDefaults standardUserDefaults] persistentDomainForName:[[NSBundle bundleForClass:[self class]] bundleIdentifier]];
     if (userDefaultsPreferences) 
@@ -375,12 +373,12 @@ static int loggingIn;
 }
 
 - (IBAction)clickiPhotoToGalleryName:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://lescoste.net/iphoto"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://lescoste.net/blog/iphototogallery3/"]];
 }
 
 - (IBAction)clickDonate:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://lescoste.net/iphoto/donate.html"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://lescoste.net/blog/iphototogallery3/"]];
 }
 
 #pragma mark - Add Gallery Panel
@@ -426,6 +424,10 @@ static int loggingIn;
     // add the rest
     [buildURLString appendString:tmpURLString];
     
+	if (![buildURLString isLike:@"*index.php/"]) {
+		[buildURLString appendString:@"index.php/"];
+	}
+	
     NSURL *url = [NSURL URLWithString:buildURLString];
     
     if ([urlString isEqual:@""]) {
@@ -1042,28 +1044,7 @@ static int loggingIn;
                         [mainStatusString setStringValue:[NSString stringWithFormat:@"Export failed (error code: %i)", status]];
                 }
                     
-                if (status != ZW_GALLERY_OPERATION_DID_CANCEL) {
-                    [GrowlApplicationBridge notifyWithTitle:@"Export Failed"
-                                                description:[NSString stringWithFormat:@"Export to gallery failed after %i photos were uploaded",
-                                                    imageNum]
-                                           notificationName:@"Export to Gallery Failed"
-                                                   iconData:[item data]
-                                                   priority:0
-                                                   isSticky:NO
-                                               clickContext:NULL];
-                }
-                
                 cancel = YES;
-            }
-            else {
-                [GrowlApplicationBridge notifyWithTitle:@"Photo Uploaded"
-                                            description:[NSString stringWithFormat:@"Photo %@ uploaded to Gallery",
-                                                [item filename]]
-                                       notificationName:@"Photo Uploaded to Gallery"
-                                               iconData:[item data]
-                                               priority:0
-                                               isSticky:NO
-                                           clickContext:NULL];
             }
             
         } [innerPool release];
@@ -1073,33 +1054,43 @@ static int loggingIn;
     
     if (status == GR_STAT_SUCCESS) {
         if ([mainOpenBrowserSwitch state] == NSOnState) {
+			NSMutableArray  * parentsArray = [[NSMutableArray alloc] init]; 
+			ZWGalleryAlbum *parent;
+			ZWGalleryAlbum *acurrentAlbum = album;
+			// add first name : album name
+            NSString * parentName = [acurrentAlbum name];
+			[parentsArray addObject:parentName];
+			
+			while (parentName != nil && ![parentName isEqualToString:@""]) {				
+				parent = [acurrentAlbum parent];
+				if (parent == nil) {
+					parentName = @"";
+				} else {
+					parentName = [parent name];
+					if (parentName != nil && ![parentName isEqualToString:@""])
+						[parentsArray addObject:parentName];
+					acurrentAlbum = parent;
+				}
+  			}
+//			NSLog ( @"mainOpenBrowserSwitch parentsArray 3: %@", parentsArray );
+
+			// URLs look like this: http://example.com/gallery3/index.php/parentname/parentname/albumname
             NSMutableString *albumURLString = nil;
+			albumURLString = [NSMutableString stringWithString:[[currentGallery url] absoluteString]];
+			NSEnumerator *enumerator = [parentsArray reverseObjectEnumerator];
+			int i = 0;
+			for (id parentName in enumerator) {
+				//NSLog ( @"mainOpenBrowserSwitch parent name 2: %@", parentName );
+				if (i>0) [albumURLString appendString:@"/"];
+				[albumURLString appendString:parentName];
+				i++;
+			}
             
-            if (![currentGallery isGalleryV2]) {
-                albumURLString = [NSMutableString stringWithString:[[currentGallery url] absoluteString]];
-                [albumURLString appendString:[album name]];
-            }
-            else {
-                // URLs look like this: http://example.com/gallery2/main.php?g2_view=core:ShowItem&g2_itemId=16
-                albumURLString = [NSMutableString stringWithString:[[currentGallery url] absoluteString]];
-              
-                // Take care of trailing slashes! (thx: Johann Richard)
-                if (![albumURLString hasSuffix:@"/"])
-                    [albumURLString appendString:@"/"];
-                [albumURLString appendFormat:@"main.php?g2_view=core:ShowItem&g2_itemId=%@", [album name]];
-            }
+			NSLog ( @"mainOpenBrowserSwitch url : %@", albumURLString );
             [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:albumURLString]];
         }
 
-        [GrowlApplicationBridge notifyWithTitle:@"All Photos Uploaded"
-                                    description:[NSString stringWithFormat:@"%i photos were uploaded to Gallery",
-                                        [exportManager imageCount]]
-                               notificationName:@"All Photos Uploaded to Gallery"
-                                       iconData:nil
-                                       priority:0
-                                       isSticky:NO
-                                   clickContext:NULL];
-        
+            
         [exportManager cancelExportBeforeBeginning];
     }
         
@@ -1255,34 +1246,5 @@ static int loggingIn;
     return [gallery valueForKey:[aTableColumn identifier]];
 }
 
-#pragma mark -
-#pragma mark GrowlDelegate
-
-- (NSDictionary *)registrationDictionaryForGrowl
-{
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-        [NSArray arrayWithObjects:
-            @"Photo Uploaded to Gallery",
-            @"All Photos Uploaded to Gallery",
-            @"Export to Gallery Failed",
-            nil], GROWL_NOTIFICATIONS_ALL,
-        [NSArray arrayWithObjects:
-            @"All Photos Uploaded to Gallery",
-            @"Export to Gallery Failed",
-            nil], GROWL_NOTIFICATIONS_DEFAULT,
-        nil];
-}
-
-- (NSString *)applicationNameForGrowl
-{
-    return @"iPhotoToGallery";
-}
-
-- (NSData *)applicationIconDataForGrowl
-{
-    
-    NSString *iconPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"iPhotoPluginIcon" ofType:@"tif"];
-    return [NSData dataWithContentsOfFile:iconPath];
-}
 
 @end

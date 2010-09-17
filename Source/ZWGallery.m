@@ -57,7 +57,7 @@
 }
 
 - (id)initWithURL:(NSURL*)newUrl username:(NSString*)newUsername {
-    url = [newUrl retain];
+	url = [newUrl retain];
     fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest"]];
     username = [newUsername retain];
     delegate = self;
@@ -314,7 +314,7 @@
 	
 	int i =0;
 	int nbmembers = [members count];
-	NSLog ( @"getandparseAlbums nbmembers size : %d", nbmembers );
+	NSLog ( @"getandparseAlbums : total albums = %d", nbmembers );
 	while (i < nbmembers) {
 		
 		// go get 5 members data in one request
@@ -338,14 +338,14 @@
 		fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items?"]];
 		NSURL* fullReqURL = [[NSURL alloc] initWithString:[[fullURL absoluteString] stringByAppendingString:escapedUrlString]];
 		
-		NSLog ( @"fullReqURL  = %@", [fullReqURL absoluteString] );
+		//NSLog ( @"fullReqURL  = %@", [fullReqURL absoluteString] );
 		
 		NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
 																  cachePolicy:NSURLRequestReloadIgnoringCacheData
 															  timeoutInterval:60.0];
-		[theRequest setValue:@"iPhotoToGallery" forHTTPHeaderField:@"User-Agent"];
+		[theRequest setValue:@"iPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
 		
-		NSLog ( @"The current date and time is: %@ ; doGetAlbums requestkey  = %@", [NSDate date], requestkey );
+		//NSLog ( @"The current date and time is: %@ ; doGetAlbums requestkey  = %@", [NSDate date], requestkey );
 		
 		[theRequest setHTTPMethod:@"GET"];
 		[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
@@ -380,13 +380,13 @@
 				[jsonalbums addObject:[dict retain]];
 				
 				NSString *title = [entity objectForKey:@"title"];
-				NSLog ( @"getandparseAlbums add album : %@ ", title );
-				NSLog ( @"getandparseAlbums jsonalbums size : %d", [jsonalbums count] );
-
+				//NSLog ( @"getandparseAlbums add album : %@ ", title );
+				//NSLog ( @"getandparseAlbums jsonalbums size : %d", [jsonalbums count] );
+				
 			}
 		}
 	}
-	NSLog ( @"getandparseAlbums end");
+	//NSLog ( @"getandparseAlbums end");
 	
 	
 	return GR_STAT_SUCCESS;
@@ -453,7 +453,7 @@
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullURL
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
 														  timeoutInterval:60.0];
-	[theRequest setValue:@"iPhotoToGallery" forHTTPHeaderField:@"User-Agent"];
+	[theRequest setValue:@"iPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
 	// X-Gallery-Request-Method: post
 	[theRequest setValue:@"post" forHTTPHeaderField:@"X-Gallery-Request-Method"];
 	
@@ -496,7 +496,7 @@
 			return GR_STAT_PASSWD_WRONG;
 		}
 		
-		NSLog ( @"The current date and time is: %@ ; requestkey = %@", [NSDate date], requestkey );
+		NSLog ( @"logged in :requestkey = %@",  requestkey );
 		
 		return GR_STAT_SUCCESS;
 	}
@@ -542,14 +542,14 @@
 	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/item/1?"]];
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[fullURL absoluteString] stringByAppendingString:escapedUrlString]];
 	
-	NSLog ( @"The current date and time is: %@ ; fullReqURL  = %@", [NSDate date], [fullReqURL absoluteString] );
+	//NSLog ( @"The current date and time is: %@ ; fullReqURL  = %@", [NSDate date], [fullReqURL absoluteString] );
 	
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
 														  timeoutInterval:60.0];
-	[theRequest setValue:@"iPhotoToGallery" forHTTPHeaderField:@"User-Agent"];
+	[theRequest setValue:@"iPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
 	
-	NSLog ( @"The current date and time is: %@ ; doGetAlbums requestkey  = %@", [NSDate date], requestkey );
+	//NSLog ( @"The current date and time is: %@ ; doGetAlbums requestkey  = %@", [NSDate date], requestkey );
 	
 	[theRequest setHTTPMethod:@"GET"];
 	[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
@@ -575,10 +575,11 @@
 		return ZW_GALLERY_PROTOCOL_ERROR;
 	
 	NSArray *members = [galleryResponse objectForKey:@"members"];
+	//NSLog ( @"parseResponseData members = %@", members );
 	
     ZWGalleryRemoteStatusCode status = [self getandparseAlbums:members];
 	
-	NSLog ( @"doGetAlbums jsonalbums size : %d", [jsonalbums count] );
+	NSLog ( @"doGetAlbums : editable albums = %d", [jsonalbums count] );
 	
     [albums release];
     albums = nil;
@@ -600,13 +601,13 @@
 		NSDictionary *galleryAlbum =  [jsonalbums objectAtIndex:i];
 		NSDictionary *entity = [galleryAlbum objectForKey:@"entity"];
 		NSString *albumurl = [galleryAlbum objectForKey:@"url"];
-
+		
         NSString *a_name = [entity objectForKey:@"name"];
         NSString *a_title = [entity objectForKey:@"title"];
 		NSString *parent = [entity objectForKey:@"parent"];
 		
 		[galleriesPerUrl setValue:[NSNumber numberWithInt:i+1] forKey:albumurl];
-  
+		
 		ZWGalleryAlbum *album = [ZWGalleryAlbum albumWithTitle:a_title name:a_name gallery:self];
 		[album setUrl:albumurl];
 		[album setParenturl:parent];
@@ -619,16 +620,18 @@
         BOOL a_can_create_sub = YES;
         [album setCanAddSubAlbum:a_can_create_sub];
         [galleriesArray addObject:album];
-
-		NSLog ( @"doGetAlbums added : %d %@", i, a_title );
-    }
-
 		
+		//NSLog ( @"doGetAlbums added : %d %@", i, a_title );
+    }
+	
+	
+	/* find the parent
+	 */
 	for (i = 1; i <= numAlbums; i++) {
 		ZWGalleryAlbum *album = [galleriesArray objectAtIndex:i];
 		
 		NSString *parenturl = [album parenturl];
-		NSLog ( @"doGetAlbums parent : %d %@", i, parenturl );
+		//NSLog ( @"doGetAlbums parent : %d %@", i, parenturl );
 		
         if (parenturl != nil) {
 			NSNumber *album_parent_id = [galleriesPerUrl objectForKey:parenturl];
@@ -636,14 +639,16 @@
 			if ([parenturl isLike:@"*rest/item/1"]) {
 				pid = 0;
 			}
-			NSLog ( @"doGetAlbums parentid : %d %d", i, pid );
-
+			//NSLog ( @"doGetAlbums parentid : %d %d", i, pid );
+			
 			
 			ZWGalleryAlbum *parent = [galleriesArray objectAtIndex:pid];
 			
 			[album setParent:parent];
 			[parent addChild:album];
-        }
+        } else {
+			NSLog ( @"doGetAlbums pas de parentid : %d %@", i, [album name] );
+		}
     }
     albums = [[NSArray alloc] initWithArray:galleriesArray];
     
@@ -675,33 +680,66 @@
     [pool release];
 }
 
+
+/*
+ POST /gallery3/index.php/rest/item/1 HTTP/1.1
+ Host: example.com
+ X-Gallery-Request-Method: post
+ X-Gallery-Request-Key: ...
+ Content-Type: application/x-www-form-urlencoded
+ Content-Length: 117
+ entity=%7B%22type%22%3A%22album%22%2C%22name%22%3A%22Sample+Album%22%2C%22title%22%3A%22  
+ This+is+my+Sample+Album%22%7D
+ 
+ entity {
+ type: "album"
+ name: "Sample Album"
+ title: "This is my Sample Album"
+ }
+ 
+ */
 - (ZWGalleryRemoteStatusCode)doCreateAlbumWithName:(NSString *)name title:(NSString *)title summary:(NSString *)summary parent:(ZWGalleryAlbum *)parent
 {    
-    NSString *parentName;
-    if (parent != nil && ![parent isKindOfClass:[NSNull class]]) 
-        parentName = [parent name];
-    else 
-        parentName = @"0";  // this might break G2, but new G2 albums all have a parent.
+    NSString *parentUrl;
+    if (parent != nil && ![parent isKindOfClass:[NSNull class]]) {
+        parentUrl = [parent url];
+	} else {
+		NSURL *aURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/item/1"]];
+        parentUrl = [aURL absoluteString]; 
+    }
 	
-    ZWMutableURLRequest *theRequest = [ZWMutableURLRequest requestWithURL:fullURL
-                                                              cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                          timeoutInterval:60.0];
-    [theRequest setValue:@"iPhotoToGallery" forHTTPHeaderField:@"User-Agent"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setEncoding:[self sniffedEncoding]];
-    [theRequest setVariation:ZSURLMultipartVariation];
-    
-    if ([self isGalleryV2]) 
-        [theRequest addString:@"remote:GalleryRemote" forName:@"g2_controller"];
-    
-    [theRequest addString:@"new-album" forName:[self formNameWithName:@"cmd"]];
-    [theRequest addString:@"2.3" forName:[self formNameWithName:@"protocol_version"]];
-    [theRequest addString:parentName forName:[self formNameWithName:@"set_albumName"]];
-    [theRequest addString:name forName:[self formNameWithName:@"newAlbumName"]];
-    [theRequest addString:title forName:[self formNameWithName:@"newAlbumTitle"]];
-    [theRequest addString:summary forName:[self formNameWithName:@"newAlbumDesc"]];
-    
-    currentConnection = [ZWURLConnection connectionWithRequest:theRequest];
+	NSLog ( @"doCreateAlbumWithName title : %@ , parent url : %@", title, parentUrl );
+	
+	NSURL* purl = [[NSURL alloc] initWithString:parentUrl];
+	
+	NSMutableString *jsonData = [[NSMutableString alloc] initWithString:@"entity={\"type\":\"album\",\"name\":\""];
+	[jsonData appendString:name];
+	[jsonData appendString:@"\",\"title\":\""];
+	[jsonData appendString:title];
+	[jsonData appendString:@"\",\"description\":\""];
+	[jsonData appendString:summary];
+	[jsonData appendString:@"\"}"];
+	NSLog ( @"doCreateAlbumWithName jsonData : %@ ", jsonData );
+
+	NSString* escapedJsonData = [jsonData stringByAddingPercentEscapesUsingEncoding:[self sniffedEncoding]];
+	NSLog ( @"doCreateAlbumWithName escapedJsonData : %@ ", escapedJsonData );
+	
+	NSData* requestData = [escapedJsonData dataUsingEncoding:[self sniffedEncoding]];
+	NSLog ( @"doCreateAlbumWithName requestData : %@ ", requestData );
+	NSString* requestDataLengthString = [[NSString alloc] initWithFormat:@"%d", [requestData length]];
+	NSLog ( @"doCreateAlbumWithName requestDataLengthString : %@ ", requestDataLengthString );
+	
+	NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:purl];
+	[request setHTTPMethod:@"POST"];
+	[request setHTTPBody:requestData];
+	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+	[request setValue:requestDataLengthString forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"iPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
+	[request setValue:@"post" forHTTPHeaderField:@"X-Gallery-Request-Method"];
+	[request setValue:requestkey forHTTPHeaderField:@"X-Gallery-Request-Key"];
+	[request setTimeoutInterval:60.0];
+	
+    currentConnection = [ZWURLConnection connectionWithRequest:request];
     while ([currentConnection isRunning]) 
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
     
@@ -709,23 +747,25 @@
         return ZW_GALLERY_OPERATION_DID_CANCEL;
     
     NSData *data = [currentConnection data];
-    
+	
+	NSURLResponse *response = [currentConnection response];
+	
     if (data == nil) 
         return ZW_GALLERY_COULD_NOT_CONNECT;
     
     NSDictionary *galleryResponse = [self parseResponseData:data];
-    if (galleryResponse == nil) 
+	if (galleryResponse == nil) 
         return ZW_GALLERY_PROTOCOL_ERROR;
-    
-    ZWGalleryRemoteStatusCode status = (ZWGalleryRemoteStatusCode)[[galleryResponse objectForKey:@"statusCode"] intValue];
-    
-    if (status == GR_STAT_SUCCESS) {
-        [lastCreatedAlbumName release];
-        lastCreatedAlbumName = [[galleryResponse objectForKey:@"album_name"] copy];
-    }
-    
-    // TODO: create an actual ZWGalleryAlbum to return?
-    return status;
+	
+	if ([(NSHTTPURLResponse *)response statusCode] != 200 ) {
+		NSLog ( @"doCreateAlbumWithName status code : %d", [(NSHTTPURLResponse *)response statusCode] );
+        return ZW_GALLERY_PROTOCOL_ERROR;
+	}
+	[lastCreatedAlbumName release];
+	lastCreatedAlbumName = [name copy];
+	NSLog ( @"doCreateAlbumWithName album added : %@", galleryResponse );
+	
+    return GR_STAT_SUCCESS;
 }
 
 @end

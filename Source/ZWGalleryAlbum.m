@@ -248,6 +248,46 @@
     cancelled = YES;
 }
 
+
+/*
+ Uploading a new file
+ 
+ To upload a new file, use a POST request to the parent album URL, providing the actual file (and filename), along with the new entity's details as a MIME multipart body.
+ Request
+ Parameters:
+ entity: a JSON-encoded object containing the fields of the new entity (name, description, etc. - *not tags*)
+ file: the picture data and filename
+ 
+ POST /gallery3/index.php/rest/item/1 HTTP/1.1
+ X-Gallery-Request-Method: post
+ X-Gallery-Request-Key: ...
+ Content-Length: 142114
+ Content-Type: multipart/form-data; boundary=roPK9J3DoG4ZWP6etiDuJ97h-zeNAph
+ 
+ 
+ --roPK9J3DoG4ZWP6etiDuJ97h-zeNAph
+ Content-Disposition: form-data; name="entity"
+ Content-Type: text/plain; charset=UTF-8
+ Content-Transfer-Encoding: 8bit
+ 
+ {"name":"Voeux2010.jpg","type":"photo"}
+ 
+ --roPK9J3DoG4ZWP6etiDuJ97h-zeNAph
+ Content-Disposition: form-data; name="file"; filename="Voeux2010.jpg"
+ Content-Type: application/octet-stream
+ Content-Transfer-Encoding: binary
+ 
+ *** picture data ***
+ 
+ --roPK9J3DoG4ZWP6etiDuJ97h-zeNAph
+ 
+ Note: do not forget to put a blank line between "Content-Transfer-Encoding: binary" and your picture data.
+ Response
+ The response is a simple JSON-encoded object containing the URL of the new entity
+ {"url":"http://www.example.com/gallery3/index.php/rest/item/13"}
+ 
+ */
+
 - (ZWGalleryRemoteStatusCode)addItemSynchronously:(ZWGalleryItem *)item 
 {
     cancelled = NO;
@@ -267,37 +307,22 @@
     [theRequest addString:@"add-item" forName:[
     */
     
-    CFHTTPMessageRef messageRef = CFHTTPMessageCreateRequest(kCFAllocatorDefault, CFSTR("POST"), (CFURLRef)[gallery fullURL], kCFHTTPVersion1_1);
-    
+	NSURL *fullURL = [[NSURL alloc] initWithString:[self url]];
+
+    CFHTTPMessageRef messageRef = CFHTTPMessageCreateRequest(kCFAllocatorDefault, CFSTR("POST"), (CFURLRef)fullURL, kCFHTTPVersion1_1);
+
     /*
-	 * gf: 2/27/2008: The initial login to a gallery (ZWGallery doLogin) uses NSURLRequest. Since this
-	 * connection uses CFHTTPMessage (in order to monitor progress; see below), and since CFHTTPMessage
-	 * (apparently) doesn't handle user@pass in URLs automagically, we may need to add authentication
-	 * credentials. We have to pull them out of the URL (if they're there).
-	 *
+	*
 	 * Note the warning in the CF Network Programming Guide: "Do not apply credentials to the HTTP request
 	 * before receiving a server challenge. The server may have changed since the last time you authenticated
 	 * and you could create a security risk." Unfortunately, doing this right would require a more elaborate
 	 * reworking of the upload loop (below) than I have time or understanding to create.
 	 */
-	NSURL *fullURL = [gallery fullURL];
-	NSString *user = [fullURL user];
-	NSString *password = [fullURL password];
-	NSLog(@"addItemSynchronously: user=%@, password=%@", user, password);
-	if (user != nil) {
-		NSLog(@"addItemSynchronously: adding authentication");
-		Boolean result = CFHTTPMessageAddAuthentication(messageRef,		// request
-														nil,			// authenticationFailureResponse
-														(CFStringRef)user,
-														(CFStringRef)password,
-														kCFHTTPAuthenticationSchemeBasic,
-														FALSE);			// forProxy
-		if (result) {
-			NSLog(@"addItemSynchronously: added authentication");
-		} else {
-			NSLog(@"addItemSynchronously: failed to add authentication!");
-		}
-	}
+	NSString *requestkey = [gallery requestkey];
+	NSLog(@"addItemSynchronously : album url=%@, requestkey=%@", fullURL,  requestkey);
+
+	CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("X-Gallery-Request-Method"), CFSTR("post"));
+	CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("X-Gallery-Request-Key"), (CFStringRef)[NSString stringWithFormat:@"%@", requestkey]);
     
     NSString *boundary = @"--------iPhotoToGallery012nklfad9s0an3flakn3lkghkdshlafk3ln2lghroqyoi-----";
     // the actual boundary lines can to start with an extra 2 hyphens, so we'll make a string to hold that too
@@ -305,7 +330,7 @@
     NSData *boundaryData = [NSData dataWithData:[boundaryNL dataUsingEncoding:NSASCIIStringEncoding]];
     
     CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("Content-Type"), (CFStringRef)[NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary]);
-    CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("User-Agent"), CFSTR("iPhotoToGallery 0.63"));
+    CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("User-Agent"), CFSTR("iPhotoToGallery3 0.1"));
     CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("Connection"), CFSTR("close"));
     
     // don't forget the cookies!
@@ -314,52 +339,14 @@
     CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("Cookie"), (CFStringRef)[cookiesInfo objectForKey:@"Cookie"]);
     
     NSMutableData *requestData = [NSMutableData data];
-	
-	if ([gallery isGalleryV2]) {
-		[requestData appendData:boundaryData];
-		[requestData appendData:[@"Content-Disposition: form-data; name=\"g2_controller\"\r\n\r\nremote:GalleryRemote\r\n" dataUsingEncoding:NSASCIIStringEncoding]];
-	}
+
+	// photo name
+	[requestData appendData:boundaryData];
+	[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"entity\"\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n{\"name\":\"%@\",\"type\":\"photo\"}\r\n\r\n", [item filename]] dataUsingEncoding:[gallery sniffedEncoding]]];
     
-    // command
-    [requestData appendData:boundaryData];
-	if ([gallery isGalleryV2])
-		[requestData appendData:[@"Content-Disposition: form-data; name=\"g2_form[cmd]\"\r\n\r\nadd-item\r\n" dataUsingEncoding:NSASCIIStringEncoding]];
-	else
-	    [requestData appendData:[@"Content-Disposition: form-data; name=\"cmd\"\r\n\r\nadd-item\r\n" dataUsingEncoding:NSASCIIStringEncoding]];
-    // protocol_version
-    [requestData appendData:boundaryData];
-	if ([gallery isGalleryV2])
-		[requestData appendData:[@"Content-Disposition: form-data; name=\"g2_form[protocol_version]\"\r\n\r\n2.1\r\n" dataUsingEncoding:NSASCIIStringEncoding]];
-	else
-		[requestData appendData:[@"Content-Disposition: form-data; name=\"protocol_version\"\r\n\r\n2.1\r\n" dataUsingEncoding:NSASCIIStringEncoding]];
-    // album name
-    [requestData appendData:boundaryData];
-	if ([gallery isGalleryV2])
-		[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"g2_form[set_albumName]\"\r\n\r\n%@\r\n", name] dataUsingEncoding:[gallery sniffedEncoding]]];
-	else
-		[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"set_albumName\"\r\n\r\n%@\r\n", name] dataUsingEncoding:[gallery sniffedEncoding]]];
-	// caption
-    if ([item caption]) {
-        [requestData appendData:boundaryData];
-		if ([gallery isGalleryV2])
-			[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"g2_form[caption]\"\r\n\r\n%@\r\n", [item caption]] dataUsingEncoding:[gallery sniffedEncoding]]];
-		else
-			[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"caption\"\r\n\r\n%@\r\n", [item caption]] dataUsingEncoding:[gallery sniffedEncoding]]];
-    }
-	// the description
-    if ([item description] && ([gallery majorVersion] >= 2) && ([gallery minorVersion] >= 3)) {
-        [requestData appendData:boundaryData];
-		if ([gallery isGalleryV2])
-			[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"g2_form[extrafield.Description]\"\r\n\r\n%@\r\n", [item description]] dataUsingEncoding:[gallery sniffedEncoding]]];
-		else
-			[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"extrafield.Description\"\r\n\r\n%@\r\n", [item description]] dataUsingEncoding:[gallery sniffedEncoding]]];
-    }
     // the file
     [requestData appendData:boundaryData];
-	if ([gallery isGalleryV2])
-		[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"g2_userfile\"; filename=\"%@\"\r\nContent-Type: %@\r\n\r\n", [item filename], [item imageType]] dataUsingEncoding:[gallery sniffedEncoding]]];
-	else
-		[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"userfile\"; filename=\"%@\"\r\nContent-Type: %@\r\n\r\n", [item filename], [item imageType]] dataUsingEncoding:[gallery sniffedEncoding]]];
+	[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"%@\"\r\nContent-Type: %@\r\n\r\n", [item filename], [item imageType]] dataUsingEncoding:[gallery sniffedEncoding]]];
     [requestData appendData:[item data]];
     // closing
     [requestData appendData:[@"\r\n" dataUsingEncoding:NSASCIIStringEncoding]];
@@ -425,8 +412,9 @@
     
     [items addObject:item];
     
+	NSLog(@"addItemSynchronously : photo added url=%@", galleryResponse);
+
     return status;
 }
-
 
 @end
