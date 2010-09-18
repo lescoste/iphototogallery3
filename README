@@ -10,3 +10,16 @@ To install it, you need to :
 2) copy the "iPhotoToGallery3.iPhotoExporter" folder to the "~/Library/Application Support/iPhoto/Plugins" folder. If this folder doesn't exist then create it.
 
 That's it. Enjoy !
+
+
+Version history :
+
+see http://github.com/lescoste/iphototogallery3/issues/
+
+2010/09/18 version 0.2 
+fixes 2 issues : 
+     # 2 album description
+     # 3 Photo Titles and comments 
+
+2010/09/17 version 0.1 
+first version
