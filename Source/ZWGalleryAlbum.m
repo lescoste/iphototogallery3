@@ -28,6 +28,7 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#import "json/JSON.h"
 #import "ZWGalleryAlbum.h"
 #import "ZWGalleryItem.h"
 #import "ZWMutableURLRequest.h"
@@ -339,10 +340,27 @@
     CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("Cookie"), (CFStringRef)[cookiesInfo objectForKey:@"Cookie"]);
     
     NSMutableData *requestData = [NSMutableData data];
+	[requestData appendData:boundaryData];
 
 	// photo name
-	[requestData appendData:boundaryData];
-	[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"entity\"\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n{\"name\":\"%@\",\"type\":\"photo\"}\r\n\r\n", [item filename]] dataUsingEncoding:[gallery sniffedEncoding]]];
+	NSString *itemname = nil;
+	if ([item caption]) {
+		itemname = [item caption];
+	} else {
+		itemname = [item filename];
+	}
+	
+	// Create SBJSON object to write JSON
+	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+	[dict setObject:[item filename] forKey:@"name"];
+	[dict setObject:itemname forKey:@"title"];
+	[dict setObject:[item description] forKey:@"description"];
+	[dict setObject:@"photo" forKey:@"type"];
+
+	SBJsonWriter *jsonwriter = [SBJsonWriter new];
+	NSString *jsonParams = [jsonwriter stringWithObject:dict];
+    
+	[requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"entity\"\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n%@\r\n\r\n", jsonParams] dataUsingEncoding:[gallery sniffedEncoding]]];
     
     // the file
     [requestData appendData:boundaryData];

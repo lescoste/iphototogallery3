@@ -301,7 +301,6 @@
     }
     // Create SBJSON object to parse JSON
 	SBJsonParser *parser = [SBJsonParser new];
-	//[parser initialize];
     
 	// parse the JSON string into an object - assuming json_string is a NSString of JSON data
 	NSArray *dict = [parser objectWithString:response error:nil];
@@ -712,16 +711,27 @@
 	
 	NSURL* purl = [[NSURL alloc] initWithString:parentUrl];
 	
-	NSMutableString *jsonData = [[NSMutableString alloc] initWithString:@"entity={\"type\":\"album\",\"name\":\""];
+/*	NSMutableString *jsonData = [[NSMutableString alloc] initWithString:@"entity={\"type\":\"album\",\"name\":\""];
 	[jsonData appendString:name];
 	[jsonData appendString:@"\",\"title\":\""];
 	[jsonData appendString:title];
 	[jsonData appendString:@"\",\"description\":\""];
 	[jsonData appendString:summary];
 	[jsonData appendString:@"\"}"];
-	NSLog ( @"doCreateAlbumWithName jsonData : %@ ", jsonData );
+*/
+	
+	// Create SBJSON object to write JSON
+	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+	[dict setObject:name forKey:@"name"];
+	[dict setObject:title forKey:@"title"];
+	[dict setObject:summary forKey:@"description"];
+	[dict setObject:@"album" forKey:@"type"];
+	
+	SBJsonWriter *jsonwriter = [SBJsonWriter new];
+	NSString *jsonParams = [jsonwriter stringWithObject:dict];
 
-	NSString* escapedJsonData = [jsonData stringByAddingPercentEscapesUsingEncoding:[self sniffedEncoding]];
+	//NSString* escapedJsonData = [jsonData stringByAddingPercentEscapesUsingEncoding:[self sniffedEncoding]];
+	NSString* escapedJsonData = [[NSString alloc] initWithFormat:@"entity=%@", jsonParams];
 	NSLog ( @"doCreateAlbumWithName escapedJsonData : %@ ", escapedJsonData );
 	
 	NSData* requestData = [escapedJsonData dataUsingEncoding:[self sniffedEncoding]];
