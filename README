@@ -7,7 +7,8 @@ You can download it from the Download section.
 To install it, you need to :
 
 1) decompress the zip file
-2) copy the "iPhotoToGallery3.iPhotoExporter" folder to the "~/Library/Application Support/iPhoto/Plugins" folder. If this folder doesn't exist then create it.
+2) remove the old "iPhotoToGallery3.iPhotoExporter" from /Applications/iPhoto/Contents/Plugins/
+3) copy the "iPhotoToGallery3.iPhotoExporter" folder to the "~/Library/Application Support/iPhoto/Plugins" folder. If this folder doesn't exist then create it.
 
 That's it. Enjoy !
 
