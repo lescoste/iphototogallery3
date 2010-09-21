@@ -132,6 +132,7 @@ struct progressStruct {
     // the export manager handed to us by iPhoto
     id exportManager;
     
+	NSMutableDictionary *errorCodesDesc;
     NSMutableDictionary *preferences;    
     NSMutableArray *galleries;
     NSString *lastGallerySelected;
@@ -162,7 +163,7 @@ struct progressStruct {
 - (IBAction)clickGallerySettingsShowAdvancedOptions:(id)sender;
 - (IBAction)clickGallerySettingsUseHTTPAuth:(id)sender;
 - (IBAction)clickScaleImages:(id)sender;
-- (IBAction)clickSCiPhotoToGalleryName:(id)sender;
+- (IBAction)clickiPhotoToGalleryName:(id)sender;
 - (IBAction)clickLogin:(id)sender;
 - (IBAction)clickCancelLogin:(id)sender;
 - (IBAction)clickDonate:(id)sender;

@@ -58,7 +58,33 @@ static int loggingIn;
     
     exportManager = exportMgr; // weak reference - we don't expect our ExportManager to disappear on us
 
-  
+	/*
+	 GR_STAT_SUCCESS = 0,                       // The command the client sent in the request completed successfully. The data (if any) in the response should be considered valid.    
+	 GR_STAT_PROTO_MAJ_VER_INVAL = 101,         // The protocol major version the client is using is not supported.
+	 GR_STAT_PROTO_MIN_VER_INVAL = 102,         // The protocol minor version the client is using is not supported.    
+	 GR_STAT_PROTO_VER_FMT_INVAL = 103,         // The format of the protocol version string the client sent in the request is invalid.    
+	 GR_STAT_PROTO_VER_MISSING = 104,           // The request did not contain the required protocol_version key.
+	 GR_STAT_PASSWD_WRONG = 201,                // The password and/or username the client send in the request is invalid.
+	 GR_STAT_LOGIN_MISSING = 202,               // The client used the login command in the request but failed to include either the username or password (or both) in the request.
+	 GR_STAT_UNKNOWN_CMD = 301,                 // The value of the cmd key is not valid.    
+	 GR_STAT_NO_ADD_PERMISSION = 401,           // The user does not have permission to add an item to the gallery.
+	 GR_STAT_NO_FILENAME = 402,                 // No filename was specified.
+	 GR_STAT_UPLOAD_PHOTO_FAIL = 403,           // The file was received, but could not be processed or added to the album.
+	 GR_STAT_NO_WRITE_PERMISSION = 404,         // No write permission to destination album.
+	 GR_STAT_NO_CREATE_ALBUM_PERMISSION = 501,  // A new album could not be created because the user does not have permission to do so.
+	 GR_STAT_CREATE_ALBUM_FAILED = 502,         // A new album could not be created, for a different reason (name conflict).
+	 SCZW_GALLERY_COULD_NOT_CONNECT = 1000,       // Could not connect to the gallery
+	 SCZW_GALLERY_PROTOCOL_ERROR = 1001,          // Something went wrong with the protocol (no status sent, couldn't decode, etc)
+	 SCZW_GALLERY_UNKNOWN_ERROR = 1002,
+	 SCZW_GALLERY_OPERATION_DID_CANCEL = 1003     // The user cancelled whatever operation was happening
+	 */
+	errorCodesDesc = [[NSMutableDictionary alloc] init];
+	[errorCodesDesc setObject:@"Could not connect to the gallery" forKey:@"1000"];
+	[errorCodesDesc setObject:@"Protocol error" forKey:@"1001"];
+	[errorCodesDesc setObject:@"Unknown error" forKey:@"1002"];
+	[errorCodesDesc setObject:@"User canceled action" forKey:@"1003"];
+	[errorCodesDesc setObject:@"Password and/or username is invalid" forKey:@"201"];
+
     preferences = [[NSMutableDictionary alloc] init];
     NSDictionary *userDefaultsPreferences = [[NSUserDefaults standardUserDefaults] persistentDomainForName:[[NSBundle bundleForClass:[self class]] bundleIdentifier]];
     if (userDefaultsPreferences) 
@@ -81,6 +107,7 @@ static int loggingIn;
 }
 
 - (void)dealloc {
+    [errorCodesDesc release];
     [preferences release];
     [galleries release];
     [super dealloc];
@@ -372,7 +399,7 @@ static int loggingIn;
     [self setScaleImages];
 }
 
-- (IBAction)clickSCiPhotoToGalleryName:(id)sender {
+- (IBAction)clickiPhotoToGalleryName:(id)sender {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://lescoste.net/blog/iphototogallery3/"]];
 }
 
@@ -1189,7 +1216,9 @@ static int loggingIn;
     [mainProgressIndicator stopAnimation:self];
     
     // TODO: be nicer with errors here
-    [mainStatusString setStringValue:[NSString stringWithFormat:@"Unknown error: %i", (int)status]];
+	
+    [mainStatusString setStringValue:[NSString stringWithFormat:@"Unknown error: %i : %@", (int)status,
+						[errorCodesDesc objectForKey:[NSString stringWithFormat:@"%i", (int)status]]]];
 
     [self updateAlbumPopupMenu];
     [self setLoggedInOut];

@@ -296,7 +296,7 @@
 	NSString *response = [[[NSString alloc] initWithData:responseData encoding:[self sniffedEncoding]] autorelease];
     
     if (response == nil) {
-        NSLog(@"Could not convert response data into a string with encoding: %i", [self sniffedEncoding]);
+        NSLog(@"parseResponseData: Could not convert response data into a string with encoding: %i", [self sniffedEncoding]);
         return nil;
     }
     // Create SBJSON object to parse JSON
@@ -312,7 +312,7 @@
 - (NSArray *) getGalleryTags {
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/tags"]];
 	
-	NSLog ( @"getGalleryTags : fullReqURL  = %@", [fullReqURL absoluteString] );
+	NSLog ( @"getGalleryTags: url = %@", [fullReqURL absoluteString] );
 	
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -339,7 +339,7 @@
 	
 	NSArray *galleryResponse = [[self parseResponseData:data] retain];
 	
-	NSLog ( @"getGalleryTags : galleryResponse  = %@", galleryResponse);
+	NSLog ( @"getGalleryTags: galleryResponse  = %@", galleryResponse);
 
 	return galleryResponse;
 }
@@ -348,7 +348,7 @@
 	
 	int i =0;
 	int nbmembers = [members count];
-	NSLog ( @"getandparseAlbums : total albums = %d", nbmembers );
+	NSLog ( @"getandparseAlbums: total albums = %d", nbmembers );
 	while (i < nbmembers) {
 		
 		// go get 100 members data in one request
@@ -371,14 +371,14 @@
 		fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items"]];
 		NSURL* fullReqURL = [[NSURL alloc] initWithString:[fullURL absoluteString]];
 		
-		NSLog ( @"getandparseAlbums get %d albums, fullReqURL = %@", j, [fullReqURL absoluteString] );
+		NSLog ( @"getandparseAlbums: get %d albums, url = %@", j, [fullReqURL absoluteString] );
 		
 		NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
 																  cachePolicy:NSURLRequestReloadIgnoringCacheData
 															  timeoutInterval:60.0];
 		[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
 		
-		//NSLog ( @"The current date and time is: %@ ; doGetAlbums requestkey  = %@", [NSDate date], requestkey );
+		NSLog ( @"getandparseAlbums: requestkey  = %@", requestkey );
 		
 		// This request is really a HTTP POST but for the REST API it is a GET !
 		[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
@@ -485,7 +485,8 @@
     // Now try to log in 
 	// try logging into Gallery v3
 	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest"]];
-	
+	NSLog ( @"doLogin: url = %@", fullURL );
+
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullURL
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
 														  timeoutInterval:60.0];
@@ -528,18 +529,23 @@
         loggedIn = YES;
 		
 		if (requestkey == nil) {
-			NSLog(@"Could not read request key with encoding: %i", [self sniffedEncoding]);
+			NSLog(@"doLogin: Could not read request key with encoding: %i", [self sniffedEncoding]);
 			return GR_STAT_PASSWD_WRONG;
 		}
 		
-		NSLog ( @"logged in :requestkey = %@",  requestkey );
+		if ([requestkey length] > 100) {
+			NSLog(@"doLogin: Wrong request key: %@", requestkey);
+			return SCZW_GALLERY_COULD_NOT_CONNECT;
+		}
+		
+		NSLog ( @"doLogin: logged in :requestkey = %@",  requestkey );
 		
 		return GR_STAT_SUCCESS;
 	}
 	if ([(NSHTTPURLResponse *)response statusCode] == 403 ) {
         return GR_STAT_PASSWD_WRONG;
 	}    
-	NSLog ( @"The current date and time is: %@ ; error = %d", [NSDate date], [(NSHTTPURLResponse *)response statusCode] );
+	NSLog ( @"doLogin: error = %d", [(NSHTTPURLResponse *)response statusCode] );
     
     return SCZW_GALLERY_UNKNOWN_ERROR;
 }
@@ -630,18 +636,18 @@
 	// initial album
 	NSString *requestString = @"type=album&output=json&scope=all";
 	NSString* escapedUrlString = [requestString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-//	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/item/1?"]];
-	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items?"]];
+	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/item/1?"]];
+//	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items?"]];
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[fullURL absoluteString] stringByAppendingString:escapedUrlString]];
 	
-	//NSLog ( @"The current date and time is: %@ ; fullReqURL  = %@", [NSDate date], [fullReqURL absoluteString] );
+	NSLog ( @"doGetAlbums: url = %@", [fullReqURL absoluteString] );
 	
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
 														  timeoutInterval:60.0];
 	[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
 	
-	//NSLog ( @"The current date and time is: %@ ; doGetAlbums requestkey  = %@", [NSDate date], requestkey );
+	NSLog ( @"doGetAlbums: requestkey = %@", requestkey );
 	
 	[theRequest setHTTPMethod:@"GET"];
 	[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
@@ -671,7 +677,7 @@
 	
     SCZWGalleryRemoteStatusCode status = [self getandparseAlbums:members];
 	
-	NSLog ( @"doGetAlbums : editable albums = %d", [jsonalbums count] );
+	NSLog ( @"doGetAlbums: editable albums = %d", [jsonalbums count] );
 	
     [albums release];
     albums = nil;
@@ -739,7 +745,7 @@
 			[album setParent:parent];
 			[parent addChild:album];
         } else {
-			NSLog ( @"doGetAlbums pas de parentid : %d %@", i, [album name] );
+			NSLog ( @"doGetAlbums: no parentid found : %d %@", i, [album name] );
 		}
     }
     albums = [[NSArray alloc] initWithArray:galleriesArray];
@@ -800,7 +806,7 @@
         parentUrl = [aURL absoluteString]; 
     }
 	
-	NSLog ( @"doCreateAlbumWithName title : %@ , parent url : %@", title, parentUrl );
+	NSLog ( @"doCreateAlbumWithName: title : %@ , parent url : %@", title, parentUrl );
 	
 	NSURL* purl = [[NSURL alloc] initWithString:parentUrl];
 	
@@ -823,13 +829,15 @@
 	
 	//NSString* escapedJsonData = [jsonData stringByAddingPercentEscapesUsingEncoding:[self sniffedEncoding]];
 	NSString* escapedJsonData = [[NSString alloc] initWithFormat:@"entity=%@", jsonParams];
-	NSLog ( @"doCreateAlbumWithName escapedJsonData : %@ ", escapedJsonData );
+	NSLog ( @"doCreateAlbumWithName: escapedJsonData : %@ ", escapedJsonData );
 	
 	NSData* requestData = [escapedJsonData dataUsingEncoding:[self sniffedEncoding]];
-	NSLog ( @"doCreateAlbumWithName requestData : %@ ", requestData );
+	NSLog ( @"doCreateAlbumWithName: requestData : %@ ", requestData );
 	NSString* requestDataLengthString = [[NSString alloc] initWithFormat:@"%d", [requestData length]];
-	NSLog ( @"doCreateAlbumWithName requestDataLengthString : %@ ", requestDataLengthString );
+	NSLog ( @"doCreateAlbumWithName: requestDataLengthString : %@ ", requestDataLengthString );
 	
+	NSLog ( @"doCreateAlbumWithName: url : %@ ", purl );
+
 	NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:purl];
 	[request setHTTPMethod:@"POST"];
 	[request setHTTPBody:requestData];
@@ -859,12 +867,12 @@
         return SCZW_GALLERY_PROTOCOL_ERROR;
 	
 	if ([(NSHTTPURLResponse *)response statusCode] != 200 ) {
-		NSLog ( @"doCreateAlbumWithName status code : %d", [(NSHTTPURLResponse *)response statusCode] );
+		NSLog ( @"doCreateAlbumWithName: status code : %d", [(NSHTTPURLResponse *)response statusCode] );
         return SCZW_GALLERY_PROTOCOL_ERROR;
 	}
 	[lastCreatedAlbumName release];
 	lastCreatedAlbumName = [name copy];
-	NSLog ( @"doCreateAlbumWithName album added : %@", galleryResponse );
+	NSLog ( @"doCreateAlbumWithName: album added : %@", galleryResponse );
 	
     return GR_STAT_SUCCESS;
 }
