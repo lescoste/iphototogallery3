@@ -314,76 +314,81 @@
 	int i =0;
 	int nbmembers = [members count];
 	NSLog ( @"getandparseAlbums : total albums = %d", nbmembers );
-
-	NSString *requestString = @"type=album&output=json&scope=all&urls=";
-
-	// Create SBJSON object to write JSON
-	NSMutableArray *urslarray = [[NSMutableArray alloc] init];
-	for (i=0; i < nbmembers ; i++) {
-		NSString *member = [members objectAtIndex:i];
-		[urslarray addObject:member];
-	}
-	SBJsonWriter *jsonwriter = [SBJsonWriter new];
-	NSString *jsonParams = [jsonwriter stringWithObject:urslarray];
-	
-	NSString *requestbody = [NSString stringWithFormat:@"%@%@",requestString, jsonParams];
-	
-	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items"]];
-	NSURL* fullReqURL = [[NSURL alloc] initWithString:[fullURL absoluteString]];
-	
-	//NSLog ( @"fullReqURL  = %@", [fullReqURL absoluteString] );
-	
-	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
-														  cachePolicy:NSURLRequestReloadIgnoringCacheData
-														  timeoutInterval:60.0];
-	[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
-	
-	//NSLog ( @"The current date and time is: %@ ; doGetAlbums requestkey  = %@", [NSDate date], requestkey );
-	
-	// This request is really a HTTP POST but for the REST API it is a GET !
-	[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
-	[theRequest setValue:requestkey forHTTPHeaderField:@"X-Gallery-Request-Key"];
-	[theRequest setHTTPMethod:@"POST"];
-
-	NSData *requestData = [requestbody dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-	[theRequest setHTTPBody:requestData];
-	
-	
-	currentConnection = [SCZWURLConnection connectionWithRequest:theRequest];
-	while ([currentConnection isRunning]) 
-		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
-	
-	if ([currentConnection isCancelled]) 
-		return SCZW_GALLERY_OPERATION_DID_CANCEL;
-	
-	// reponse from server
-	
-	NSData *data = [currentConnection data];
-	
-	if (data == nil) 
-		return SCZW_GALLERY_COULD_NOT_CONNECT;
-	
-	NSArray *galleryResponse = [[self parseResponseData:data] retain];
-	if (galleryResponse == nil) 
-		return SCZW_GALLERY_PROTOCOL_ERROR;
-	
-	// for each album, get sub albums
-	for (NSDictionary *dict in galleryResponse) {
+	while (i < nbmembers) {
 		
-		NSDictionary *entity = [dict objectForKey:@"entity"];
-		NSNumber *canEdit = [entity objectForKey:@"can_edit"];
+		// go get 100 members data in one request
+		NSString *requestString = @"type=album&output=json&scope=all&urls=";
 		
-		if ([canEdit intValue] == 1) {
-			[jsonalbums addObject:[dict retain]];
+		// Create SBJSON object to write JSON
+		NSMutableArray *urslarray = [[NSMutableArray alloc] init];
+		int j =0;
+		for (j=0; j < 100 && i < nbmembers ; j++) {
+			NSString *member = [members objectAtIndex:i];
+			[urslarray addObject:member];
+			i++;
+		}
+		
+		SBJsonWriter *jsonwriter = [SBJsonWriter new];
+		NSString *jsonParams = [jsonwriter stringWithObject:urslarray];
+		
+		NSString *requestbody = [NSString stringWithFormat:@"%@%@",requestString, jsonParams];
+		
+		fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items"]];
+		NSURL* fullReqURL = [[NSURL alloc] initWithString:[fullURL absoluteString]];
+		
+		NSLog ( @"getandparseAlbums get %d albums, fullReqURL = %@", j, [fullReqURL absoluteString] );
+		
+		NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
+																  cachePolicy:NSURLRequestReloadIgnoringCacheData
+															  timeoutInterval:60.0];
+		[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
+		
+		//NSLog ( @"The current date and time is: %@ ; doGetAlbums requestkey  = %@", [NSDate date], requestkey );
+		
+		// This request is really a HTTP POST but for the REST API it is a GET !
+		[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
+		[theRequest setValue:requestkey forHTTPHeaderField:@"X-Gallery-Request-Key"];
+		[theRequest setHTTPMethod:@"POST"];
+		
+		NSData *requestData = [requestbody dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+		[theRequest setHTTPBody:requestData];
+		
+		
+		currentConnection = [SCZWURLConnection connectionWithRequest:theRequest];
+		while ([currentConnection isRunning]) 
+			[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
+		
+		if ([currentConnection isCancelled]) 
+			return SCZW_GALLERY_OPERATION_DID_CANCEL;
+		
+		// reponse from server
+		
+		NSData *data = [currentConnection data];
+		
+		if (data == nil) 
+			return SCZW_GALLERY_COULD_NOT_CONNECT;
+		
+		NSArray *galleryResponse = [[self parseResponseData:data] retain];
+		if (galleryResponse == nil) 
+			return SCZW_GALLERY_PROTOCOL_ERROR;
+		
+		// for each album, add editable sub albums
+		for (NSDictionary *dict in galleryResponse) {
 			
-		//	NSString *title = [entity objectForKey:@"title"];
-			//NSLog ( @"getandparseAlbums add album : %@ ", title );
-			//NSLog ( @"getandparseAlbums jsonalbums size : %d", [jsonalbums count] );
+			NSDictionary *entity = [dict objectForKey:@"entity"];
+			NSNumber *canEdit = [entity objectForKey:@"can_edit"];
 			
+			if ([canEdit intValue] == 1) {
+				[jsonalbums addObject:[dict retain]];
+				
+				//	NSString *title = [entity objectForKey:@"title"];
+				//NSLog ( @"getandparseAlbums add album : %@ ", title );
+				//NSLog ( @"getandparseAlbums jsonalbums size : %d", [jsonalbums count] );
+				
+			}
 		}
 	}
 	//NSLog ( @"getandparseAlbums end");
-	
 	
 	return GR_STAT_SUCCESS;
 }
@@ -712,9 +717,9 @@
     NSThread *callingThread = [threadDispatchInfo objectForKey:@"CallingThread"];
     
     SCZWGalleryRemoteStatusCode status = [self doCreateAlbumWithName:[threadDispatchInfo objectForKey:@"AlbumName"]
-                                                             title:[threadDispatchInfo objectForKey:@"AlbumTitle"]
-                                                           summary:[threadDispatchInfo objectForKey:@"AlbumSummary"]
-                                                            parent:[threadDispatchInfo objectForKey:@"AlbumParent"]];
+															   title:[threadDispatchInfo objectForKey:@"AlbumTitle"]
+															 summary:[threadDispatchInfo objectForKey:@"AlbumSummary"]
+															  parent:[threadDispatchInfo objectForKey:@"AlbumParent"]];
     
     if (status == GR_STAT_SUCCESS)
         [delegate performSelector:@selector(galleryDidCreateAlbum:) 
