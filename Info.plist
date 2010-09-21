@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>iPhotoPluginIcon</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.lescoste.iPhotoToGallery3</string>
+	<string>net.lescoste.SCiPhotoToGallery3</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -21,6 +21,6 @@
 	<key>NSMainNibFile</key>
 	<string>Panel.nib</string>
 	<key>NSPrincipalClass</key>
-	<string>iPhotoToGallery</string>
+	<string>SCiPhotoToGallery</string>
 </dict>
 </plist>

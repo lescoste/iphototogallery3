@@ -1,14 +1,11 @@
-Welcome to the iphototogallery3 wiki!
-
-The first working version of the iPhotoToGallery3 plugin has been release today september 17 2010.
+iPhotoToGallery3 plugin allows you to upload your iPhoto photos to a Gallery 3 site.
 
 You can download it from the Download section.
 
 To install it, you need to :
 
 1) decompress the zip file
-2) remove the old "iPhotoToGallery3.iPhotoExporter" from /Applications/iPhoto/Contents/Plugins/
-3) copy the "iPhotoToGallery3.iPhotoExporter" folder to the "~/Library/Application Support/iPhoto/Plugins" folder. If this folder doesn't exist then create it.
+2) copy the "iPhotoToGallery3.iPhotoExporter" folder to the "~/Library/Application Support/iPhoto/Plugins" folder. If this folder doesn't exist then create it.
 
 That's it. Enjoy !
 
@@ -16,6 +13,12 @@ That's it. Enjoy !
 Version history :
 
 see http://github.com/lescoste/iphototogallery3/issues/
+
+2010/09/21 version 0.3 
+   - allows to have the Gallery plugin for version 1 and 2 from Zach Wily installed together 
+   - when the new album short name is empty, it fills it with a timestamp
+   - faster album list loading
+   - should also run on Mac OsX 10.5
 
 2010/09/18 version 0.2 
 fixes 2 issues : 
