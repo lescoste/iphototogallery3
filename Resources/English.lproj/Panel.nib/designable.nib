@@ -12,11 +12,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="8"/>
-			<integer value="527"/>
 			<integer value="546"/>
-			<integer value="181"/>
 			<integer value="165"/>
+			<integer value="181"/>
+			<integer value="527"/>
+			<integer value="8"/>
 			<integer value="204"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -443,7 +443,7 @@
 											<object class="NSTextFieldCell" key="NSCell" id="805026348">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4194304</int>
-												<string key="NSContents">iPhotoToGallery3 0.2, by S. Coste</string>
+												<string key="NSContents">iPhotoToGallery3 0.3, by S. Coste</string>
 												<reference key="NSSupport" ref="26"/>
 												<reference key="NSControlView" ref="222494838"/>
 												<reference key="NSBackgroundColor" ref="438118409"/>
@@ -1935,9 +1935,7 @@
 				<string key="NSWindowRect">{{944, 634}, {409, 168}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Progress Panel</string>
-				<object class="NSMutableString" key="NSWindowClass">
-					<characters key="NS.bytes">NSPanel</characters>
-				</object>
+				<string key="NSWindowClass">NSPanel</string>
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
@@ -1978,7 +1976,7 @@
 							<int key="NSvFlags">256</int>
 							<string key="NSFrame">{{20, 28}, {128, 120}}</string>
 							<reference key="NSSuperview" ref="204213049"/>
-							<string key="NSClassName">ZWTransitionImageView</string>
+							<string key="NSClassName">SCZWTransitionImageView</string>
 							<string key="NSExtension">NSView</string>
 						</object>
 						<object class="NSTextField" id="524548042">
@@ -4364,7 +4362,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>iPhotoToGalleryExportPluginBox</string>
+					<string>SCiPhotoToGalleryExportPluginBox</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 				</object>
@@ -4402,7 +4400,7 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Source/InterThreadMessaging.h</string>
+						<string key="minorKey">Source/SCInterThreadMessaging.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -4423,520 +4421,19 @@
 					<string key="className">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Source/NSView+Fading.h</string>
+						<string key="minorKey">Source/SCNSView+Fading.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">ZWTransitionImageView</string>
+					<string key="className">SCZWTransitionImageView</string>
 					<string key="superclassName">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Source/ZWTransitionImageView.h</string>
+						<string key="minorKey">Source/SCZWTransitionImageView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">ZWTransitionImageView</string>
-					<string key="superclassName">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">iPhotoToGallery</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>clickAlbumSettingsCancel:</string>
-							<string>clickAlbumSettingsCreateAlbum:</string>
-							<string>clickCancelLogin:</string>
-							<string>clickCreateNewAlbum:</string>
-							<string>clickDonate:</string>
-							<string>clickGalleryListDone:</string>
-							<string>clickGalleryListRemove:</string>
-							<string>clickGalleryListSelectGallery:</string>
-							<string>clickGalleryPopup:</string>
-							<string>clickGallerySettingsCancel:</string>
-							<string>clickGallerySettingsOK:</string>
-							<string>clickGallerySettingsShowAdvancedOptions:</string>
-							<string>clickGallerySettingsUseHTTPAuth:</string>
-							<string>clickLogin:</string>
-							<string>clickPasswordCancel:</string>
-							<string>clickPasswordOK:</string>
-							<string>clickProgressCancel:</string>
-							<string>clickScaleImages:</string>
-							<string>clickiPhotoToGalleryName:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>clickAlbumSettingsCancel:</string>
-							<string>clickAlbumSettingsCreateAlbum:</string>
-							<string>clickCancelLogin:</string>
-							<string>clickCreateNewAlbum:</string>
-							<string>clickDonate:</string>
-							<string>clickGalleryListDone:</string>
-							<string>clickGalleryListRemove:</string>
-							<string>clickGalleryListSelectGallery:</string>
-							<string>clickGalleryPopup:</string>
-							<string>clickGallerySettingsCancel:</string>
-							<string>clickGallerySettingsOK:</string>
-							<string>clickGallerySettingsShowAdvancedOptions:</string>
-							<string>clickGallerySettingsUseHTTPAuth:</string>
-							<string>clickLogin:</string>
-							<string>clickPasswordCancel:</string>
-							<string>clickPasswordOK:</string>
-							<string>clickProgressCancel:</string>
-							<string>clickScaleImages:</string>
-							<string>clickiPhotoToGalleryName:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">clickAlbumSettingsCancel:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickAlbumSettingsCreateAlbum:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickCancelLogin:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickCreateNewAlbum:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickDonate:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickGalleryListDone:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickGalleryListRemove:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickGalleryListSelectGallery:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickGalleryPopup:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickGallerySettingsCancel:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickGallerySettingsOK:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickGallerySettingsShowAdvancedOptions:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickGallerySettingsUseHTTPAuth:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickLogin:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickPasswordCancel:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickPasswordOK:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickProgressCancel:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickScaleImages:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">clickiPhotoToGalleryName:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>albumSettingsDescriptionField</string>
-							<string>albumSettingsNameField</string>
-							<string>albumSettingsNestedInPopup</string>
-							<string>albumSettingsPanel</string>
-							<string>albumSettingsTitleField</string>
-							<string>exportManager</string>
-							<string>firstView</string>
-							<string>galleryListPanel</string>
-							<string>galleryListRemoveGalleryButton</string>
-							<string>galleryListTable</string>
-							<string>gallerySettingsAdvancedBox</string>
-							<string>gallerySettingsHTTPPasswordField</string>
-							<string>gallerySettingsHTTPUsernameField</string>
-							<string>gallerySettingsPanel</string>
-							<string>gallerySettingsPasswordField</string>
-							<string>gallerySettingsShowAdvancedOptionsString</string>
-							<string>gallerySettingsShowAdvancedOptionsSwitch</string>
-							<string>gallerySettingsURLField</string>
-							<string>gallerySettingsUseHTTPAuthSwitch</string>
-							<string>gallerySettingsUseHTTPSSwitch</string>
-							<string>gallerySettingsUsernameField</string>
-							<string>lastView</string>
-							<string>mainAddToAlbumPopup</string>
-							<string>mainConnectCancelButton</string>
-							<string>mainCreateNewAlbumButton</string>
-							<string>mainDonateButton</string>
-							<string>mainExportCommentsSwitch</string>
-							<string>mainGalleryPopup</string>
-							<string>mainOpenBrowserSwitch</string>
-							<string>mainProgressIndicator</string>
-							<string>mainScaleImagesHeightField</string>
-							<string>mainScaleImagesSwitch</string>
-							<string>mainScaleImagesWidthField</string>
-							<string>mainStatusString</string>
-							<string>passwordDescriptionField</string>
-							<string>passwordInputField</string>
-							<string>passwordPanel</string>
-							<string>passwordTitleField</string>
-							<string>progressImageView</string>
-							<string>progressPanel</string>
-							<string>progressProgressIndicator</string>
-							<string>progressUploadingDetailField</string>
-							<string>progressUploadingTextField</string>
-							<string>settingsView</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>albumSettingsDescriptionField</string>
-							<string>albumSettingsNameField</string>
-							<string>albumSettingsNestedInPopup</string>
-							<string>albumSettingsPanel</string>
-							<string>albumSettingsTitleField</string>
-							<string>exportManager</string>
-							<string>firstView</string>
-							<string>galleryListPanel</string>
-							<string>galleryListRemoveGalleryButton</string>
-							<string>galleryListTable</string>
-							<string>gallerySettingsAdvancedBox</string>
-							<string>gallerySettingsHTTPPasswordField</string>
-							<string>gallerySettingsHTTPUsernameField</string>
-							<string>gallerySettingsPanel</string>
-							<string>gallerySettingsPasswordField</string>
-							<string>gallerySettingsShowAdvancedOptionsString</string>
-							<string>gallerySettingsShowAdvancedOptionsSwitch</string>
-							<string>gallerySettingsURLField</string>
-							<string>gallerySettingsUseHTTPAuthSwitch</string>
-							<string>gallerySettingsUseHTTPSSwitch</string>
-							<string>gallerySettingsUsernameField</string>
-							<string>lastView</string>
-							<string>mainAddToAlbumPopup</string>
-							<string>mainConnectCancelButton</string>
-							<string>mainCreateNewAlbumButton</string>
-							<string>mainDonateButton</string>
-							<string>mainExportCommentsSwitch</string>
-							<string>mainGalleryPopup</string>
-							<string>mainOpenBrowserSwitch</string>
-							<string>mainProgressIndicator</string>
-							<string>mainScaleImagesHeightField</string>
-							<string>mainScaleImagesSwitch</string>
-							<string>mainScaleImagesWidthField</string>
-							<string>mainStatusString</string>
-							<string>passwordDescriptionField</string>
-							<string>passwordInputField</string>
-							<string>passwordPanel</string>
-							<string>passwordTitleField</string>
-							<string>progressImageView</string>
-							<string>progressPanel</string>
-							<string>progressProgressIndicator</string>
-							<string>progressUploadingDetailField</string>
-							<string>progressUploadingTextField</string>
-							<string>settingsView</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">albumSettingsDescriptionField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">albumSettingsNameField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">albumSettingsNestedInPopup</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">albumSettingsPanel</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">albumSettingsTitleField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">exportManager</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">firstView</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">galleryListPanel</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">galleryListRemoveGalleryButton</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">galleryListTable</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsAdvancedBox</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsHTTPPasswordField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsHTTPUsernameField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsPanel</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsPasswordField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsShowAdvancedOptionsString</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsShowAdvancedOptionsSwitch</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsURLField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsUseHTTPAuthSwitch</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsUseHTTPSSwitch</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">gallerySettingsUsernameField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">lastView</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainAddToAlbumPopup</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainConnectCancelButton</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainCreateNewAlbumButton</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainDonateButton</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainExportCommentsSwitch</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainGalleryPopup</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainOpenBrowserSwitch</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainProgressIndicator</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainScaleImagesHeightField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainScaleImagesSwitch</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainScaleImagesWidthField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainStatusString</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">passwordDescriptionField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">passwordInputField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">passwordPanel</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">passwordTitleField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">progressImageView</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">progressPanel</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">progressProgressIndicator</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">progressUploadingDetailField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">progressUploadingTextField</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">settingsView</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Source/iPhotoToGallery.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">iPhotoToGallery</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">iPhotoToGalleryExportPluginBox</string>
+					<string key="className">SCiPhotoToGalleryExportPluginBox</string>
 					<string key="superclassName">NSBox</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">mPlugin</string>
@@ -4951,12 +4448,12 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Source/iPhotoToGalleryExportPluginBox.h</string>
+						<string key="minorKey">Source/SCiPhotoToGalleryExportPluginBox.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">iPhotoToGalleryExportPluginBox</string>
-					<string key="superclassName">NSBox</string>
+					<string key="className">iPhotoToGallery</string>
+					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
@@ -5598,7 +5095,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1060" key="NS.object.0"/>
+			<integer value="1050" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
