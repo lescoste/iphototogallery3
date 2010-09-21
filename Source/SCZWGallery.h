@@ -117,6 +117,7 @@ typedef enum
 
 // This helper method can be used by children too
 - (id)parseResponseData:(NSData*)responseData;
+- (NSArray *) getGalleryTags; 
 - (SCZWGalleryRemoteStatusCode)getandparseAlbums:(NSArray*)member;
 - (NSString *)formNameWithName:(NSString *)paramName;
 

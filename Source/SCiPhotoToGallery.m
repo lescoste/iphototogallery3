@@ -969,7 +969,12 @@ static int loggingIn;
         
             NSString *imagePath = [exportManager imagePathAtIndex:imageNum];
             NSDictionary *imageDict = [self exportManagerImageDictionaryAtIndex:imageNum];
-            
+            NSArray *imageKeywords = [exportManager imageKeywordsAtIndex:imageNum];
+            int imageRating = [exportManager imageRatingAtIndex:imageNum];
+			
+			NSLog ( @"addItemsThread i= %d , image dict = %@", imageNum, imageDict );
+
+			
             SCZWGalleryItem *item = [SCZWGalleryItem itemWithAlbum:album];
             
             // add the filename

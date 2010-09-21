@@ -42,6 +42,8 @@
     NSString* description;
     NSString* filename;
     NSString* imageType;
+    NSArray* keywords;
+	int rating;
     SCZWGalleryAlbum* album;
 }
 
@@ -62,6 +64,13 @@
 
 - (void)setImageType:(NSString*)newImageType;
 - (NSString*)imageType;
+
+- (void)setKeywords:(NSArray*)newKeywords;
+- (NSArray*)keywords;
+
+- (void)setRating:(int)newRating;
+- (int)rating;
+
 
 - (SCZWGalleryAlbum*)album;
 

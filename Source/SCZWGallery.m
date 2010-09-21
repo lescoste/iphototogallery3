@@ -309,6 +309,41 @@
 	return dict;
 }
 
+- (NSArray *) getGalleryTags {
+	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/tags"]];
+	
+	NSLog ( @"getGalleryTags : fullReqURL  = %@", [fullReqURL absoluteString] );
+	
+	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
+															  cachePolicy:NSURLRequestReloadIgnoringCacheData
+														  timeoutInterval:60.0];
+	[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
+	
+	[theRequest setHTTPMethod:@"GET"];
+	[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
+	[theRequest setValue:requestkey forHTTPHeaderField:@"X-Gallery-Request-Key"];
+	
+	currentConnection = [SCZWURLConnection connectionWithRequest:theRequest];
+	while ([currentConnection isRunning]) 
+		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
+	
+	if ([currentConnection isCancelled]) 
+		return nil;
+	
+	// reponse from server
+	
+	NSData *data = [currentConnection data];
+	
+	if (data == nil) 
+		return nil;
+	
+	NSArray *galleryResponse = [[self parseResponseData:data] retain];
+	
+	NSLog ( @"getGalleryTags : galleryResponse  = %@", galleryResponse);
+
+	return galleryResponse;
+}
+
 - (SCZWGalleryRemoteStatusCode)getandparseAlbums:(NSArray*)members {
 	
 	int i =0;
@@ -587,13 +622,16 @@
 - (SCZWGalleryRemoteStatusCode)doGetAlbums
 {
 	
+	[self getGalleryTags];
+	
 	// store all json albums from gallery
 	jsonalbums = [[[NSMutableArray alloc] init] retain];                                     
 	
 	// initial album
 	NSString *requestString = @"type=album&output=json&scope=all";
 	NSString* escapedUrlString = [requestString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/item/1?"]];
+//	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/item/1?"]];
+	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items?"]];
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[fullURL absoluteString] stringByAppendingString:escapedUrlString]];
 	
 	//NSLog ( @"The current date and time is: %@ ; fullReqURL  = %@", [NSDate date], [fullReqURL absoluteString] );

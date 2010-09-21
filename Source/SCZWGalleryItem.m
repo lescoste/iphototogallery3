@@ -111,6 +111,29 @@
     return album;
 }
 
+- (void)setKeywords:(NSArray*)newKeywords 
+{
+    [newKeywords retain];
+    [keywords release];
+    keywords = newKeywords;
+}
+
+- (NSArray*)keywords
+{
+    return keywords;
+}
+
+- (void)setRating:(int)newRating 
+{
+    rating = newRating;
+}
+
+- (int)rating
+{
+    return rating;
+}
+
+
 - (void) dealloc
 {
     [data release];
@@ -118,6 +141,7 @@
     [description release];
     [filename release];
     [imageType release];
+    [keywords release];
     
     [super dealloc];
 }

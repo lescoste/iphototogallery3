@@ -5,7 +5,11 @@ You can download it from the Download section.
 To install it, you need to :
 
 1) decompress the zip file
-2) copy the "iPhotoToGallery3.iPhotoExporter" folder to the "~/Library/Application Support/iPhoto/Plugins" folder. If this folder doesn't exist then create it.
+2) stop iPhoto
+3) copy the "iPhotoToGallery3.iPhotoExporter" folder to the "~/Library/Application Support/iPhoto/Plugins" folder. If this folder doesn't exist then create it.
+4) start iPhoto
+5) Activate the REST module in your Gallery server via the administration pages.
+
 
 That's it. Enjoy !
 
