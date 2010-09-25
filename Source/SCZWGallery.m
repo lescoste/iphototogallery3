@@ -226,8 +226,18 @@
     if (parent == nil) 
         (id)parent = (id)[NSNull null];
 	
+	
+	NSString *albumname = nil;
+	if (name == nil || [name isEqualToString:@""]) {
+		albumname = [NSString stringWithFormat:@"%d", (long)[[NSDate date] timeIntervalSince1970]];
+	} else {
+		albumname = name;
+	}
+	
+	
+	
     NSDictionary *threadDispatchInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-										name, @"AlbumName",
+										albumname, @"AlbumName",
 										title, @"AlbumTitle",
 										summary, @"AlbumSummary",
 										parent, @"AlbumParent",
@@ -291,6 +301,52 @@
  "http:\/\/lescoste.net\/gallery3\/rest\/item\/3",
  "http:\/\/lescoste.net\/gallery3\/rest\/item\/6"]}]
  */	
+- (NSDictionary *) doGetItem:(NSURL*)itemUrl {
+	
+	NSMutableDictionary * result = [[NSMutableDictionary alloc] init];
+	
+	NSLog ( @"doGetItem: url = %@", itemUrl );
+	
+	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:itemUrl
+															  cachePolicy:NSURLRequestReloadIgnoringCacheData
+														  timeoutInterval:60.0];
+	[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
+	
+	NSLog ( @"doGetAlbums: requestkey = %@", requestkey );
+	
+	[theRequest setHTTPMethod:@"GET"];
+	[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
+	[theRequest setValue:requestkey forHTTPHeaderField:@"X-Gallery-Request-Key"];
+	
+	
+	currentConnection = [SCZWURLConnection connectionWithRequest:theRequest];
+	while ([currentConnection isRunning]) 
+		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
+	
+	if ([currentConnection isCancelled]){
+		[result setObject: [NSNumber numberWithInt:SCZW_GALLERY_OPERATION_DID_CANCEL] forKey:@"status"];
+		return result;
+	} 
+	
+	// reponse from server
+	
+	NSData *data = [currentConnection data];
+	
+	if (data == nil) {
+		[result setObject:[NSNumber numberWithInt:SCZW_GALLERY_COULD_NOT_CONNECT] forKey:@"status"];
+		return result;
+	}
+	
+	id galleryResponse = [self parseResponseData:data];
+	if (galleryResponse == nil) {
+		[result setObject:[NSNumber numberWithInt:SCZW_GALLERY_PROTOCOL_ERROR] forKey:@"status"];
+		return result;
+	}
+	
+	[result setObject:galleryResponse forKey:@"data"];
+	[result setObject:[NSNumber numberWithInt:GR_STAT_SUCCESS] forKey:@"status"];
+	return result;	
+}	
 
 - (id)parseResponseData:(NSData*)responseData {
 	NSString *response = [[[NSString alloc] initWithData:responseData encoding:[self sniffedEncoding]] autorelease];
@@ -309,7 +365,11 @@
 	return dict;
 }
 
+<<<<<<< HEAD:Source/SCZWGallery.m
 - (NSArray *) getGalleryTags {
+=======
+- (NSDictionary *) getGalleryTags {
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/tags"]];
 	
 	NSLog ( @"getGalleryTags: url = %@", [fullReqURL absoluteString] );
@@ -318,6 +378,7 @@
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
 														  timeoutInterval:60.0];
 	[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
+<<<<<<< HEAD:Source/SCZWGallery.m
 	
 	[theRequest setHTTPMethod:@"GET"];
 	[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
@@ -345,19 +406,118 @@
 }
 
 - (SCZWGalleryRemoteStatusCode)getandparseAlbums:(NSArray*)members {
+=======
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
 	
+	[theRequest setHTTPMethod:@"GET"];
+	[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
+	[theRequest setValue:requestkey forHTTPHeaderField:@"X-Gallery-Request-Key"];
+	
+	currentConnection = [SCZWURLConnection connectionWithRequest:theRequest];
+	while ([currentConnection isRunning]) 
+		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
+	
+	if ([currentConnection isCancelled]) 
+		return nil;
+	
+	// reponse from server
+	
+	NSData *data = [currentConnection data];
+	
+	if (data == nil) 
+		return nil;
+	
+	NSDictionary *galleryResponse = [self parseResponseData:data];
+	
+	//NSLog ( @"getGalleryTags: tags  = %@", galleryResponse);
+
+	/*
+	 tags  = {
+	 members =     (
+	 "http://lescoste.net/gallery3/index.php/rest/tag/1",
+	 "http://lescoste.net/gallery3/index.php/rest/tag/2",
+	 "http://lescoste.net/gallery3/index.php/rest/tag/3"
+	 );
+	 url = "http://lescoste.net/gallery3/index.php/rest/tags";
+	 }
+	 */
+	NSArray *members = [galleryResponse objectForKey:@"members"];
+	NSMutableDictionary *tags = [[NSMutableDictionary alloc] init];
 	int i =0;
+	int nbmembers = [members count];
+<<<<<<< HEAD:Source/SCZWGallery.m
+	NSLog ( @"getandparseAlbums: total albums = %d", nbmembers );
+=======
+	NSLog ( @"getGalleryTags: total tags = %d", nbmembers );
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
+	while (i < nbmembers) {
+		NSString *tagUrl = [members objectAtIndex:i];
+		NSURL* fullReqURL = [[NSURL alloc] initWithString:tagUrl];
+
+		NSDictionary * response = [self doGetItem:fullReqURL];
+		SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
+		
+		if (status != GR_STAT_SUCCESS) 
+			continue;
+		
+		NSDictionary * galleryResponse = [response objectForKey:@"data"];
+		if (galleryResponse == nil) 
+			continue;
+		/*
+		 galleryResponse tag = {
+		 entity =     {
+		 count = 2;
+		 id = 3;
+		 name = fun;
+		 };
+		 relationships =     {
+		 items =         {
+		 members =             (
+		 "http://lescoste.net/gallery3/index.php/rest/tag_item/3,1550",
+		 "http://lescoste.net/gallery3/index.php/rest/tag_item/3,1551"
+		 );
+		 url = "http://lescoste.net/gallery3/index.php/rest/tag_items/3";
+		 };
+		 };
+		 url = "http://lescoste.net/gallery3/index.php/rest/tag/3";
+		 }
+		 */
+		
+<<<<<<< HEAD:Source/SCZWGallery.m
+=======
+		//NSLog ( @"getGalleryTags: galleryResponse tag = %@", galleryResponse );
+		NSString * tagName = [[galleryResponse objectForKey:@"entity"] objectForKey:@"name"];
+		
+		
+		[tags setObject:tagUrl forKey:tagName];
+
+		i++;
+	}
+	
+	NSLog ( @"getGalleryTags: tags = %@", tags );
+
+	return tags;
+}
+
+- (SCZWGalleryRemoteStatusCode)getandparseAlbums:(NSArray*)members {
+	
+    int i =0;
 	int nbmembers = [members count];
 	NSLog ( @"getandparseAlbums: total albums = %d", nbmembers );
 	while (i < nbmembers) {
 		
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
 		// go get 100 members data in one request
 		NSString *requestString = @"type=album&output=json&scope=all&urls=";
 		
 		// Create SBJSON object to write JSON
 		NSMutableArray *urslarray = [[NSMutableArray alloc] init];
 		int j =0;
+<<<<<<< HEAD:Source/SCZWGallery.m
 		for (j=0; j < 100 && i < nbmembers ; j++) {
+=======
+		for (j=0; j < 20 && i < nbmembers ; j++) {
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
 			NSString *member = [members objectAtIndex:i];
 			[urslarray addObject:member];
 			i++;
@@ -378,7 +538,11 @@
 															  timeoutInterval:60.0];
 		[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
 		
+<<<<<<< HEAD:Source/SCZWGallery.m
 		NSLog ( @"getandparseAlbums: requestkey  = %@", requestkey );
+=======
+		//NSLog ( @"getandparseAlbums: requestkey  = %@", requestkey );
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
 		
 		// This request is really a HTTP POST but for the REST API it is a GET !
 		[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
@@ -403,7 +567,7 @@
 		if (data == nil) 
 			return SCZW_GALLERY_COULD_NOT_CONNECT;
 		
-		NSArray *galleryResponse = [[self parseResponseData:data] retain];
+		NSArray *galleryResponse = [self parseResponseData:data];
 		if (galleryResponse == nil) 
 			return SCZW_GALLERY_PROTOCOL_ERROR;
 		
@@ -414,7 +578,7 @@
 			NSNumber *canEdit = [entity objectForKey:@"can_edit"];
 			
 			if ([canEdit intValue] == 1) {
-				[jsonalbums addObject:[dict retain]];
+				[jsonalbums addObject:dict];
 				
 				//	NSString *title = [entity objectForKey:@"title"];
 				//NSLog ( @"getandparseAlbums add album : %@ ", title );
@@ -628,10 +792,14 @@
 - (SCZWGalleryRemoteStatusCode)doGetAlbums
 {
 	
+<<<<<<< HEAD:Source/SCZWGallery.m
 	[self getGalleryTags];
+=======
+//	[self getGalleryTags];
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
 	
 	// store all json albums from gallery
-	jsonalbums = [[[NSMutableArray alloc] init] retain];                                     
+	jsonalbums = [[NSMutableArray alloc] init];                                     
 	
 	// initial album
 	NSString *requestString = @"type=album&output=json&scope=all";
@@ -641,6 +809,7 @@
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[fullURL absoluteString] stringByAppendingString:escapedUrlString]];
 	
 	NSLog ( @"doGetAlbums: url = %@", [fullReqURL absoluteString] );
+<<<<<<< HEAD:Source/SCZWGallery.m
 	
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -667,15 +836,27 @@
 	
 	if (data == nil) 
 		return SCZW_GALLERY_COULD_NOT_CONNECT;
+=======
+
+	NSDictionary * response = [self doGetItem:(NSURL *)fullReqURL];
+	SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
+
+	if (status != GR_STAT_SUCCESS) 
+		return status;
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
 	
-	NSDictionary *galleryResponse = [[self parseResponseData:data] retain];
+	NSDictionary * galleryResponse = [response objectForKey:@"data"];
 	if (galleryResponse == nil) 
 		return SCZW_GALLERY_PROTOCOL_ERROR;
 	
 	NSArray *members = [galleryResponse objectForKey:@"members"];
 	//NSLog ( @"parseResponseData members = %@", members );
 	
+<<<<<<< HEAD:Source/SCZWGallery.m
     SCZWGalleryRemoteStatusCode status = [self getandparseAlbums:members];
+=======
+    status = [self getandparseAlbums:members];
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
 	
 	NSLog ( @"doGetAlbums: editable albums = %d", [jsonalbums count] );
 	
@@ -761,9 +942,15 @@
     NSThread *callingThread = [threadDispatchInfo objectForKey:@"CallingThread"];
     
     SCZWGalleryRemoteStatusCode status = [self doCreateAlbumWithName:[threadDispatchInfo objectForKey:@"AlbumName"]
+<<<<<<< HEAD:Source/SCZWGallery.m
 															   title:[threadDispatchInfo objectForKey:@"AlbumTitle"]
 															 summary:[threadDispatchInfo objectForKey:@"AlbumSummary"]
 															  parent:[threadDispatchInfo objectForKey:@"AlbumParent"]];
+=======
+                                                             title:[threadDispatchInfo objectForKey:@"AlbumTitle"]
+                                                           summary:[threadDispatchInfo objectForKey:@"AlbumSummary"]
+                                                            parent:[threadDispatchInfo objectForKey:@"AlbumParent"]];
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
     
     if (status == GR_STAT_SUCCESS)
         [delegate performSelector:@selector(galleryDidCreateAlbum:) 
@@ -810,6 +997,7 @@
 	
 	NSURL* purl = [[NSURL alloc] initWithString:parentUrl];
 	
+<<<<<<< HEAD:Source/SCZWGallery.m
 	NSString *albumname = nil;
 	if (name == nil || [name isEqualToString:@""]) {
 		albumname = [NSString stringWithFormat:@"%d", (long)[[NSDate date] timeIntervalSince1970]];
@@ -817,6 +1005,8 @@
 		albumname = name;
 	}
 	
+=======
+>>>>>>> 569b6dee30bb64d45076:Source/SCZWGallery.m
 	// Create SBJSON object to write JSON
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 	[dict setObject:albumname forKey:@"name"];

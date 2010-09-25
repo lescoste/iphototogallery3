@@ -1,6 +1,6 @@
 //
 //  SCZWMutableURLRequest.h
-//  SCiPhotoToGallery
+//  iPhotoToGallery
 //
 //  Created by Zach Wily on 7/1/05.
 //  Copyright 2005 __MyCompanyName__. All rights reserved.

@@ -333,7 +333,7 @@ static int loggingIn;
         [albumSettingsNameField setFormatter:nameFormatter];
         [nameFormatter release];
     }
-    
+	
     // Get defaults for the Title and Description fields (thx Nathaniel Gray)
     NSString *currAlbum, *currComments = nil;
     if ([exportManager respondsToSelector:@selector(albumName)]) {
