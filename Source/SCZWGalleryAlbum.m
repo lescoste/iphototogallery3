@@ -29,27 +29,27 @@
 //
 
 #import "json/JSON.h"
-#import "ZWGalleryAlbum.h"
-#import "ZWGalleryItem.h"
-#import "ZWMutableURLRequest.h"
+#import "SCZWGalleryAlbum.h"
+#import "SCZWGalleryItem.h"
+#import "SCZWMutableURLRequest.h"
 
 #import <SystemConfiguration/SystemConfiguration.h>
 
 #define BUFSIZE 1024
 
-@implementation ZWGalleryAlbum
+@implementation SCZWGalleryAlbum
 
 #pragma mark -
 
-- (id)initWithTitle:(NSString*)newTitle name:(NSString*)newName gallery:(ZWGallery*)newGallery {
+- (id)initWithTitle:(NSString*)newTitle name:(NSString*)newName gallery:(SCZWGallery*)newGallery {
     return [self initWithTitle:newTitle name:newName summary:nil nestedIn:nil gallery:newGallery];
 }
 
-+ (ZWGalleryAlbum*)albumWithTitle:(NSString*)newTitle name:(NSString*)newName gallery:(ZWGallery*)newGallery {
-    return [[[ZWGalleryAlbum alloc] initWithTitle:newTitle name:newName gallery:newGallery] autorelease];
++ (SCZWGalleryAlbum*)albumWithTitle:(NSString*)newTitle name:(NSString*)newName gallery:(SCZWGallery*)newGallery {
+    return [[[SCZWGalleryAlbum alloc] initWithTitle:newTitle name:newName gallery:newGallery] autorelease];
 }
 
-- (id)initWithTitle:(NSString*)newTitle name:(NSString*)newName summary:(NSString*)newSummary nestedIn:(ZWGalleryAlbum*)newParent gallery:(ZWGallery*)newGallery
+- (id)initWithTitle:(NSString*)newTitle name:(NSString*)newName summary:(NSString*)newSummary nestedIn:(SCZWGalleryAlbum*)newParent gallery:(SCZWGallery*)newGallery
 {
     title = [newTitle retain];
     name = [newName retain];
@@ -61,9 +61,9 @@
     return self;
 }
 
-- (ZWGalleryAlbum*)albumWithTitle:(NSString*)newTitle name:(NSString*)newName summary:(NSString*)newSummary nestedIn:(ZWGalleryAlbum*)newParent gallery:(ZWGallery*)newGallery
+- (SCZWGalleryAlbum*)albumWithTitle:(NSString*)newTitle name:(NSString*)newName summary:(NSString*)newSummary nestedIn:(SCZWGalleryAlbum*)newParent gallery:(SCZWGallery*)newGallery
 {
-    return [[[ZWGalleryAlbum alloc] initWithTitle:newTitle name:newName summary:newSummary nestedIn:parent gallery:newGallery] autorelease];
+    return [[[SCZWGalleryAlbum alloc] initWithTitle:newTitle name:newName summary:newSummary nestedIn:parent gallery:newGallery] autorelease];
 }
 
 - (void)dealloc
@@ -153,29 +153,29 @@
     summary = newSummary;
 }
 
-- (ZWGallery*)gallery
+- (SCZWGallery*)gallery
 {
     return gallery;
 }
 
-- (void)setGallery:(ZWGallery*)newGallery
+- (void)setGallery:(SCZWGallery*)newGallery
 {
     [newGallery retain];
     [gallery release];
     gallery = newGallery;
 }
 
-- (void)setParent:(ZWGalleryAlbum*)newParent {
+- (void)setParent:(SCZWGalleryAlbum*)newParent {
     [newParent retain];
     [parent release];
     parent = newParent;
 }
 
-- (ZWGalleryAlbum*)parent {
+- (SCZWGalleryAlbum*)parent {
     return parent;
 }
 
-- (void)addChild:(ZWGalleryAlbum*)child {
+- (void)addChild:(SCZWGalleryAlbum*)child {
     if (children == nil) {
         children = [[NSMutableArray array] retain];
     }
@@ -236,7 +236,7 @@
 
 - (int)depth {
     int d = 0;
-    ZWGalleryAlbum* cur_parent = parent;
+    SCZWGalleryAlbum* cur_parent = parent;
     while (cur_parent) {
         cur_parent = [cur_parent parent];
         d++;
@@ -263,24 +263,24 @@
  X-Gallery-Request-Method: post
  X-Gallery-Request-Key: ...
  Content-Length: 142114
- Content-Type: multipart/form-data; boundary=roPK9J3DoG4ZWP6etiDuJ97h-zeNAph
+ Content-Type: multipart/form-data; boundary=roPK9J3DoG4SCZWP6etiDuJ97h-zeNAph
  
  
- --roPK9J3DoG4ZWP6etiDuJ97h-zeNAph
+ --roPK9J3DoG4SCZWP6etiDuJ97h-zeNAph
  Content-Disposition: form-data; name="entity"
  Content-Type: text/plain; charset=UTF-8
  Content-Transfer-Encoding: 8bit
  
  {"name":"Voeux2010.jpg","type":"photo"}
  
- --roPK9J3DoG4ZWP6etiDuJ97h-zeNAph
+ --roPK9J3DoG4SCZWP6etiDuJ97h-zeNAph
  Content-Disposition: form-data; name="file"; filename="Voeux2010.jpg"
  Content-Type: application/octet-stream
  Content-Transfer-Encoding: binary
  
  *** picture data ***
  
- --roPK9J3DoG4ZWP6etiDuJ97h-zeNAph
+ --roPK9J3DoG4SCZWP6etiDuJ97h-zeNAph
  
  Note: do not forget to put a blank line between "Content-Transfer-Encoding: binary" and your picture data.
  Response
@@ -289,12 +289,12 @@
  
  */
 
-- (ZWGalleryRemoteStatusCode)addItemSynchronously:(ZWGalleryItem *)item 
+- (SCZWGalleryRemoteStatusCode)addItemSynchronously:(SCZWGalleryItem *)item 
 {
     cancelled = NO;
     
     /*
-    ZWMutableURLRequest *theRequest = [ZWMutableURLRequest requestWithURL:[gallery fullURL]
+    SCZWMutableURLRequest *theRequest = [SCZWMutableURLRequest requestWithURL:[gallery fullURL]
                                                               cachePolicy:NSURLRequestReloadIgnoringCacheData
                                                           timeoutInterval:60.0];
     [theRequest setValue:@"iPhotoToGallery" forHTTPHeaderField:@"User-Agent"];
@@ -320,12 +320,12 @@
 	 * reworking of the upload loop (below) than I have time or understanding to create.
 	 */
 	NSString *requestkey = [gallery requestkey];
-	NSLog(@"addItemSynchronously : album url=%@, requestkey=%@", fullURL,  requestkey);
+	NSLog(@"addItemSynchronously: album url=%@, requestkey=%@", fullURL,  requestkey);
 
 	CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("X-Gallery-Request-Method"), CFSTR("post"));
 	CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("X-Gallery-Request-Key"), (CFStringRef)[NSString stringWithFormat:@"%@", requestkey]);
     
-    NSString *boundary = @"--------iPhotoToGallery012nklfad9s0an3flakn3lkghkdshlafk3ln2lghroqyoi-----";
+    NSString *boundary = @"--------SCiPhotoToGallery012nklfad9s0an3flakn3lkghkdshlafk3ln2lghroqyoi-----";
     // the actual boundary lines can to start with an extra 2 hyphens, so we'll make a string to hold that too
     NSString *boundaryNL = [[@"--" stringByAppendingString:boundary] stringByAppendingString:@"\r\n"];
     NSData *boundaryData = [NSData dataWithData:[boundaryNL dataUsingEncoding:NSASCIIStringEncoding]];
@@ -393,7 +393,7 @@
             CFIndex bytesRead = CFReadStreamRead(readStream, buf, BUFSIZE);
             if (bytesRead < 0) {
                 // uh-oh - this returns without releasing our CF objects
-                return ZW_GALLERY_UNKNOWN_ERROR;
+                return SCZW_GALLERY_UNKNOWN_ERROR;
             } else if (bytesRead == 0) {
                 done = YES;
             } else {
@@ -419,18 +419,18 @@
     CFRelease(readStream);
     
     if (cancelled)
-        return ZW_GALLERY_OPERATION_DID_CANCEL;
+        return SCZW_GALLERY_OPERATION_DID_CANCEL;
     
     NSDictionary *galleryResponse = [[self gallery] parseResponseData:data];
     if (galleryResponse == nil) {
-        return ZW_GALLERY_PROTOCOL_ERROR;
+        return SCZW_GALLERY_PROTOCOL_ERROR;
     }
     
-    ZWGalleryRemoteStatusCode status = (ZWGalleryRemoteStatusCode)[[galleryResponse objectForKey:@"statusCode"] intValue];
+    SCZWGalleryRemoteStatusCode status = (SCZWGalleryRemoteStatusCode)[[galleryResponse objectForKey:@"statusCode"] intValue];
     
     [items addObject:item];
     
-	NSLog(@"addItemSynchronously : photo added url=%@", galleryResponse);
+	NSLog(@"addItemSynchronously: photo added url=%@", galleryResponse);
 
     return status;
 }

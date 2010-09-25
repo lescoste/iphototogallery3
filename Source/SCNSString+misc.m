@@ -28,7 +28,7 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "NSString+misc.h"
+#import "SCNSString+misc.h"
 
 @implementation NSString(URLEscaping)
 

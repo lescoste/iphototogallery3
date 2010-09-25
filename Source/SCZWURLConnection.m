@@ -28,40 +28,96 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "NSView+Fading.h"
+#import "SCZWURLConnection.h"
 
 
-@implementation NSView (Fading)
+@implementation SCZWURLConnection
 
-- (void)setHiddenWithFade:(BOOL)hidden
+#pragma mark Object Life Cycle
+
++ (SCZWURLConnection *)connectionWithRequest:(NSURLRequest *)request
 {
-    if (hidden == [self isHidden])
-        return;
-    
-    Class viewAnimationClass = NSClassFromString(@"NSViewAnimation");
-    if (viewAnimationClass) {
-        NSString *effect = NSViewAnimationFadeInEffect;
-        if (hidden)
-            effect = NSViewAnimationFadeOutEffect;
-        
-        NSViewAnimation *viewAnimation = [[viewAnimationClass alloc] initWithViewAnimations:
-            [NSArray arrayWithObject:
-                [NSDictionary dictionaryWithObjectsAndKeys:
-                    self, NSViewAnimationTargetKey,
-                    effect, NSViewAnimationEffectKey,
-                    nil]]];
-        [viewAnimation setAnimationCurve:NSAnimationEaseInOut];
-        [viewAnimation setAnimationBlockingMode:NSAnimationBlocking];
-        [viewAnimation setDuration:0.35];
-        [viewAnimation startAnimation];
-        
-        [self setHidden:hidden];
-    }
-    else {
-        // pre-tiger
-        [self setHidden:hidden];
+    return [[[self alloc] initWithRequest:request] autorelease];
+}
+
+- (id)initWithRequest:(NSURLRequest *)request
+{
+    if (self = [super initWithRequest:request delegate:self]) {
+        running = YES;
     }
     
+    return self;
+}
+
+- (void)dealloc
+{
+    [data release];
+    [response release];
+    [error release];
+    [super dealloc];
+}
+
+#pragma mark NSURLConnection
+
+- (void)cancel
+{
+    cancelled = YES;
+    [super cancel];
+    running = NO;
+    // TODO: figure out how to receive myself from the freaking run loop here
+}
+
+#pragma mark Accessors
+
+- (BOOL)isRunning
+{
+    return running;
+}
+
+- (NSData *)data
+{
+    return data;
+}
+
+- (NSError *)error
+{
+    return error;
+}
+
+- (NSURLResponse *)response
+{
+    return response;
+}
+
+- (BOOL)isCancelled
+{
+    return cancelled;
+}
+
+#pragma mark NSURLConnection Delegate
+
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)aResponse
+{
+    response = [aResponse retain];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)someData
+{
+    if (data == nil) 
+        data = [[NSMutableData alloc] init];
+    
+    [data appendData:someData];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)anError
+{
+    running = NO;
+    error = [anError retain];
+}
+
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    running = NO;
 }
 
 @end

@@ -1,6 +1,6 @@
 /*-*- Mode: ObjC; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4  -*-*/
 /*
- * InterThreadMessaging -- InterThreadMessaging.h
+ * SCInterThreadMessaging -- SCInterThreadMessaging.h
  * Created by toby on Tue Jun 19 2001.
  *
  * A low-cost-but-not-quite-as-general alternative to D.O.
@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface NSThread (InterThreadMessaging)
+@interface NSThread (SCInterThreadMessaging)
 
 /* The inter-thread messaging category methods use NSPorts to deliver messages
    between threads.  In order to receive an inter-thread message, the receiver
@@ -54,7 +54,7 @@
    allocated in.  (In general, you don't need to worry about simple/immutable
    objects, such as NSString, NSData, etc.) */
 
-@interface NSObject (InterThreadMessaging)
+@interface NSObject (SCInterThreadMessaging)
 
 - (void) performSelector:(SEL)selector
          inThread:(NSThread *)thread;	// before date [NSDate distantFuture]
@@ -114,7 +114,7 @@
    don't need to worry about simple/immutable objects, such as NSString,
    NSData, etc.) */
 
-@interface NSNotificationCenter (InterThreadMessaging)
+@interface NSNotificationCenter (SCInterThreadMessaging)
 
 - (void) postNotification:(NSNotification *)notification
          inThread:(NSThread *)thread;	// before date [NSDate distantFuture]

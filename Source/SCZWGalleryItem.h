@@ -27,13 +27,51 @@
 //  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+//  
+//  This class isn't really needed at all. It doesn't do anything that an NSDictionary couldn't
+//  do just as well.
+//
 
 #import <Foundation/Foundation.h>
 
-@interface ImageResizer : NSObject {
+@class SCZWGalleryAlbum;
 
+@interface SCZWGalleryItem : NSObject {
+    NSData* data;
+    NSString* caption;
+    NSString* description;
+    NSString* filename;
+    NSString* imageType;
+    NSArray* keywords;
+	int rating;
+    SCZWGalleryAlbum* album;
 }
 
-+ (NSData*) getScaledImageFromData:(NSData*)data toSize:(NSSize)size;
+- (id)initWithAlbum:(SCZWGalleryAlbum*)newAlbum;
++ (SCZWGalleryItem*)itemWithAlbum:(SCZWGalleryAlbum*)newAlbum;
+
+- (void)setData:(NSData*)newData;
+- (NSData*)data;
+
+- (void)setCaption:(NSString*)newCaption;
+- (NSString*)caption;
+
+- (void)setDescription:(NSString*)newDescription;
+- (NSString*)description;
+
+- (void)setFilename:(NSString*)newFilename;
+- (NSString*)filename;
+
+- (void)setImageType:(NSString*)newImageType;
+- (NSString*)imageType;
+
+- (void)setKeywords:(NSArray*)newKeywords;
+- (NSArray*)keywords;
+
+- (void)setRating:(int)newRating;
+- (int)rating;
+
+
+- (SCZWGalleryAlbum*)album;
 
 @end

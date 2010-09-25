@@ -1,14 +1,14 @@
 /*-*- Mode: ObjC; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4  -*-*/
 /*
- * InterThreadMessaging -- InterThreadMessaging.m
+ * SCInterThreadMessaging -- SCInterThreadMessaging.m
  * Created by toby on Tue Jun 19 2001.
  *
- * NOTE: this is a modified InterThreadMessaging that schedules on the run loop for the modal mode along with default
+ * NOTE: this is a modified SCInterThreadMessaging that schedules on the run loop for the modal mode along with default
  *
  */
 
 #import <pthread.h>
-#import "InterThreadMessaging.h"
+#import "SCInterThreadMessaging.h"
 
 /* There are four types of messages that can be posted between threads: a
    notification to be posted to the default notification centre and selectors
@@ -58,7 +58,7 @@ struct InterThreadMessage
 static NSMapTable *pThreadMessagePorts = NULL;
 static pthread_mutex_t pGate = { 0 };
 
-@interface InterThreadManager : NSObject
+@interface SCInterThreadManager : NSObject
 + (void) threadDied:(NSNotification *)notification;
 + (void) handlePortMessage:(NSPortMessage *)msg;
 @end
@@ -77,8 +77,8 @@ createMessagePortForThread (NSThread *thread, NSRunLoop *runLoop)
     port = NSMapGet(pThreadMessagePorts, thread);
     if (nil == port) {
         port = [[NSPort allocWithZone:NULL] init];
-        [port setDelegate:[InterThreadManager class]];
-        [port scheduleInRunLoop:runLoop forMode:NSModalPanelRunLoopMode];  // ZWw: I need this for iPhotoToGallery usage
+        [port setDelegate:[SCInterThreadManager class]];
+        [port scheduleInRunLoop:runLoop forMode:NSModalPanelRunLoopMode];  // SCZWw: I need this for SCiPhotoToGallery usage
         [port scheduleInRunLoop:runLoop forMode:NSDefaultRunLoopMode];
         NSMapInsertKnownAbsent(pThreadMessagePorts, thread, port);
 
@@ -123,7 +123,7 @@ removeMessagePortForThread (NSThread *thread, NSRunLoop *runLoop)
     
     port = (NSPort *) NSMapGet(pThreadMessagePorts, thread);
     if (nil != port) {
-        [port removeFromRunLoop:runLoop forMode:NSModalPanelRunLoopMode];    // ZWw: I added it, so I need to remove it
+        [port removeFromRunLoop:runLoop forMode:NSModalPanelRunLoopMode];    // SCZWw: I added it, so I need to remove it
         [port removeFromRunLoop:runLoop forMode:NSDefaultRunLoopMode];
         NSMapRemove(pThreadMessagePorts, thread);
     }
@@ -134,12 +134,12 @@ removeMessagePortForThread (NSThread *thread, NSRunLoop *runLoop)
 
 
 
-@implementation NSThread (InterThreadMessaging)
+@implementation NSThread (SCInterThreadMessaging)
 
 + (void) prepareForInterThreadMessages
 {
     /* Force the class initialization. */
-    [InterThreadManager class];
+    [SCInterThreadManager class];
 
     createMessagePortForThread([NSThread currentThread],
                                [NSRunLoop currentRunLoop]);
@@ -154,7 +154,7 @@ removeMessagePortForThread (NSThread *thread, NSRunLoop *runLoop)
 - (NSRunLoop *) runLoop;
 @end
 
-@implementation InterThreadManager
+@implementation SCInterThreadManager
 
 + (void) initialize
 {
@@ -316,7 +316,7 @@ postNotification (NSNotification *notification, NSThread *thread,
 
 
 
-@implementation NSObject (InterThreadMessaging)
+@implementation NSObject (SCInterThreadMessaging)
 
 - (void) performSelector:(SEL)selector
          inThread:(NSThread *)thread
@@ -373,7 +373,7 @@ postNotification (NSNotification *notification, NSThread *thread,
 
 
 
-@implementation NSNotificationCenter (InterThreadMessaging)
+@implementation NSNotificationCenter (SCInterThreadMessaging)
 
 - (void) postNotification:(NSNotification *)notification
          inThread:(NSThread *)thread

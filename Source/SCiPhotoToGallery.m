@@ -28,26 +28,26 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "iPhotoToGallery.h"
-#import "ImageResizer.h"
-#import "ZWAlbumNameFormatter.h"
-#import "InterThreadMessaging.h"
-#import "NSView+Fading.h"
-#import "ZWGallery.h"
-#import "ZWGalleryAlbum.h"
-#import "ZWGalleryItem.h"
+#import "SCiPhotoToGallery.h"
+#import "SCImageResizer.h"
+#import "SCZWAlbumNameFormatter.h"
+#import "SCInterThreadMessaging.h"
+#import "SCNSView+Fading.h"
+#import "SCZWGallery.h"
+#import "SCZWGalleryAlbum.h"
+#import "SCZWGalleryItem.h"
 
 #include <Security/Security.h>
 #include <CoreFoundation/CoreFoundation.h>
 
-@interface iPhotoToGallery (PrivateStuff)
+@interface SCiPhotoToGallery (PrivateStuff)
 
-- (int)addAlbumAndChildren:(ZWGalleryAlbum *)album toMenu:(NSMenu *)menu indentLevel:(int)level addSub:(BOOL)addSub;
+- (int)addAlbumAndChildren:(SCZWGalleryAlbum *)album toMenu:(NSMenu *)menu indentLevel:(int)level addSub:(BOOL)addSub;
 - (void)openAddGalleryPanel;
 
 @end
 
-@implementation iPhotoToGallery
+@implementation SCiPhotoToGallery
 
 static int loggingIn;
 
@@ -58,7 +58,33 @@ static int loggingIn;
     
     exportManager = exportMgr; // weak reference - we don't expect our ExportManager to disappear on us
 
-  
+	/*
+	 GR_STAT_SUCCESS = 0,                       // The command the client sent in the request completed successfully. The data (if any) in the response should be considered valid.    
+	 GR_STAT_PROTO_MAJ_VER_INVAL = 101,         // The protocol major version the client is using is not supported.
+	 GR_STAT_PROTO_MIN_VER_INVAL = 102,         // The protocol minor version the client is using is not supported.    
+	 GR_STAT_PROTO_VER_FMT_INVAL = 103,         // The format of the protocol version string the client sent in the request is invalid.    
+	 GR_STAT_PROTO_VER_MISSING = 104,           // The request did not contain the required protocol_version key.
+	 GR_STAT_PASSWD_WRONG = 201,                // The password and/or username the client send in the request is invalid.
+	 GR_STAT_LOGIN_MISSING = 202,               // The client used the login command in the request but failed to include either the username or password (or both) in the request.
+	 GR_STAT_UNKNOWN_CMD = 301,                 // The value of the cmd key is not valid.    
+	 GR_STAT_NO_ADD_PERMISSION = 401,           // The user does not have permission to add an item to the gallery.
+	 GR_STAT_NO_FILENAME = 402,                 // No filename was specified.
+	 GR_STAT_UPLOAD_PHOTO_FAIL = 403,           // The file was received, but could not be processed or added to the album.
+	 GR_STAT_NO_WRITE_PERMISSION = 404,         // No write permission to destination album.
+	 GR_STAT_NO_CREATE_ALBUM_PERMISSION = 501,  // A new album could not be created because the user does not have permission to do so.
+	 GR_STAT_CREATE_ALBUM_FAILED = 502,         // A new album could not be created, for a different reason (name conflict).
+	 SCZW_GALLERY_COULD_NOT_CONNECT = 1000,       // Could not connect to the gallery
+	 SCZW_GALLERY_PROTOCOL_ERROR = 1001,          // Something went wrong with the protocol (no status sent, couldn't decode, etc)
+	 SCZW_GALLERY_UNKNOWN_ERROR = 1002,
+	 SCZW_GALLERY_OPERATION_DID_CANCEL = 1003     // The user cancelled whatever operation was happening
+	 */
+	errorCodesDesc = [[NSMutableDictionary alloc] init];
+	[errorCodesDesc setObject:@"Could not connect to the gallery" forKey:@"1000"];
+	[errorCodesDesc setObject:@"Protocol error" forKey:@"1001"];
+	[errorCodesDesc setObject:@"Unknown error" forKey:@"1002"];
+	[errorCodesDesc setObject:@"User canceled action" forKey:@"1003"];
+	[errorCodesDesc setObject:@"Password and/or username is invalid" forKey:@"201"];
+
     preferences = [[NSMutableDictionary alloc] init];
     NSDictionary *userDefaultsPreferences = [[NSUserDefaults standardUserDefaults] persistentDomainForName:[[NSBundle bundleForClass:[self class]] bundleIdentifier]];
     if (userDefaultsPreferences) 
@@ -71,7 +97,7 @@ static int loggingIn;
         NSEnumerator *each = [galleryDictionaries objectEnumerator];
         NSDictionary *galleryDictionary;
         while (galleryDictionary = [each nextObject]) {
-            ZWGallery *gallery = [ZWGallery galleryWithDictionary:galleryDictionary];
+            SCZWGallery *gallery = [SCZWGallery galleryWithDictionary:galleryDictionary];
             if (gallery) 
                 [galleries addObject:gallery];
         }
@@ -81,6 +107,7 @@ static int loggingIn;
 }
 
 - (void)dealloc {
+    [errorCodesDesc release];
     [preferences release];
     [galleries release];
     [super dealloc];
@@ -300,13 +327,13 @@ static int loggingIn;
 }
 
 - (IBAction)clickCreateNewAlbum:(id)sender {
-    // set the ZWAlbumNameFormatter on the album name field
+    // set the SCZWAlbumNameFormatter on the album name field
     if (![albumSettingsNameField formatter]) {
-        ZWAlbumNameFormatter *nameFormatter = [[ZWAlbumNameFormatter alloc] init];
+        SCZWAlbumNameFormatter *nameFormatter = [[SCZWAlbumNameFormatter alloc] init];
         [albumSettingsNameField setFormatter:nameFormatter];
         [nameFormatter release];
     }
-    
+	
     // Get defaults for the Title and Description fields (thx Nathaniel Gray)
     NSString *currAlbum, *currComments = nil;
     if ([exportManager respondsToSelector:@selector(albumName)]) {
@@ -339,7 +366,7 @@ static int loggingIn;
     
 	int count = 0;
 	NSEnumerator *enumerator = [[currentGallery albums] objectEnumerator];
-	ZWGalleryAlbum *album;
+	SCZWGalleryAlbum *album;
 	while (album = [enumerator nextObject]) {
 		if ([album canAddSubToAlbumOrSub] && ![album parent]) 
 			count += [self addAlbumAndChildren:album toMenu:[albumSettingsNestedInPopup menu] indentLevel:0 addSub:YES];
@@ -353,7 +380,7 @@ static int loggingIn;
     // start the "nested in" popup on the currently selected gallery, if possible
     // This is only relevant for G2 - for G1 we will default to an album at root level
     if ([currentGallery isGalleryV2]) {
-        ZWGalleryAlbum *selectedAlbum = [[mainAddToAlbumPopup selectedItem] representedObject];
+        SCZWGalleryAlbum *selectedAlbum = [[mainAddToAlbumPopup selectedItem] representedObject];
         int idx = [albumSettingsNestedInPopup indexOfItemWithRepresentedObject:selectedAlbum];
         if (idx >= 0 && [[albumSettingsNestedInPopup itemAtIndex:idx] isEnabled]) 
             [albumSettingsNestedInPopup selectItemAtIndex:idx];
@@ -448,7 +475,7 @@ static int loggingIn;
         return;
     }
     
-    ZWGallery *gallery = [ZWGallery galleryWithURL:url username:username];
+    SCZWGallery *gallery = [SCZWGallery galleryWithURL:url username:username];
     if (gallery) {
         [galleries addObject:gallery];
         [self savePreferences];
@@ -520,7 +547,7 @@ static int loggingIn;
 }
 
 - (IBAction)clickGalleryListRemove:(id)sender {
-    ZWGallery *gallery = [galleries objectAtIndex:[galleryListTable selectedRow]];
+    SCZWGallery *gallery = [galleries objectAtIndex:[galleryListTable selectedRow]];
     NSString *username = [gallery username];
     NSString *host = [[gallery url] host];
     NSString *path = [[gallery url] path];
@@ -773,7 +800,7 @@ static int loggingIn;
 // This is a little helper method that populates those album menus. You hand it an album and it recursively adds it
 // and sub-albums, increasing indentation as you get further down the tree. The confusingly-named "addSub" lets you specify
 // whether or not to only add sub-albums that the user has permission to create a new album in. Or something like that. :)
-- (int)addAlbumAndChildren:(ZWGalleryAlbum *)album toMenu:(NSMenu *)menu indentLevel:(int)level addSub:(BOOL)addSub
+- (int)addAlbumAndChildren:(SCZWGalleryAlbum *)album toMenu:(NSMenu *)menu indentLevel:(int)level addSub:(BOOL)addSub
 {
 	int count = 0;
 
@@ -790,7 +817,7 @@ static int loggingIn;
 	count++;
 	
 	NSEnumerator *each = [[album children] objectEnumerator];
-	ZWGalleryAlbum *child;
+	SCZWGalleryAlbum *child;
 	while (child = [each nextObject]) {
 		if (!addSub && [child canAddItemToAlbumOrSub]) 
 			count += [self addAlbumAndChildren:child toMenu:menu indentLevel:(level + 1) addSub:addSub];
@@ -812,7 +839,7 @@ static int loggingIn;
     [mainAddToAlbumPopup setAutoenablesItems:NO];
     
 	NSEnumerator *enumerator = [albums objectEnumerator];
-	ZWGalleryAlbum *album;
+	SCZWGalleryAlbum *album;
 	while (album = [enumerator nextObject]) {
 		if ([album canAddItemToAlbumOrSub] && ![album parent]) {
 			anyAlbums += [self addAlbumAndChildren:album toMenu:[mainAddToAlbumPopup menu] indentLevel:0 addSub:NO];
@@ -954,12 +981,12 @@ static int loggingIn;
     [NSThread prepareForInterThreadMessages];
     
     // this is the thread that uploads all the images
-    ZWGalleryAlbum *album = [[mainAddToAlbumPopup selectedItem] representedObject];
+    SCZWGalleryAlbum *album = [[mainAddToAlbumPopup selectedItem] representedObject];
     if (album == nil) 
         return;
     
     currentAlbum = album;
-    ZWGalleryRemoteStatusCode status = 0;
+    SCZWGalleryRemoteStatusCode status = 0;
     
     int imageNum;
     BOOL cancel = NO;
@@ -969,8 +996,13 @@ static int loggingIn;
         
             NSString *imagePath = [exportManager imagePathAtIndex:imageNum];
             NSDictionary *imageDict = [self exportManagerImageDictionaryAtIndex:imageNum];
-            
-            ZWGalleryItem *item = [ZWGalleryItem itemWithAlbum:album];
+            NSArray *imageKeywords = [exportManager imageKeywordsAtIndex:imageNum];
+            int imageRating = [exportManager imageRatingAtIndex:imageNum];
+			
+			NSLog ( @"addItemsThread i= %d , image dict = %@", imageNum, imageDict );
+
+			
+            SCZWGalleryItem *item = [SCZWGalleryItem itemWithAlbum:album];
             
             // add the filename
             [item setFilename:[imagePath lastPathComponent]];
@@ -1007,7 +1039,7 @@ static int loggingIn;
                     nil];
                 [self performSelectorOnMainThread:@selector(updateProgress:) withObject:progressInfo waitUntilDone:NO modes:[NSArray arrayWithObjects:NSDefaultRunLoopMode, NSModalPanelRunLoopMode, nil]];
                 
-                NSData *scaledData = [ImageResizer getScaledImageFromData:imageData toSize:NSMakeSize([mainScaleImagesWidthField intValue], [mainScaleImagesHeightField intValue])];
+                NSData *scaledData = [SCImageResizer getScaledImageFromData:imageData toSize:NSMakeSize([mainScaleImagesWidthField intValue], [mainScaleImagesHeightField intValue])];
                 [item setData:scaledData];
                 currentImageSize = [scaledData length];
             } else {
@@ -1028,7 +1060,7 @@ static int loggingIn;
 
             if (status != GR_STAT_SUCCESS) {
                 switch (status) {
-                    case ZW_GALLERY_OPERATION_DID_CANCEL:
+                    case SCZW_GALLERY_OPERATION_DID_CANCEL:
                         if (imageNum == 1) 
                             [mainStatusString setStringValue:[NSString stringWithFormat:@"Export cancelled after %i photo", imageNum]];
                         else
@@ -1055,8 +1087,8 @@ static int loggingIn;
     if (status == GR_STAT_SUCCESS) {
         if ([mainOpenBrowserSwitch state] == NSOnState) {
 			NSMutableArray  * parentsArray = [[NSMutableArray alloc] init]; 
-			ZWGalleryAlbum *parent;
-			ZWGalleryAlbum *acurrentAlbum = album;
+			SCZWGalleryAlbum *parent;
+			SCZWGalleryAlbum *acurrentAlbum = album;
 			// add first name : album name
             NSString * parentName = [acurrentAlbum name];
 			[parentsArray addObject:parentName];
@@ -1100,9 +1132,9 @@ static int loggingIn;
 }
 
 #pragma mark -
-#pragma mark ZWGalleryDelegate
+#pragma mark SCZWGalleryDelegate
 
-- (void)galleryDidLogin:(ZWGallery *)sender
+- (void)galleryDidLogin:(SCZWGallery *)sender
 {
     [mainStatusString setStringValue:@"Fetching albums..."];
     [currentGallery getAlbums];
@@ -1111,28 +1143,28 @@ static int loggingIn;
     loggingIn = 0;
 }
 
-- (void)gallery:(ZWGallery *)sender loginFailedWithCode:(NSNumber *)statusNumber
+- (void)gallery:(SCZWGallery *)sender loginFailedWithCode:(NSNumber *)statusNumber
 {
     [self hideCancelButton];
     
-    ZWGalleryRemoteStatusCode status = [statusNumber intValue];
+    SCZWGalleryRemoteStatusCode status = [statusNumber intValue];
     if (status == GR_STAT_PASSWD_WRONG) {
         [mainProgressIndicator stopAnimation:self];
         [mainStatusString setStringValue:@"Bad username/password"];
         [self setLoggedInOut];
         // TODO: Pop up password dialog here.
     }
-    else if (status == ZW_GALLERY_COULD_NOT_CONNECT) {
+    else if (status == SCZW_GALLERY_COULD_NOT_CONNECT) {
         [mainProgressIndicator stopAnimation:self];
         [mainStatusString setStringValue:@"Could not connect to the gallery"];
         [self setLoggedInOut];
     }
-    else if (status == ZW_GALLERY_PROTOCOL_ERROR) {
+    else if (status == SCZW_GALLERY_PROTOCOL_ERROR) {
         [mainProgressIndicator stopAnimation:self];
         [mainStatusString setStringValue:@"No gallery found at URL"];
         [self setLoggedInOut];
     }
-    else if (status == ZW_GALLERY_OPERATION_DID_CANCEL) {
+    else if (status == SCZW_GALLERY_OPERATION_DID_CANCEL) {
         [mainProgressIndicator stopAnimation:self];
         [mainStatusString setStringValue:@"Login cancelled"];
         [self setLoggedInOut];
@@ -1147,7 +1179,7 @@ static int loggingIn;
     loggingIn = 0;    
 }
 
-- (void)galleryDidGetAlbums:(ZWGallery *)sender
+- (void)galleryDidGetAlbums:(SCZWGallery *)sender
 {
     [self hideCancelButton];
     
@@ -1175,16 +1207,18 @@ static int loggingIn;
     }
 }
 
-- (void)gallery:(ZWGallery *)sender getAlbumsFailedWithCode:(NSNumber *)statusNumber
+- (void)gallery:(SCZWGallery *)sender getAlbumsFailedWithCode:(NSNumber *)statusNumber
 {
     [self hideCancelButton];
     
-    ZWGalleryRemoteStatusCode status = [statusNumber intValue];
+    SCZWGalleryRemoteStatusCode status = [statusNumber intValue];
 
     [mainProgressIndicator stopAnimation:self];
     
     // TODO: be nicer with errors here
-    [mainStatusString setStringValue:[NSString stringWithFormat:@"Unknown error: %i", (int)status]];
+	
+    [mainStatusString setStringValue:[NSString stringWithFormat:@"Unknown error: %i : %@", (int)status,
+						[errorCodesDesc objectForKey:[NSString stringWithFormat:@"%i", (int)status]]]];
 
     [self updateAlbumPopupMenu];
     [self setLoggedInOut];
@@ -1192,7 +1226,7 @@ static int loggingIn;
     selectLastCreatedAlbumWhenDoneFetching = NO;
 }
 
-- (void)galleryDidCreateAlbum:(ZWGallery *)sender
+- (void)galleryDidCreateAlbum:(SCZWGallery *)sender
 {
     [mainStatusString setStringValue:@"Fetching albums..."];
     [currentGallery getAlbums];
@@ -1200,11 +1234,11 @@ static int loggingIn;
     selectLastCreatedAlbumWhenDoneFetching = YES;
 }
 
-- (void)gallery:(ZWGallery *)sender createAlbumFailedWithCode:(NSNumber *)statusNumber
+- (void)gallery:(SCZWGallery *)sender createAlbumFailedWithCode:(NSNumber *)statusNumber
 {
-    ZWGalleryRemoteStatusCode status = [statusNumber intValue];
+    SCZWGalleryRemoteStatusCode status = [statusNumber intValue];
 
-    if (status == ZW_GALLERY_COULD_NOT_CONNECT) {
+    if (status == SCZW_GALLERY_COULD_NOT_CONNECT) {
         [mainProgressIndicator stopAnimation:self];
         [mainStatusString setStringValue:@"Could not connect to the gallery"];
     } 
@@ -1214,15 +1248,15 @@ static int loggingIn;
     }    
 }
 
-- (void)galleryDidAddItems:(ZWGalleryRemoteStatusCode)status
+- (void)galleryDidAddItems:(SCZWGalleryRemoteStatusCode)status
 {
     
 }
 
 #pragma mark -
-#pragma mark ZWGalleryAlbumDelegate
+#pragma mark SCZWGalleryAlbumDelegate
 
-- (void)album:(ZWGalleryAlbum *)sender item:(ZWGalleryItem *)item updateBytesSent:(unsigned long)bytes
+- (void)album:(SCZWGalleryAlbum *)sender item:(SCZWGalleryItem *)item updateBytesSent:(unsigned long)bytes
 {
     currentItemProgress = bytes;
     
@@ -1242,7 +1276,7 @@ static int loggingIn;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex {
-    ZWGallery *gallery = [galleries objectAtIndex:rowIndex];
+    SCZWGallery *gallery = [galleries objectAtIndex:rowIndex];
     return [gallery valueForKey:[aTableColumn identifier]];
 }
 

@@ -28,40 +28,40 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ZWAlbumNameFormatter.h"
+#import "SCNSView+Fading.h"
 
-NSString *ZWInvalidAlbumNameCharacters = @"\\/*?\"'&<>|.+# ";
 
-@implementation ZWAlbumNameFormatter
+@implementation NSView (Fading)
 
-- (NSString*)stringForObjectValue:(id)obj
+- (void)setHiddenWithFade:(BOOL)hidden
 {
-    return obj;
-}
-
-- (BOOL)getObjectValue:(id *)obj
-             forString:(NSString *)string
-      errorDescription:(NSString **)errorString
-{
-    *obj = string;
-    return YES;
-}
-
-- (BOOL)isPartialStringValid:(NSString *)partial
-            newEditingString:(NSString **)newString
-            errorDescription:(NSString **)errorString
-{
-    if ([partial length] == 0) 
-        return YES;
+    if (hidden == [self isHidden])
+        return;
     
-    NSRange found = [partial rangeOfCharacterFromSet:
-        [NSCharacterSet characterSetWithCharactersInString:ZWInvalidAlbumNameCharacters]];
-    if (found.location != NSNotFound) {
-        *errorString = @"Invalid character";
-        return NO;
+    Class viewAnimationClass = NSClassFromString(@"NSViewAnimation");
+    if (viewAnimationClass) {
+        NSString *effect = NSViewAnimationFadeInEffect;
+        if (hidden)
+            effect = NSViewAnimationFadeOutEffect;
+        
+        NSViewAnimation *viewAnimation = [[viewAnimationClass alloc] initWithViewAnimations:
+            [NSArray arrayWithObject:
+                [NSDictionary dictionaryWithObjectsAndKeys:
+                    self, NSViewAnimationTargetKey,
+                    effect, NSViewAnimationEffectKey,
+                    nil]]];
+        [viewAnimation setAnimationCurve:NSAnimationEaseInOut];
+        [viewAnimation setAnimationBlockingMode:NSAnimationBlocking];
+        [viewAnimation setDuration:0.35];
+        [viewAnimation startAnimation];
+        
+        [self setHidden:hidden];
+    }
+    else {
+        // pre-tiger
+        [self setHidden:hidden];
     }
     
-    return YES;
 }
 
 @end

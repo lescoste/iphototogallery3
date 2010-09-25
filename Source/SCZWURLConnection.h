@@ -31,7 +31,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface ZWURLConnection : NSURLConnection {
+@interface SCZWURLConnection : NSURLConnection {
     NSMutableData *data;
     NSURLResponse *response;
     NSError *error;
@@ -39,7 +39,7 @@
     BOOL running;
 }
 
-+ (ZWURLConnection *)connectionWithRequest:(NSURLRequest *)request;
++ (SCZWURLConnection *)connectionWithRequest:(NSURLRequest *)request;
 - (id)initWithRequest:(NSURLRequest *)request;
 
 - (NSData *)data;

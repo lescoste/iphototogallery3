@@ -31,7 +31,7 @@
 #import <Cocoa/Cocoa.h>
 #import "iPhotoExporter.h"
 
-@class ZWGallery, ZWGalleryAlbum, ZWGalleryItem;
+@class SCZWGallery, SCZWGalleryAlbum, SCZWGalleryItem;
 
 // This protocol description was class-dump'd out of iPhoto, and we must implement it.
 @protocol ExportPluginProtocol
@@ -68,7 +68,7 @@ struct progressStruct {
     int unknown;
 };
 
-@interface iPhotoToGallery : NSObject <ExportPluginProtocol>
+@interface SCiPhotoToGallery : NSObject <ExportPluginProtocol>
 {
     // Everything is all in one nib. Why yes, this was my first ever Cocoa project, thank you very much.
     
@@ -132,10 +132,11 @@ struct progressStruct {
     // the export manager handed to us by iPhoto
     id exportManager;
     
+	NSMutableDictionary *errorCodesDesc;
     NSMutableDictionary *preferences;    
     NSMutableArray *galleries;
     NSString *lastGallerySelected;
-    ZWGallery *currentGallery;
+    SCZWGallery *currentGallery;
     BOOL selectLastCreatedAlbumWhenDoneFetching;
     int indexOfLastGallery;
     NSTimer *showCancelTimer;
@@ -144,7 +145,7 @@ struct progressStruct {
     unsigned long currentImageSize;
     unsigned long currentImageIndex;
     
-    ZWGalleryAlbum *currentAlbum;
+    SCZWGalleryAlbum *currentAlbum;
     
     int heightOfAdvancedBox;
 }

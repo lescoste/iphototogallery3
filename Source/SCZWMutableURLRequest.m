@@ -1,15 +1,15 @@
 //
-//  ZWMutableURLRequest.m
+//  SCZWMutableURLRequest.m
 //  iPhotoToGallery
 //
 //  Created by Zach Wily on 7/1/05.
 //  Copyright 2005 __MyCompanyName__. All rights reserved.
 //
 
-#import "ZWMutableURLRequest.h"
+#import "SCZWMutableURLRequest.h"
 
 
-@implementation ZWMutableURLRequest
+@implementation SCZWMutableURLRequest
 
 - (id)init
 {
@@ -33,12 +33,12 @@
     return NULL;
 }
 
-- (void)setVariation:(ZWURLRequestPOSTVariation)newVariation
+- (void)setVariation:(SCZWURLRequestPOSTVariation)newVariation
 {
     variation = newVariation;
 }
 
-- (ZWURLRequestPOSTVariation)variation
+- (SCZWURLRequestPOSTVariation)variation
 {
     return variation;
 }

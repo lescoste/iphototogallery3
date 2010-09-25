@@ -8,71 +8,138 @@
 
 #import <Foundation/Foundation.h>
 
+/*
+ File:       ExportImageProtocol.h
+ 
+ Contains:   iPhoto Plug-ins interfaces: Protocol for image exporting
+ 
+ Version:    Technology: iPhoto
+ Release:    1.0
+ 
+ Copyright:  © 2002-2007 by Apple Inc. All rights reserved.
+ 
+ Bugs?:      For bug reports, consult the following page on
+ the World Wide Web:
+ 
+ http://developer.apple.com/bugreporter/
+ */
+
+typedef enum
+{
+	EQualityLow,
+	EQualityMed,
+	EQualityHigh,
+	EQualityMax
+} ExportQuality;
+
+typedef enum
+{
+	EMNone, // 0000
+	EMEXIF, // 0001
+	EMIPTC, // 0010
+	EMBoth  // 0011
+} ExportMetadata;
+
+typedef struct
+{
+	OSType			format;
+	ExportQuality	quality;
+	float			rotation;
+	unsigned		width;
+	unsigned		height;
+	ExportMetadata	metadata;
+} ImageExportOptions;
+
+//exif metadata access keys
+#define kIPExifDateDigitized @"DateDigitized"
+#define kIPExifCameraModel @"CameraModel"
+#define kIPExifShutter @"Shutter"
+#define kIPExifAperture @"Aperture"
+#define kIPExifMaxAperture @"MaxAperture"
+#define kIPExifExposureBias @"ExposureBias"
+#define kIPExifExposure @"Exposure"
+#define kIPExifExposureIndex @"ExposureIndex"
+#define kIPExifFocalLength @"FocalLength"
+#define kIPExifDistance @"Distance"
+#define kIPExifSensing @"Sensing"
+#define kIPExifLightSource @"LightSource"
+#define kIPExifFlash @"Flash"
+#define kIPExifMetering @"Metering"
+#define kIPExifBrightness @"Brightness"
+#define kIPExifISOSpeed @"ISOSpeed"
+
+//tiff metadata access keys
+#define kIPTiffImageWidth @"ImageWidth"
+#define kIPTiffImageHeight @"ImageHeight"
+#define kIPTiffOriginalDate @"OriginalDate"
+#define kIPTiffDigitizedDate @"DigitizedDate"
+#define kIPTiffFileName @"FileName"
+#define kIPTiffFileSize @"FileSize"
+#define kIPTiffModifiedDate @"ModifiedDate"
+#define kIPTiffImportedDate @"ImportedDate"
+#define kIPTiffCameraMaker @"CameraMaker"
+#define kIPTiffCameraModel @"CameraModel"
+#define kIPTiffSoftware @"Software"
+
 @protocol ExportImageProtocol
-- (struct _NSSize)lastThumbnailSize:(void *)fp12;
-- (struct _NSSize)lastImageSize:(void *)fp16;
-- (char)thumbnailer:(void *)fp16 createThumbnail:fp20 dest:fp24;
-- thumbnailerOutputExtension:(void *)fp12;
-- (void)setThumbnailer:(void *)fp12 outputExtension:fp16;
-- (unsigned int)thumbnailerOutputFormat:(void *)fp12;
-- (void)setThumbnailer:(void *)fp12 outputFormat:(unsigned int)fp16;
-- (float)thumbnailerRotation:(void *)fp12;
-- (void)setThumbnailer:(void *)fp12 rotation:(float)fp40;
-- (int)thumbnailerQuality:(void *)fp12;
-- (void)setThumbnailer:(void *)fp12 quality:(int)fp16;
-- (struct _NSSize)thumbnailerMaxBounds:(void *)fp12;
-- (void)setThumbnailer:(void *)fp16 maxBytes:(unsigned int)fp20 maxWidth:(unsigned int)fp24 maxHeight:(unsigned int)fp28;
-- (void)releaseThumbnailer:(void *)fp12;
-- (void *)autoreleaseThumbnailer:(void *)fp12;
-- (void *)retainThumbnailer:(void *)fp12;
-- (void *)createThumbnailer;
-- (struct OpaqueGrafPtr *)uncompressImage:fp12 size:(struct _NSSize)fp16 pixelFormat:(unsigned int)fp24 rotation:(float)fp40 colorProfile:(STR **)fp32;
-- (unsigned int)getImageFormatForExtension:fp12;
-- getExtensionForImageFormat:(unsigned int)fp12;
-- validFilename:fp12;
-- (char)ensurePermissions:(unsigned long)fp12 forPath:fp16;
-- stringByResolvingAliasesInPath:fp12;
-- pathContentOfAliasAtPath:fp12;
-- (char)isAliasFileAtPath:fp12;
-- (unsigned long long)sizeAtPath:fp12 count:(unsigned long *)fp16 physical:(char)fp20;
-- (unsigned long)countFilesFromArray:fp12 descend:(char)fp16;
-- (unsigned long)countFiles:fp12 descend:(char)fp16;
-- pathForFSRef:(struct FSRef *)fp12;
-- (char)getFSRef:(struct FSRef *)fp12 forPath:fp16 isDirectory:(char)fp20;
-- pathForFSSpec:fp12;
-- (char)makeFSSpec:fp12 spec:(struct FSSpec *)fp16;
-- makeUniqueFileNameWithTime:fp12;
-- makeUniqueFilePath:fp12 extension:fp16;
-- makeUniquePath:fp12;
-- uniqueSubPath:fp12 child:fp16;
-- (char)createDir:fp12;
-- (char)doesDirectoryExist:fp12;
-- (char)doesFileExist:fp12;
-- temporaryDirectory;
-- directoryPath;
-- (void)cancelExportBeforeBeginning;
-- (void)cancelExport;
-- (void)startExport;
-- (void)clickExport;
-- (void)disableControls;
+
+//------------------------------------------------------------------------------
+// Access to images
+//------------------------------------------------------------------------------
+- (unsigned)imageCount;
+- (NSSize)imageSizeAtIndex:(unsigned)index;
+- (OSType)imageFormatAtIndex:(unsigned)index;
+- (OSType)originalImageFormatAtIndex:(unsigned)index;
+- (BOOL)originalIsRawAtIndex:(unsigned)index;
+- (BOOL)originalIsMovieAtIndex:(unsigned)index;
+- (NSString *)imageTitleAtIndex:(unsigned)index;
+- (NSString *)imageCommentsAtIndex:(unsigned)index;
+- (float)imageRotationAtIndex:(unsigned)index;
+- (NSString *)imagePathAtIndex:(unsigned)index;
+- (NSString *)sourcePathAtIndex:(unsigned)index;
+- (NSString *)thumbnailPathAtIndex:(unsigned)index;
+- (NSString *)imageFileNameAtIndex:(unsigned)index;
+- (BOOL)imageIsEditedAtIndex:(unsigned)index;
+- (BOOL)imageIsPortraitAtIndex:(unsigned)index;
+- (float)imageAspectRatioAtIndex:(unsigned)index;
+- (unsigned long long)imageFileSizeAtIndex:(unsigned)index;
+- (NSDate *)imageDateAtIndex:(unsigned)index;
+- (int)imageRatingAtIndex:(unsigned)index;
+- (NSDictionary *)imageTiffPropertiesAtIndex:(unsigned)index;
+- (NSDictionary *)imageExifPropertiesAtIndex:(unsigned)index;
+- (NSArray *)imageKeywordsAtIndex:(unsigned)index;
+- (NSArray *)albumsOfImageAtIndex:(unsigned)index;
+
+- (NSString *)getExtensionForImageFormat:(OSType)format;
+- (OSType)getImageFormatForExtension:(NSString *)extension;
+
+//------------------------------------------------------------------------------
+// Access to albums
+//------------------------------------------------------------------------------
+- (unsigned)albumCount; //total number of albums
+- (NSString *)albumNameAtIndex:(unsigned)index; //name of album at index
+- (NSString *)albumMusicPathAtIndex:(unsigned)index;
+- (NSString *)albumCommentsAtIndex:(unsigned)index;
+- (unsigned)positionOfImageAtIndex:(unsigned)index inAlbum:(unsigned)album;
+
+//------------------------------------------------------------------------------
+// Access to export controller's GUI
+//------------------------------------------------------------------------------
+- (id)window;
 - (void)enableControls;
-- window;
-- (unsigned int)albumPositionOfImageAtIndex:(unsigned int)fp12;
-- (unsigned int)albumCount;
-- albumMusicPath;
-- albumName;
-- selectedAlbums;
-- (float)imageAspectRatioAtIndex:(unsigned int)fp12;
-- imageDictionaryAtIndex:(unsigned int)fp12;
-- thumbnailPathAtIndex:(unsigned int)fp12;
-- imagePathAtIndex:(unsigned int)fp12;
-- imageCaptionAtIndex:(unsigned int)fp12;
-- imageTitleAtIndex:(unsigned int)fp12; // added in iPhoto 7
-- imageCommentsAtIndex:(unsigned int)fp12; // added in iPhoto 5
-- (unsigned int)imageFormatAtIndex:(unsigned int)fp12;
-- (struct _NSSize)imageSizeAtIndex:(unsigned int)fp12;
-- (char)imageIsPortraitAtIndex:(unsigned int)fp16;
-- (unsigned int)imageCount;
+- (void)disableControls;
+
+- (void)clickExport;
+- (void)startExport;
+- (void)cancelExportBeforeBeginning;
+
+- (NSString *)directoryPath;
+- (unsigned)sessionID;
+
+- (BOOL)exportImageAtIndex:(unsigned)index dest:(NSString *)dest options:(ImageExportOptions *)options;
+- (NSSize)lastExportedImageSize;
+
+//------------------------------------------------------------------------------
 @end
 
 @interface ExportController:NSObject

@@ -30,8 +30,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class ZWGalleryAlbum;
-@class ZWURLConnection;
+@class SCZWGalleryAlbum;
+@class SCZWURLConnection;
 
 typedef enum
 {
@@ -49,26 +49,26 @@ typedef enum
     GR_STAT_NO_WRITE_PERMISSION = 404,         // No write permission to destination album.
     GR_STAT_NO_CREATE_ALBUM_PERMISSION = 501,  // A new album could not be created because the user does not have permission to do so.
     GR_STAT_CREATE_ALBUM_FAILED = 502,         // A new album could not be created, for a different reason (name conflict).
-    ZW_GALLERY_COULD_NOT_CONNECT = 1000,       // Could not connect to the gallery
-    ZW_GALLERY_PROTOCOL_ERROR = 1001,          // Something went wrong with the protocol (no status sent, couldn't decode, etc)
-    ZW_GALLERY_UNKNOWN_ERROR = 1002,
-    ZW_GALLERY_OPERATION_DID_CANCEL = 1003     // The user cancelled whatever operation was happening
-} ZWGalleryRemoteStatusCode;
+    SCZW_GALLERY_COULD_NOT_CONNECT = 1000,       // Could not connect to the gallery
+    SCZW_GALLERY_PROTOCOL_ERROR = 1001,          // Something went wrong with the protocol (no status sent, couldn't decode, etc)
+    SCZW_GALLERY_UNKNOWN_ERROR = 1002,
+    SCZW_GALLERY_OPERATION_DID_CANCEL = 1003     // The user cancelled whatever operation was happening
+} SCZWGalleryRemoteStatusCode;
 
 typedef enum
 {
     GalleryTypeG1 = 0,
     GalleryTypeG2,
     GalleryTypeG2XMLRPC
-} ZWGalleryType;
+} SCZWGalleryType;
 
-@interface ZWGallery : NSObject {
+@interface SCZWGallery : NSObject {
     NSURL* url;
     NSURL* fullURL;
     NSString* requestkey;
     NSString* username;
     NSString* password;
-    ZWGalleryType type;
+    SCZWGalleryType type;
     
     BOOL loggedIn;
     int majorVersion;
@@ -80,19 +80,19 @@ typedef enum
     NSStringEncoding sniffedEncoding;
     
     id delegate;    
-    ZWURLConnection *currentConnection;
+    SCZWURLConnection *currentConnection;
 }
 
 - (id)init;
 - (id)initWithURL:(NSURL *)url username:(NSString *)username;
 - (id)initWithDictionary:(NSDictionary *)description;
-+ (ZWGallery *)galleryWithURL:(NSURL *)url username:(NSString *)username;
-+ (ZWGallery *)galleryWithDictionary:(NSDictionary *)description;
++ (SCZWGallery *)galleryWithURL:(NSURL *)url username:(NSString *)username;
++ (SCZWGallery *)galleryWithDictionary:(NSDictionary *)description;
 
 - (void)cancelOperation;
 - (void)login;
 - (void)logout;
-- (void)createAlbumWithName:(NSString *)name title:(NSString *)title summary:(NSString *)summary parent:(ZWGallery *)parent;
+- (void)createAlbumWithName:(NSString *)name title:(NSString *)title summary:(NSString *)summary parent:(SCZWGallery *)parent;
 - (void)getAlbums;
 
 // accessor methods
@@ -107,7 +107,7 @@ typedef enum
 - (BOOL)loggedIn;
 - (NSArray *)albums;
 - (NSDictionary *)infoDictionary;
-- (ZWGalleryType)type;
+- (SCZWGalleryType)type;
 - (BOOL)isGalleryV2;
 - (void)setDelegate:(id)delegate;
 - (id)delegate;
@@ -116,21 +116,23 @@ typedef enum
 - (NSStringEncoding)sniffedEncoding;
 
 // This helper method can be used by children too
-- (NSArray *)parseResponseData:(NSData*)responseData;
-- (ZWGalleryRemoteStatusCode)getandparseAlbums:(NSArray*)member;
+- (id)parseResponseData:(NSData*)responseData;
+- (NSDictionary *) getGalleryTags; 
+- (NSDictionary *) doGetItem:(NSURL*)itemUrl;
+- (SCZWGalleryRemoteStatusCode)getandparseAlbums:(NSArray*)member;
 - (NSString *)formNameWithName:(NSString *)paramName;
 
 @end
 
-@interface ZWGallery (ZWGalleryDelegateMethods)
+@interface SCZWGallery (SCZWGalleryDelegateMethods)
 
-- (void)galleryDidLogin:(ZWGallery *)sender;
-- (void)gallery:(ZWGallery *)sender loginFailedWithCode:(ZWGalleryRemoteStatusCode)status;
+- (void)galleryDidLogin:(SCZWGallery *)sender;
+- (void)gallery:(SCZWGallery *)sender loginFailedWithCode:(SCZWGalleryRemoteStatusCode)status;
 
-- (void)galleryDidGetAlbums:(ZWGallery *)sender;
-- (void)gallery:(ZWGallery *)sender getAlbumsFailedWithCode:(ZWGalleryRemoteStatusCode)status;
+- (void)galleryDidGetAlbums:(SCZWGallery *)sender;
+- (void)gallery:(SCZWGallery *)sender getAlbumsFailedWithCode:(SCZWGalleryRemoteStatusCode)status;
 
-- (void)galleryDidCreateAlbum:(ZWGallery *)sender;
-- (void)gallery:(ZWGallery *)sender createAlbumFailedWithCode:(ZWGalleryRemoteStatusCode)status;
+- (void)galleryDidCreateAlbum:(SCZWGallery *)sender;
+- (void)gallery:(SCZWGallery *)sender createAlbumFailedWithCode:(SCZWGalleryRemoteStatusCode)status;
 
 @end

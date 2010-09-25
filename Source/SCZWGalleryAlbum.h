@@ -29,19 +29,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ZWGallery.h"
+#import "SCZWGallery.h"
 
-@class ZWGalleryItem;
+@class SCZWGalleryItem;
 
-@interface ZWGalleryAlbum : NSObject {
+@interface SCZWGalleryAlbum : NSObject {
     NSString *title;
     NSString *parenturl;
     NSString *url;
     NSString *name;
     NSString *summary;
     
-    ZWGallery *gallery;
-    ZWGalleryAlbum *parent;
+    SCZWGallery *gallery;
+    SCZWGalleryAlbum *parent;
     NSMutableArray *children;    
     NSMutableArray *items;
     
@@ -53,19 +53,19 @@
     BOOL cancelled;
 }
 
-- (id)initWithTitle:(NSString *)newTitle name:(NSString *)newName gallery:(ZWGallery *)newGallery;
-+ (ZWGalleryAlbum *)albumWithTitle:(NSString *)newTitle name:(NSString *)newName gallery:(ZWGallery *)newGallery;
+- (id)initWithTitle:(NSString *)newTitle name:(NSString *)newName gallery:(SCZWGallery *)newGallery;
++ (SCZWGalleryAlbum *)albumWithTitle:(NSString *)newTitle name:(NSString *)newName gallery:(SCZWGallery *)newGallery;
 
-- (id)initWithTitle:(NSString *)newTitle name:(NSString *)newName summary:(NSString *)newSummary nestedIn:(ZWGalleryAlbum *)newParent gallery:(ZWGallery *)newGallery;
-- (ZWGalleryAlbum *)albumWithTitle:(NSString *)newTitle name:(NSString *)newName summary:(NSString *)newSummary nestedIn:(ZWGalleryAlbum *)newParent gallery:(ZWGallery *)newGallery;
+- (id)initWithTitle:(NSString *)newTitle name:(NSString *)newName summary:(NSString *)newSummary nestedIn:(SCZWGalleryAlbum *)newParent gallery:(SCZWGallery *)newGallery;
+- (SCZWGalleryAlbum *)albumWithTitle:(NSString *)newTitle name:(NSString *)newName summary:(NSString *)newSummary nestedIn:(SCZWGalleryAlbum *)newParent gallery:(SCZWGallery *)newGallery;
 
 - (void)setDelegate:(id)newDelegate;
 - (id)delegate;
 
-- (void)setParent:(ZWGalleryAlbum *)parent;
-- (ZWGalleryAlbum *)parent;
+- (void)setParent:(SCZWGalleryAlbum *)parent;
+- (SCZWGalleryAlbum *)parent;
 
-- (void)addChild:(ZWGalleryAlbum *)child;
+- (void)addChild:(SCZWGalleryAlbum *)child;
 - (NSArray *)children;
 
 - (void)setCanAddItem:(BOOL)canAddItem;
@@ -93,16 +93,16 @@
 - (NSString *)summary;
 - (void)setSummary:(NSString *)newSummary;
 
-- (ZWGallery *)gallery;
-- (void)setGallery:(ZWGallery *)newGallery;
+- (SCZWGallery *)gallery;
+- (void)setGallery:(SCZWGallery *)newGallery;
 
 - (void)cancelOperation;
-- (ZWGalleryRemoteStatusCode)addItemSynchronously:(ZWGalleryItem *)item;
+- (SCZWGalleryRemoteStatusCode)addItemSynchronously:(SCZWGalleryItem *)item;
 
 @end
 
-@interface ZWGalleryAlbum (ZWGalleryAlbumDelegate)
+@interface SCZWGalleryAlbum (SCZWGalleryAlbumDelegate)
 
-- (void)album:(ZWGalleryAlbum *)sender item:(ZWGalleryItem *)item updateBytesSent:(unsigned long)bytes;
+- (void)album:(SCZWGalleryAlbum *)sender item:(SCZWGalleryItem *)item updateBytesSent:(unsigned long)bytes;
 
 @end

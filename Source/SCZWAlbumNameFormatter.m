@@ -28,12 +28,40 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "iPhotoToGalleryExportPluginBox.h"
+#import "SCZWAlbumNameFormatter.h"
 
-@implementation iPhotoToGalleryExportPluginBox
+NSString *SCZWInvalidAlbumNameCharacters = @"\\/*?\"'&<>|.+# ";
 
-- (char)performKeyEquivalent:fp12 {
-    return 0;
+@implementation SCZWAlbumNameFormatter
+
+- (NSString*)stringForObjectValue:(id)obj
+{
+    return obj;
+}
+
+- (BOOL)getObjectValue:(id *)obj
+             forString:(NSString *)string
+      errorDescription:(NSString **)errorString
+{
+    *obj = string;
+    return YES;
+}
+
+- (BOOL)isPartialStringValid:(NSString *)partial
+            newEditingString:(NSString **)newString
+            errorDescription:(NSString **)errorString
+{
+    if ([partial length] == 0) 
+        return YES;
+    
+    NSRange found = [partial rangeOfCharacterFromSet:
+        [NSCharacterSet characterSetWithCharactersInString:SCZWInvalidAlbumNameCharacters]];
+    if (found.location != NSNotFound) {
+        *errorString = @"Invalid character";
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end

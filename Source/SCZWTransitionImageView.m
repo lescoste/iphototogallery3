@@ -28,15 +28,15 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ZWTransitionImageView.h"
+#import "SCZWTransitionImageView.h"
 #import <Quartz/Quartz.h>
 
 static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 
-@interface MyViewAnimation : NSAnimation
+@interface SCMyViewAnimation : NSAnimation
 @end
 
-@implementation ZWTransitionImageView
+@implementation SCZWTransitionImageView
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -57,7 +57,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
     // Preload shading bitmap to use in transitions (borrowed from the "Fun House" Core Image example).
     /*
     NSData *shadingBitmapData = [NSData dataWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"restrictedshine" ofType:@"tiff"]];
-    NSBitmapImageRep *shadingBitmap = [[[NSBitmapImageRep alloc] initWithData:shadingBitmapData] autorelease];
+    SCNSBitmapImageRep *shadingBitmap = [[[SCNSBitmapImageRep alloc] initWithData:shadingBitmapData] autorelease];
     inputShadingImage = [[CIImage alloc] initWithBitmapImageRep:shadingBitmap];
     */
 }
@@ -155,7 +155,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
         [initialCIImage release];
         [finalCIImage release];
 
-        animation = [[MyViewAnimation alloc] initWithDuration:0.7 animationCurve:NSAnimationEaseInOut];
+        animation = [[SCMyViewAnimation alloc] initWithDuration:0.7 animationCurve:NSAnimationEaseInOut];
         [animation setDelegate:self];
         [animation setAnimationBlockingMode:NSAnimationNonblocking];
         
@@ -201,7 +201,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 
 @end
 
-@implementation MyViewAnimation
+@implementation SCMyViewAnimation
 
 // Override NSAnimation's -setCurrentProgress: method, and use it as our point to hook in and advance our Core Image transition effect to the next time slice.
 - (void)setCurrentProgress:(NSAnimationProgress)progress {
@@ -215,7 +215,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage);
 @end
 
 static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage) {
-    // See if the NSImage has an NSBitmapImageRep.  If so, return the first NSBitmapImageRep encountered.  An NSImage that is initialized by loading the contents of a bitmap image file (such as JPEG, TIFF, or PNG) and, not subsequently rescaled, will usually have a single NSBitmapImageRep.
+    // See if the NSImage has an SCNSBitmapImageRep.  If so, return the first SCNSBitmapImageRep encountered.  An NSImage that is initialized by loading the contents of a bitmap image file (such as JPEG, TIFF, or PNG) and, not subsequently rescaled, will usually have a single SCNSBitmapImageRep.
     NSEnumerator *enumerator = [[nsImage representations] objectEnumerator];
     NSImageRep *representation;
     while (representation = [enumerator nextObject]) {
@@ -224,7 +224,7 @@ static NSBitmapImageRep *BitmapImageRepFromNSImage(NSImage *nsImage) {
         }
     }
     
-    // If we didn't find an NSBitmapImageRep (perhaps because we received a PDF image), we can create one using one of two approaches: (1) lock focus on the NSImage, and create the bitmap using -[NSBitmapImageRep initWithFocusedViewRect:], or (2) (Tiger and later) create an NSBitmapImageRep, and an NSGraphicsContext that draws into it using +[NSGraphicsContext graphicsContextWithBitmapImageRep:], and composite the NSImage into the bitmap graphics context.  We'll use approach (1) here, since it is simple and supported on all versions of Mac OS X.
+    // If we didn't find an SCNSBitmapImageRep (perhaps because we received a PDF image), we can create one using one of two approaches: (1) lock focus on the NSImage, and create the bitmap using -[SCNSBitmapImageRep initWithFocusedViewRect:], or (2) (Tiger and later) create an SCNSBitmapImageRep, and an NSGraphicsContext that draws into it using +[NSGraphicsContext graphicsContextWithBitmapImageRep:], and composite the NSImage into the bitmap graphics context.  We'll use approach (1) here, since it is simple and supported on all versions of Mac OS X.
     NSSize size = [nsImage size];
     [nsImage lockFocus];
     NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0, 0, size.width, size.height)];

@@ -27,42 +27,28 @@
 //  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-//  
-//  This class isn't really needed at all. It doesn't do anything that an NSDictionary couldn't
-//  do just as well.
-//
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
-@class ZWGalleryAlbum;
+@class CIFilter;
+@class CIImage;
 
-@interface ZWGalleryItem : NSObject {
-    NSData* data;
-    NSString* caption;
-    NSString* description;
-    NSString* filename;
-    NSString* imageType;
-    ZWGalleryAlbum* album;
+@interface SCZWTransitionImageView : NSView {
+
+    NSImage *image;
+    NSImage *oldImage;
+    NSImage *actualOldImage;
+    
+    BOOL imageIsBlank;
+    NSRect mattedImageRect;
+ 
+    CIImage *inputShadingImage;     // an environment-map image that the transitionFilter may use in generating the transition effect
+    CIFilter *transitionFilter;      // the Core Image transition filter that will generate the animation frames
+    NSRect imageRect;         // the subrect of the AnimatingTabView where the animating image should be composited
+    NSAnimation *animation;
 }
 
-- (id)initWithAlbum:(ZWGalleryAlbum*)newAlbum;
-+ (ZWGalleryItem*)itemWithAlbum:(ZWGalleryAlbum*)newAlbum;
-
-- (void)setData:(NSData*)newData;
-- (NSData*)data;
-
-- (void)setCaption:(NSString*)newCaption;
-- (NSString*)caption;
-
-- (void)setDescription:(NSString*)newDescription;
-- (NSString*)description;
-
-- (void)setFilename:(NSString*)newFilename;
-- (NSString*)filename;
-
-- (void)setImageType:(NSString*)newImageType;
-- (NSString*)imageType;
-
-- (ZWGalleryAlbum*)album;
+- (NSImage *)image;
+- (void)setImage:(NSImage *)newImage;
 
 @end

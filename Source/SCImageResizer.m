@@ -28,7 +28,7 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ImageResizer.h"
+#import "SCImageResizer.h"
 #import "QuickTime/QuickTime.h"
 
 Handle myCreateHandleDataRef(
@@ -42,7 +42,7 @@ Handle myCreateHandleDataRef(
 
 NSSize getGoodSize(NSSize size, NSSize maxSize);
 
-@implementation ImageResizer
+@implementation SCImageResizer
 
 + (NSData*) getScaledImageFromData:(NSData*)data toSize:(NSSize)size {
     NSData *scaledImageData;

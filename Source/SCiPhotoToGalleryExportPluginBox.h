@@ -28,12 +28,15 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
-extern NSString *ZWInvalidAlbumNameCharacters;
+@protocol ExportPluginBoxProtocol
+- (char)performKeyEquivalent:fp16;
+@end
 
-@interface ZWAlbumNameFormatter : NSFormatter {
-
+@interface SCiPhotoToGalleryExportPluginBox:NSBox <ExportPluginBoxProtocol>
+{
+    IBOutlet id mPlugin;
 }
 
 @end

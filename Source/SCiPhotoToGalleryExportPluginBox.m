@@ -28,96 +28,12 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ZWURLConnection.h"
+#import "SCiPhotoToGalleryExportPluginBox.h"
 
+@implementation SCiPhotoToGalleryExportPluginBox
 
-@implementation ZWURLConnection
-
-#pragma mark Object Life Cycle
-
-+ (ZWURLConnection *)connectionWithRequest:(NSURLRequest *)request
-{
-    return [[[self alloc] initWithRequest:request] autorelease];
-}
-
-- (id)initWithRequest:(NSURLRequest *)request
-{
-    if (self = [super initWithRequest:request delegate:self]) {
-        running = YES;
-    }
-    
-    return self;
-}
-
-- (void)dealloc
-{
-    [data release];
-    [response release];
-    [error release];
-    [super dealloc];
-}
-
-#pragma mark NSURLConnection
-
-- (void)cancel
-{
-    cancelled = YES;
-    [super cancel];
-    running = NO;
-    // TODO: figure out how to receive myself from the freaking run loop here
-}
-
-#pragma mark Accessors
-
-- (BOOL)isRunning
-{
-    return running;
-}
-
-- (NSData *)data
-{
-    return data;
-}
-
-- (NSError *)error
-{
-    return error;
-}
-
-- (NSURLResponse *)response
-{
-    return response;
-}
-
-- (BOOL)isCancelled
-{
-    return cancelled;
-}
-
-#pragma mark NSURLConnection Delegate
-
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)aResponse
-{
-    response = [aResponse retain];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)someData
-{
-    if (data == nil) 
-        data = [[NSMutableData alloc] init];
-    
-    [data appendData:someData];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)anError
-{
-    running = NO;
-    error = [anError retain];
-}
-
--(void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    running = NO;
+- (char)performKeyEquivalent:fp12 {
+    return 0;
 }
 
 @end

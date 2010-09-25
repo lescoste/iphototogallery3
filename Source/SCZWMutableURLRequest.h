@@ -1,5 +1,5 @@
 //
-//  ZWMutableURLRequest.h
+//  SCZWMutableURLRequest.h
 //  iPhotoToGallery
 //
 //  Created by Zach Wily on 7/1/05.
@@ -17,20 +17,20 @@
 typedef enum {
     ZSURLEncodedVariation,
     ZSURLMultipartVariation
-} ZWURLRequestPOSTVariation;
+} SCZWURLRequestPOSTVariation;
 
-@interface ZWMutableURLRequest : NSMutableURLRequest {
+@interface SCZWMutableURLRequest : NSMutableURLRequest {
     NSData *boundaryData;
     NSMutableData *requestBodyData;
     NSStringEncoding encoding;
     
-    ZWURLRequestPOSTVariation variation;
+    SCZWURLRequestPOSTVariation variation;
 }
 
 - (CFHTTPMessageRef)copyCFHTTPMessageRef;
 
-- (void)setVariation:(ZWURLRequestPOSTVariation)newVariation;
-- (ZWURLRequestPOSTVariation)variation;
+- (void)setVariation:(SCZWURLRequestPOSTVariation)newVariation;
+- (SCZWURLRequestPOSTVariation)variation;
 
 - (void)setEncoding:(NSStringEncoding)newEncoding;
 - (NSStringEncoding)encoding;

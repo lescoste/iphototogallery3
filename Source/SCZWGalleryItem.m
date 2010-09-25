@@ -28,21 +28,21 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ZWGalleryItem.h"
-#import "ZWGalleryAlbum.h"
+#import "SCZWGalleryItem.h"
+#import "SCZWGalleryAlbum.h"
 
-@implementation ZWGalleryItem
+@implementation SCZWGalleryItem
 
-- (id)initWithAlbum:(ZWGalleryAlbum*)newAlbum
+- (id)initWithAlbum:(SCZWGalleryAlbum*)newAlbum
 {
     album = newAlbum;   // Weak reference.
     
     return self;
 }
 
-+ (ZWGalleryItem*)itemWithAlbum:(ZWGalleryAlbum*)newAlbum
++ (SCZWGalleryItem*)itemWithAlbum:(SCZWGalleryAlbum*)newAlbum
 {
-    return [[[ZWGalleryItem alloc] initWithAlbum:newAlbum] autorelease];
+    return [[[SCZWGalleryItem alloc] initWithAlbum:newAlbum] autorelease];
 }
 
 
@@ -106,10 +106,33 @@
     return imageType;
 }
 
-- (ZWGalleryAlbum*)album
+- (SCZWGalleryAlbum*)album
 {
     return album;
 }
+
+- (void)setKeywords:(NSArray*)newKeywords 
+{
+    [newKeywords retain];
+    [keywords release];
+    keywords = newKeywords;
+}
+
+- (NSArray*)keywords
+{
+    return keywords;
+}
+
+- (void)setRating:(int)newRating 
+{
+    rating = newRating;
+}
+
+- (int)rating
+{
+    return rating;
+}
+
 
 - (void) dealloc
 {
@@ -118,6 +141,7 @@
     [description release];
     [filename release];
     [imageType release];
+    [keywords release];
     
     [super dealloc];
 }

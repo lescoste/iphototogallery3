@@ -28,27 +28,12 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
-@class CIFilter;
-@class CIImage;
+@interface SCImageResizer : NSObject {
 
-@interface ZWTransitionImageView : NSView {
-
-    NSImage *image;
-    NSImage *oldImage;
-    NSImage *actualOldImage;
-    
-    BOOL imageIsBlank;
-    NSRect mattedImageRect;
- 
-    CIImage *inputShadingImage;     // an environment-map image that the transitionFilter may use in generating the transition effect
-    CIFilter *transitionFilter;      // the Core Image transition filter that will generate the animation frames
-    NSRect imageRect;         // the subrect of the AnimatingTabView where the animating image should be composited
-    NSAnimation *animation;
 }
 
-- (NSImage *)image;
-- (void)setImage:(NSImage *)newImage;
++ (NSData*) getScaledImageFromData:(NSData*)data toSize:(NSSize)size;
 
 @end
