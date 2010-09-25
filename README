@@ -18,6 +18,10 @@ Version history :
 
 see http://github.com/lescoste/iphototogallery3/issues/
 
+2010/09/24 version 0.3.1 
+   - issue 7 fixed : when a new album is created with an empty shortname, it is still automatically selected on the export dialog.
+   - issue 6 fixed : new compilation params for os X 10.5
+
 2010/09/21 version 0.3 
    - allows to have the Gallery plugin for version 1 and 2 from Zach Wily installed together 
    - when the new album short name is empty, it fills it with a timestamp
