@@ -462,6 +462,10 @@
 - (SCZWGalleryRemoteStatusCode)getandparseAlbums:(NSArray*)members {
 	
     int i =0;
+	int batchSizeMin = 1;
+	int batchSizeMax = 100;
+	int batchSize = batchSizeMax;
+	
 	int nbmembers = [members count];
 	NSLog ( @"getandparseAlbums: total albums = %d", nbmembers );
 	while (i < nbmembers) {
@@ -517,10 +521,12 @@
 		
 		if (data == nil) 
 			return SCZW_GALLERY_COULD_NOT_CONNECT;
-		
+
 		NSArray *galleryResponse = [self parseResponseData:data];
 		if (galleryResponse == nil) 
 			return SCZW_GALLERY_PROTOCOL_ERROR;
+		
+
 		
 		// for each album, get sub albums
 		for (NSDictionary *dict in galleryResponse) {
