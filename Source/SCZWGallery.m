@@ -396,7 +396,7 @@
 	NSDictionary *galleryResponse = [self parseResponseData:data];
 	
 	//NSLog ( @"getGalleryTags: tags  = %@", galleryResponse);
-	
+
 	/*
 	 tags  = {
 	 members =     (
@@ -415,7 +415,7 @@
 	while (i < nbmembers) {
 		NSString *tagUrl = [members objectAtIndex:i];
 		NSURL* fullReqURL = [[NSURL alloc] initWithString:tagUrl];
-		
+
 		NSDictionary * response = [self doGetItem:fullReqURL];
 		SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
 		
@@ -450,12 +450,12 @@
 		
 		
 		[tags setObject:tagUrl forKey:tagName];
-		
+
 		i++;
 	}
 	
 	NSLog ( @"getGalleryTags: tags = %@", tags );
-	
+
 	return tags;
 }
 
@@ -602,7 +602,7 @@
 	// try logging into Gallery v3
 	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest"]];
 	NSLog ( @"doLogin: url = %@", fullURL );
-	
+
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullURL
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
 														  timeoutInterval:60.0];
@@ -744,7 +744,7 @@
 - (SCZWGalleryRemoteStatusCode)doGetAlbums
 {
 	
-	//	[self getGalleryTags];
+//	[self getGalleryTags];
 	
 	// store all json albums from gallery
 	jsonalbums = [[NSMutableArray alloc] init];                                     
@@ -756,10 +756,10 @@
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[fullURL absoluteString] stringByAppendingString:escapedUrlString]];
 	
 	NSLog ( @"doGetAlbums: url = %@", [fullReqURL absoluteString] );
-	
+
 	NSDictionary * response = [self doGetItem:(NSURL *)fullReqURL];
 	SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
-	
+
 	if (status != GR_STAT_SUCCESS) 
 		return status;
 	
@@ -856,9 +856,9 @@
     NSThread *callingThread = [threadDispatchInfo objectForKey:@"CallingThread"];
     
     SCZWGalleryRemoteStatusCode status = [self doCreateAlbumWithName:[threadDispatchInfo objectForKey:@"AlbumName"]
-															   title:[threadDispatchInfo objectForKey:@"AlbumTitle"]
-															 summary:[threadDispatchInfo objectForKey:@"AlbumSummary"]
-															  parent:[threadDispatchInfo objectForKey:@"AlbumParent"]];
+                                                             title:[threadDispatchInfo objectForKey:@"AlbumTitle"]
+                                                           summary:[threadDispatchInfo objectForKey:@"AlbumSummary"]
+                                                            parent:[threadDispatchInfo objectForKey:@"AlbumParent"]];
     
     if (status == GR_STAT_SUCCESS)
         [delegate performSelector:@selector(galleryDidCreateAlbum:) 
@@ -914,7 +914,7 @@
 	
 	SBJsonWriter *jsonwriter = [SBJsonWriter new];
 	NSString *jsonParams = [jsonwriter stringWithObject:dict];
-	
+
 	//NSString* escapedJsonData = [jsonData stringByAddingPercentEscapesUsingEncoding:[self sniffedEncoding]];
 	NSString* escapedJsonData = [[NSString alloc] initWithFormat:@"entity=%@", jsonParams];
 	NSLog ( @"doCreateAlbumWithName: escapedJsonData : %@ ", escapedJsonData );
@@ -925,7 +925,7 @@
 	NSLog ( @"doCreateAlbumWithName: requestDataLengthString : %@ ", requestDataLengthString );
 	
 	NSLog ( @"doCreateAlbumWithName: url : %@ ", purl );
-	
+
 	NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:purl];
 	[request setHTTPMethod:@"POST"];
 	[request setHTTPBody:requestData];

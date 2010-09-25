@@ -165,11 +165,11 @@ static int loggingIn;
 #pragma mark ExportPluginProtocol
 
 - (NSString *)description {
-    return @"SCiPhotoToGallery3 Exporter by Stephane Coste";
+    return @"iPhotoToGallery3 Exporter by Stephane Coste";
 }
 
 - (NSString *)name {
-    return @"SCiPhotoToGallery3";
+    return @"iPhotoToGallery3";
 }
 
 - (void)cancelExport {
@@ -502,7 +502,7 @@ static int loggingIn;
         
         // TODO: check that add succeeded
         if (status != noErr) 
-            NSLog(@"SCiPhotoToGallery: Error adding password to keychain: %i", status);
+            NSLog(@"iPhotoToGallery: Error adding password to keychain: %i", status);
         
         [mainGalleryPopup selectItemWithTitle:[gallery identifier]];
         [self clickGalleryPopup:self];
@@ -944,7 +944,7 @@ static int loggingIn;
                                          NULL);
     if (status != noErr) {
         // TODO: Pop up password dialog here.
-        NSLog(@"SCiPhotoToGallery: Error retrieving password from keychain: %i", (int)status);
+        NSLog(@"iPhotoToGallery: Error retrieving password from keychain: %i", (int)status);
         return nil;
     }
     

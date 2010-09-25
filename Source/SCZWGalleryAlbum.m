@@ -297,7 +297,7 @@
     SCZWMutableURLRequest *theRequest = [SCZWMutableURLRequest requestWithURL:[gallery fullURL]
                                                               cachePolicy:NSURLRequestReloadIgnoringCacheData
                                                           timeoutInterval:60.0];
-    [theRequest setValue:@"SCiPhotoToGallery" forHTTPHeaderField:@"User-Agent"];
+    [theRequest setValue:@"iPhotoToGallery" forHTTPHeaderField:@"User-Agent"];
     [theRequest setHTTPMethod:@"POST"];
     [theRequest setEncoding:[self sniffedEncoding]];
     [theRequest setVariation:ZSURLMultipartVariation];
@@ -331,7 +331,7 @@
     NSData *boundaryData = [NSData dataWithData:[boundaryNL dataUsingEncoding:NSASCIIStringEncoding]];
     
     CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("Content-Type"), (CFStringRef)[NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary]);
-    CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("User-Agent"), CFSTR("SCiPhotoToGallery3 0.1"));
+    CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("User-Agent"), CFSTR("iPhotoToGallery3 0.1"));
     CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("Connection"), CFSTR("close"));
     
     // don't forget the cookies!

@@ -23,24 +23,25 @@
 
 /* Begin PBXBuildFile section */
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
-		E202E5A41248803700F90084 /* SCiPhotoToGallery.m in Sources */ = {isa = PBXBuildFile; fileRef = E202E5A11248803700F90084 /* SCiPhotoToGallery.m */; };
-		E202E5A51248803700F90084 /* SCiPhotoToGalleryExportPluginBox.m in Sources */ = {isa = PBXBuildFile; fileRef = E202E5A31248803700F90084 /* SCiPhotoToGalleryExportPluginBox.m */; };
-		E202E5AA1248804B00F90084 /* SCImageResizer.m in Sources */ = {isa = PBXBuildFile; fileRef = E202E5A71248804B00F90084 /* SCImageResizer.m */; };
-		E202E5AB1248804B00F90084 /* SCInterThreadMessaging.m in Sources */ = {isa = PBXBuildFile; fileRef = E202E5A91248804B00F90084 /* SCInterThreadMessaging.m */; };
-		E202E5B01248805D00F90084 /* SCNSString+misc.m in Sources */ = {isa = PBXBuildFile; fileRef = E202E5AD1248805D00F90084 /* SCNSString+misc.m */; };
-		E202E5B11248805D00F90084 /* SCNSView+Fading.m in Sources */ = {isa = PBXBuildFile; fileRef = E202E5AF1248805D00F90084 /* SCNSView+Fading.m */; };
+		E20B035C124B34D300AAB3CF /* SCImageResizer.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B0341124B34D300AAB3CF /* SCImageResizer.m */; };
+		E20B035D124B34D300AAB3CF /* SCInterThreadMessaging.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B0343124B34D300AAB3CF /* SCInterThreadMessaging.m */; };
+		E20B035E124B34D300AAB3CF /* SCiPhotoToGallery.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B0345124B34D300AAB3CF /* SCiPhotoToGallery.m */; };
+		E20B035F124B34D300AAB3CF /* SCiPhotoToGalleryExportPluginBox.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B0347124B34D300AAB3CF /* SCiPhotoToGalleryExportPluginBox.m */; };
+		E20B0360124B34D300AAB3CF /* NSBitmapImageRep+sizing.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B0349124B34D300AAB3CF /* NSBitmapImageRep+sizing.m */; };
+		E20B0361124B34D300AAB3CF /* SCNSString+misc.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B034B124B34D300AAB3CF /* SCNSString+misc.m */; };
+		E20B0362124B34D300AAB3CF /* SCNSView+Fading.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B034D124B34D300AAB3CF /* SCNSView+Fading.m */; };
+		E20B0363124B34D300AAB3CF /* SCZWAlbumNameFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B034F124B34D300AAB3CF /* SCZWAlbumNameFormatter.m */; };
+		E20B0364124B34D300AAB3CF /* SCZWGallery.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B0351124B34D300AAB3CF /* SCZWGallery.m */; };
+		E20B0365124B34D300AAB3CF /* SCZWGalleryAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B0353124B34D300AAB3CF /* SCZWGalleryAlbum.m */; };
+		E20B0366124B34D300AAB3CF /* SCZWGalleryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B0355124B34D300AAB3CF /* SCZWGalleryItem.m */; };
+		E20B0367124B34D300AAB3CF /* SCZWMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B0357124B34D300AAB3CF /* SCZWMutableURLRequest.m */; };
+		E20B0368124B34D300AAB3CF /* SCZWTransitionImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B0359124B34D300AAB3CF /* SCZWTransitionImageView.m */; };
+		E20B0369124B34D300AAB3CF /* SCZWURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E20B035B124B34D300AAB3CF /* SCZWURLConnection.m */; };
 		E2211FB0123FFA6900EED2BB /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = E2211FA7123FFA6900EED2BB /* NSObject+SBJSON.m */; };
 		E2211FB1123FFA6900EED2BB /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = E2211FA9123FFA6900EED2BB /* NSString+SBJSON.m */; };
 		E2211FB2123FFA6900EED2BB /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E2211FAB123FFA6900EED2BB /* SBJsonBase.m */; };
 		E2211FB3123FFA6900EED2BB /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E2211FAD123FFA6900EED2BB /* SBJsonParser.m */; };
 		E2211FB4123FFA6900EED2BB /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = E2211FAF123FFA6900EED2BB /* SBJsonWriter.m */; };
-		E273689A12487DBF001454FC /* SCZWGallery.m in Sources */ = {isa = PBXBuildFile; fileRef = E273689512487DBF001454FC /* SCZWGallery.m */; };
-		E273689B12487DBF001454FC /* SCZWGalleryAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = E273689712487DBF001454FC /* SCZWGalleryAlbum.m */; };
-		E273689C12487DBF001454FC /* SCZWGalleryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E273689912487DBF001454FC /* SCZWGalleryItem.m */; };
-		E273689F12487DD4001454FC /* SCZWAlbumNameFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E273689E12487DD4001454FC /* SCZWAlbumNameFormatter.m */; };
-		E27368A612487DE5001454FC /* SCZWMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E27368A112487DE5001454FC /* SCZWMutableURLRequest.m */; };
-		E27368A712487DE5001454FC /* SCZWTransitionImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E27368A312487DE5001454FC /* SCZWTransitionImageView.m */; };
-		E27368A812487DE5001454FC /* SCZWURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E27368A512487DE5001454FC /* SCZWURLConnection.m */; };
 		FF1F7C520577F3280000D2DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1F7C510577F3280000D2DB /* Security.framework */; };
 		FF64F5B40874F0C30057A0FC /* Panel.nib in Resources */ = {isa = PBXBuildFile; fileRef = FF64F5AE0874F0C30057A0FC /* Panel.nib */; };
 		FF64F5EB0874F2CD0057A0FC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF64F5E90874F2CD0057A0FC /* InfoPlist.strings */; };
@@ -97,18 +98,34 @@
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		8D5B49B6048680CD000E48DA /* iPhotoToGallery3.iPhotoExporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iPhotoToGallery3.iPhotoExporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E202E5A01248803700F90084 /* SCiPhotoToGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCiPhotoToGallery.h; path = Source/SCiPhotoToGallery.h; sourceTree = "<group>"; };
-		E202E5A11248803700F90084 /* SCiPhotoToGallery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCiPhotoToGallery.m; path = Source/SCiPhotoToGallery.m; sourceTree = "<group>"; };
-		E202E5A21248803700F90084 /* SCiPhotoToGalleryExportPluginBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCiPhotoToGalleryExportPluginBox.h; path = Source/SCiPhotoToGalleryExportPluginBox.h; sourceTree = "<group>"; };
-		E202E5A31248803700F90084 /* SCiPhotoToGalleryExportPluginBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCiPhotoToGalleryExportPluginBox.m; path = Source/SCiPhotoToGalleryExportPluginBox.m; sourceTree = "<group>"; };
-		E202E5A61248804B00F90084 /* SCImageResizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCImageResizer.h; path = Source/SCImageResizer.h; sourceTree = "<group>"; };
-		E202E5A71248804B00F90084 /* SCImageResizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCImageResizer.m; path = Source/SCImageResizer.m; sourceTree = "<group>"; };
-		E202E5A81248804B00F90084 /* SCInterThreadMessaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCInterThreadMessaging.h; path = Source/SCInterThreadMessaging.h; sourceTree = "<group>"; };
-		E202E5A91248804B00F90084 /* SCInterThreadMessaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCInterThreadMessaging.m; path = Source/SCInterThreadMessaging.m; sourceTree = "<group>"; };
-		E202E5AC1248805D00F90084 /* SCNSString+misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SCNSString+misc.h"; path = "Source/SCNSString+misc.h"; sourceTree = "<group>"; };
-		E202E5AD1248805D00F90084 /* SCNSString+misc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SCNSString+misc.m"; path = "Source/SCNSString+misc.m"; sourceTree = "<group>"; };
-		E202E5AE1248805D00F90084 /* SCNSView+Fading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SCNSView+Fading.h"; path = "Source/SCNSView+Fading.h"; sourceTree = "<group>"; };
-		E202E5AF1248805D00F90084 /* SCNSView+Fading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SCNSView+Fading.m"; path = "Source/SCNSView+Fading.m"; sourceTree = "<group>"; };
+		E20B0340124B34D300AAB3CF /* SCImageResizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCImageResizer.h; path = Source/SCImageResizer.h; sourceTree = "<group>"; };
+		E20B0341124B34D300AAB3CF /* SCImageResizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCImageResizer.m; path = Source/SCImageResizer.m; sourceTree = "<group>"; };
+		E20B0342124B34D300AAB3CF /* SCInterThreadMessaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCInterThreadMessaging.h; path = Source/SCInterThreadMessaging.h; sourceTree = "<group>"; };
+		E20B0343124B34D300AAB3CF /* SCInterThreadMessaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCInterThreadMessaging.m; path = Source/SCInterThreadMessaging.m; sourceTree = "<group>"; };
+		E20B0344124B34D300AAB3CF /* SCiPhotoToGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCiPhotoToGallery.h; path = Source/SCiPhotoToGallery.h; sourceTree = "<group>"; };
+		E20B0345124B34D300AAB3CF /* SCiPhotoToGallery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCiPhotoToGallery.m; path = Source/SCiPhotoToGallery.m; sourceTree = "<group>"; };
+		E20B0346124B34D300AAB3CF /* SCiPhotoToGalleryExportPluginBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCiPhotoToGalleryExportPluginBox.h; path = Source/SCiPhotoToGalleryExportPluginBox.h; sourceTree = "<group>"; };
+		E20B0347124B34D300AAB3CF /* SCiPhotoToGalleryExportPluginBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCiPhotoToGalleryExportPluginBox.m; path = Source/SCiPhotoToGalleryExportPluginBox.m; sourceTree = "<group>"; };
+		E20B0348124B34D300AAB3CF /* NSBitmapImageRep+sizing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBitmapImageRep+sizing.h"; path = "Source/NSBitmapImageRep+sizing.h"; sourceTree = "<group>"; };
+		E20B0349124B34D300AAB3CF /* NSBitmapImageRep+sizing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBitmapImageRep+sizing.m"; path = "Source/NSBitmapImageRep+sizing.m"; sourceTree = "<group>"; };
+		E20B034A124B34D300AAB3CF /* SCNSString+misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SCNSString+misc.h"; path = "Source/SCNSString+misc.h"; sourceTree = "<group>"; };
+		E20B034B124B34D300AAB3CF /* SCNSString+misc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SCNSString+misc.m"; path = "Source/SCNSString+misc.m"; sourceTree = "<group>"; };
+		E20B034C124B34D300AAB3CF /* SCNSView+Fading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SCNSView+Fading.h"; path = "Source/SCNSView+Fading.h"; sourceTree = "<group>"; };
+		E20B034D124B34D300AAB3CF /* SCNSView+Fading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SCNSView+Fading.m"; path = "Source/SCNSView+Fading.m"; sourceTree = "<group>"; };
+		E20B034E124B34D300AAB3CF /* SCZWAlbumNameFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCZWAlbumNameFormatter.h; path = Source/SCZWAlbumNameFormatter.h; sourceTree = "<group>"; };
+		E20B034F124B34D300AAB3CF /* SCZWAlbumNameFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCZWAlbumNameFormatter.m; path = Source/SCZWAlbumNameFormatter.m; sourceTree = "<group>"; };
+		E20B0350124B34D300AAB3CF /* SCZWGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCZWGallery.h; sourceTree = "<group>"; };
+		E20B0351124B34D300AAB3CF /* SCZWGallery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCZWGallery.m; sourceTree = "<group>"; };
+		E20B0352124B34D300AAB3CF /* SCZWGalleryAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCZWGalleryAlbum.h; sourceTree = "<group>"; };
+		E20B0353124B34D300AAB3CF /* SCZWGalleryAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCZWGalleryAlbum.m; sourceTree = "<group>"; };
+		E20B0354124B34D300AAB3CF /* SCZWGalleryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCZWGalleryItem.h; sourceTree = "<group>"; };
+		E20B0355124B34D300AAB3CF /* SCZWGalleryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCZWGalleryItem.m; sourceTree = "<group>"; };
+		E20B0356124B34D300AAB3CF /* SCZWMutableURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCZWMutableURLRequest.h; path = Source/SCZWMutableURLRequest.h; sourceTree = "<group>"; };
+		E20B0357124B34D300AAB3CF /* SCZWMutableURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCZWMutableURLRequest.m; path = Source/SCZWMutableURLRequest.m; sourceTree = "<group>"; };
+		E20B0358124B34D300AAB3CF /* SCZWTransitionImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCZWTransitionImageView.h; path = Source/SCZWTransitionImageView.h; sourceTree = "<group>"; };
+		E20B0359124B34D300AAB3CF /* SCZWTransitionImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCZWTransitionImageView.m; path = Source/SCZWTransitionImageView.m; sourceTree = "<group>"; };
+		E20B035A124B34D300AAB3CF /* SCZWURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCZWURLConnection.h; path = Source/SCZWURLConnection.h; sourceTree = "<group>"; };
+		E20B035B124B34D300AAB3CF /* SCZWURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCZWURLConnection.m; path = Source/SCZWURLConnection.m; sourceTree = "<group>"; };
 		E2211FA5123FFA6900EED2BB /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		E2211FA6123FFA6900EED2BB /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		E2211FA7123FFA6900EED2BB /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -120,21 +137,7 @@
 		E2211FAD123FFA6900EED2BB /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		E2211FAE123FFA6900EED2BB /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		E2211FAF123FFA6900EED2BB /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		E273689512487DBF001454FC /* SCZWGallery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCZWGallery.m; sourceTree = "<group>"; };
-		E273689612487DBF001454FC /* SCZWGalleryAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCZWGalleryAlbum.h; sourceTree = "<group>"; };
-		E273689712487DBF001454FC /* SCZWGalleryAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCZWGalleryAlbum.m; sourceTree = "<group>"; };
-		E273689812487DBF001454FC /* SCZWGalleryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCZWGalleryItem.h; sourceTree = "<group>"; };
-		E273689912487DBF001454FC /* SCZWGalleryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCZWGalleryItem.m; sourceTree = "<group>"; };
-		E273689D12487DD4001454FC /* SCZWAlbumNameFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCZWAlbumNameFormatter.h; path = Source/SCZWAlbumNameFormatter.h; sourceTree = "<group>"; };
-		E273689E12487DD4001454FC /* SCZWAlbumNameFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCZWAlbumNameFormatter.m; path = Source/SCZWAlbumNameFormatter.m; sourceTree = "<group>"; };
-		E27368A012487DE5001454FC /* SCZWMutableURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCZWMutableURLRequest.h; path = Source/SCZWMutableURLRequest.h; sourceTree = "<group>"; };
-		E27368A112487DE5001454FC /* SCZWMutableURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCZWMutableURLRequest.m; path = Source/SCZWMutableURLRequest.m; sourceTree = "<group>"; };
-		E27368A212487DE5001454FC /* SCZWTransitionImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCZWTransitionImageView.h; path = Source/SCZWTransitionImageView.h; sourceTree = "<group>"; };
-		E27368A312487DE5001454FC /* SCZWTransitionImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCZWTransitionImageView.m; path = Source/SCZWTransitionImageView.m; sourceTree = "<group>"; };
-		E27368A412487DE5001454FC /* SCZWURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCZWURLConnection.h; path = Source/SCZWURLConnection.h; sourceTree = "<group>"; };
-		E27368A512487DE5001454FC /* SCZWURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCZWURLConnection.m; path = Source/SCZWURLConnection.m; sourceTree = "<group>"; };
 		E2C934EF12436F7800B882AE /* iPhotoToGallery3_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhotoToGallery3_Prefix.pch; sourceTree = "<group>"; };
-		E2CF17C912487E7F0008C054 /* SCZWGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCZWGallery.h; sourceTree = "<group>"; };
 		FF0FDA04086A3ACB00C17F70 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
 		FF1578F005DAEB31009C952D /* iPhotoExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPhotoExporter.h; path = Source/iPhotoExporter.h; sourceTree = "<group>"; };
 		FF1F7C510577F3280000D2DB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
@@ -202,13 +205,13 @@
 		08FB77AFFE84173DC02AAC07 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				FF1578F005DAEB31009C952D /* iPhotoExporter.h */,
+				E20B0344124B34D300AAB3CF /* SCiPhotoToGallery.h */,
+				E20B0345124B34D300AAB3CF /* SCiPhotoToGallery.m */,
+				E20B0346124B34D300AAB3CF /* SCiPhotoToGalleryExportPluginBox.h */,
+				E20B0347124B34D300AAB3CF /* SCiPhotoToGalleryExportPluginBox.m */,
 				E2C934EF12436F7800B882AE /* iPhotoToGallery3_Prefix.pch */,
 				E2211FA4123FFA6900EED2BB /* json */,
-				FF1578F005DAEB31009C952D /* iPhotoExporter.h */,
-				E202E5A01248803700F90084 /* SCiPhotoToGallery.h */,
-				E202E5A11248803700F90084 /* SCiPhotoToGallery.m */,
-				E202E5A21248803700F90084 /* SCiPhotoToGalleryExportPluginBox.h */,
-				E202E5A31248803700F90084 /* SCiPhotoToGalleryExportPluginBox.m */,
 				FF50BBE7085617350073F0E4 /* Gallery */,
 				FF64F5B50874F0D80057A0FC /* Other */,
 			);
@@ -265,12 +268,12 @@
 		FF50BBE7085617350073F0E4 /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				E2CF17C912487E7F0008C054 /* SCZWGallery.h */,
-				E273689512487DBF001454FC /* SCZWGallery.m */,
-				E273689612487DBF001454FC /* SCZWGalleryAlbum.h */,
-				E273689712487DBF001454FC /* SCZWGalleryAlbum.m */,
-				E273689812487DBF001454FC /* SCZWGalleryItem.h */,
-				E273689912487DBF001454FC /* SCZWGalleryItem.m */,
+				E20B0350124B34D300AAB3CF /* SCZWGallery.h */,
+				E20B0351124B34D300AAB3CF /* SCZWGallery.m */,
+				E20B0352124B34D300AAB3CF /* SCZWGalleryAlbum.h */,
+				E20B0353124B34D300AAB3CF /* SCZWGalleryAlbum.m */,
+				E20B0354124B34D300AAB3CF /* SCZWGalleryItem.h */,
+				E20B0355124B34D300AAB3CF /* SCZWGalleryItem.m */,
 			);
 			name = Gallery;
 			path = Source;
@@ -279,22 +282,24 @@
 		FF64F5B50874F0D80057A0FC /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				E202E5A61248804B00F90084 /* SCImageResizer.h */,
-				E202E5A71248804B00F90084 /* SCImageResizer.m */,
-				E202E5A81248804B00F90084 /* SCInterThreadMessaging.h */,
-				E202E5A91248804B00F90084 /* SCInterThreadMessaging.m */,
-				E202E5AC1248805D00F90084 /* SCNSString+misc.h */,
-				E202E5AD1248805D00F90084 /* SCNSString+misc.m */,
-				E202E5AE1248805D00F90084 /* SCNSView+Fading.h */,
-				E202E5AF1248805D00F90084 /* SCNSView+Fading.m */,
-				E273689D12487DD4001454FC /* SCZWAlbumNameFormatter.h */,
-				E273689E12487DD4001454FC /* SCZWAlbumNameFormatter.m */,
-				E27368A012487DE5001454FC /* SCZWMutableURLRequest.h */,
-				E27368A112487DE5001454FC /* SCZWMutableURLRequest.m */,
-				E27368A212487DE5001454FC /* SCZWTransitionImageView.h */,
-				E27368A312487DE5001454FC /* SCZWTransitionImageView.m */,
-				E27368A412487DE5001454FC /* SCZWURLConnection.h */,
-				E27368A512487DE5001454FC /* SCZWURLConnection.m */,
+				E20B0340124B34D300AAB3CF /* SCImageResizer.h */,
+				E20B0341124B34D300AAB3CF /* SCImageResizer.m */,
+				E20B0342124B34D300AAB3CF /* SCInterThreadMessaging.h */,
+				E20B0343124B34D300AAB3CF /* SCInterThreadMessaging.m */,
+				E20B0348124B34D300AAB3CF /* NSBitmapImageRep+sizing.h */,
+				E20B0349124B34D300AAB3CF /* NSBitmapImageRep+sizing.m */,
+				E20B034A124B34D300AAB3CF /* SCNSString+misc.h */,
+				E20B034B124B34D300AAB3CF /* SCNSString+misc.m */,
+				E20B034C124B34D300AAB3CF /* SCNSView+Fading.h */,
+				E20B034D124B34D300AAB3CF /* SCNSView+Fading.m */,
+				E20B034E124B34D300AAB3CF /* SCZWAlbumNameFormatter.h */,
+				E20B034F124B34D300AAB3CF /* SCZWAlbumNameFormatter.m */,
+				E20B0356124B34D300AAB3CF /* SCZWMutableURLRequest.h */,
+				E20B0357124B34D300AAB3CF /* SCZWMutableURLRequest.m */,
+				E20B0358124B34D300AAB3CF /* SCZWTransitionImageView.h */,
+				E20B0359124B34D300AAB3CF /* SCZWTransitionImageView.m */,
+				E20B035A124B34D300AAB3CF /* SCZWURLConnection.h */,
+				E20B035B124B34D300AAB3CF /* SCZWURLConnection.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -384,19 +389,20 @@
 				E2211FB2123FFA6900EED2BB /* SBJsonBase.m in Sources */,
 				E2211FB3123FFA6900EED2BB /* SBJsonParser.m in Sources */,
 				E2211FB4123FFA6900EED2BB /* SBJsonWriter.m in Sources */,
-				E273689A12487DBF001454FC /* SCZWGallery.m in Sources */,
-				E273689B12487DBF001454FC /* SCZWGalleryAlbum.m in Sources */,
-				E273689C12487DBF001454FC /* SCZWGalleryItem.m in Sources */,
-				E273689F12487DD4001454FC /* SCZWAlbumNameFormatter.m in Sources */,
-				E27368A612487DE5001454FC /* SCZWMutableURLRequest.m in Sources */,
-				E27368A712487DE5001454FC /* SCZWTransitionImageView.m in Sources */,
-				E27368A812487DE5001454FC /* SCZWURLConnection.m in Sources */,
-				E202E5A41248803700F90084 /* SCiPhotoToGallery.m in Sources */,
-				E202E5A51248803700F90084 /* SCiPhotoToGalleryExportPluginBox.m in Sources */,
-				E202E5AA1248804B00F90084 /* SCImageResizer.m in Sources */,
-				E202E5AB1248804B00F90084 /* SCInterThreadMessaging.m in Sources */,
-				E202E5B01248805D00F90084 /* SCNSString+misc.m in Sources */,
-				E202E5B11248805D00F90084 /* SCNSView+Fading.m in Sources */,
+				E20B035C124B34D300AAB3CF /* SCImageResizer.m in Sources */,
+				E20B035D124B34D300AAB3CF /* SCInterThreadMessaging.m in Sources */,
+				E20B035E124B34D300AAB3CF /* SCiPhotoToGallery.m in Sources */,
+				E20B035F124B34D300AAB3CF /* SCiPhotoToGalleryExportPluginBox.m in Sources */,
+				E20B0360124B34D300AAB3CF /* NSBitmapImageRep+sizing.m in Sources */,
+				E20B0361124B34D300AAB3CF /* SCNSString+misc.m in Sources */,
+				E20B0362124B34D300AAB3CF /* SCNSView+Fading.m in Sources */,
+				E20B0363124B34D300AAB3CF /* SCZWAlbumNameFormatter.m in Sources */,
+				E20B0364124B34D300AAB3CF /* SCZWGallery.m in Sources */,
+				E20B0365124B34D300AAB3CF /* SCZWGalleryAlbum.m in Sources */,
+				E20B0366124B34D300AAB3CF /* SCZWGalleryItem.m in Sources */,
+				E20B0367124B34D300AAB3CF /* SCZWMutableURLRequest.m in Sources */,
+				E20B0368124B34D300AAB3CF /* SCZWTransitionImageView.m in Sources */,
+				E20B0369124B34D300AAB3CF /* SCZWURLConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,12 +442,15 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION_i386 = 4.2;
+				GCC_VERSION_ppc = 4.2;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				MACOSX_DEPLOYMENT_TARGET_i386 = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "iPhotoToGallery3 Install";
+				SDKROOT = macosx10.5;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -473,27 +482,31 @@
 		FF93797C08553AA800831A51 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks\"";
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_TRIGRAPHS = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPhotoToGallery3_Prefix.pch;
+				GCC_VERSION_i386 = 4.2;
+				GCC_VERSION_ppc = 4.2;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Applications/iPhoto.app/Contents/Plugins;
 				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				MACOSX_DEPLOYMENT_TARGET_i386 = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = iPhotoToGallery3;
+				SDKROOT = macosx10.5;
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -507,19 +520,17 @@
 		FF93798008553AA800831A51 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					"<Multiple",
-					"values>",
-					ppc,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CURRENT_PROJECT_VERSION = 2;
 				FRAMEWORK_SEARCH_PATHS = Frameworks/;
-				GCC_VERSION_i386 = 4.0;
-				GCC_VERSION_ppc = 4.0;
+				GCC_VERSION_i386 = 4.2;
+				GCC_VERSION_ppc = 4.2;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				MACOSX_DEPLOYMENT_TARGET_i386 = 10.6;
+				MACOSX_DEPLOYMENT_TARGET_i386 = 10.5;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.5;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					Quartz,
@@ -569,14 +580,14 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION_i386 = 4.0;
 				GCC_VERSION_ppc = 3.3;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.2;
 				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.2;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					Quartz,
 				);
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+				SDKROOT = macosx10.5;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
