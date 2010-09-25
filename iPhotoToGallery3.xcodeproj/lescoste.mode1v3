@@ -279,7 +279,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>7</integer>
+									<integer>12</integer>
+									<integer>10</integer>
 									<integer>2</integer>
 									<integer>0</integer>
 								</array>
@@ -315,14 +316,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>SCiPhotoToGallery.m</string>
+								<string>SCZWGallery.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -330,18 +329,15 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>SCiPhotoToGallery.m</string>
+										<string>SCZWGallery.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E2D2EE6412493B4C007E2E2C</string>
+										<string>E2BBC4E5124E31A4002BDDAC</string>
 										<key>history</key>
 										<array>
-											<string>E2E68572123FD8D00027913D</string>
 											<string>E24A8B131243659700278359</string>
 											<string>E2C934E812436EE600B882AE</string>
-											<string>E23EC21C12437545003E17D7</string>
-											<string>E209D4C012450663007A24A3</string>
 											<string>E209D4D412450ECE007A24A3</string>
 											<string>E209D4D512450ECE007A24A3</string>
 											<string>E209D4D612450ECE007A24A3</string>
@@ -359,10 +355,11 @@
 											<string>E2D2EE4212492CDB007E2E2C</string>
 											<string>E2D2EE4312492CDB007E2E2C</string>
 											<string>E2D2EE52124937AA007E2E2C</string>
-											<string>E2D2EE53124937AA007E2E2C</string>
 											<string>E2D2EE54124937AA007E2E2C</string>
-											<string>E2D2EE55124937AA007E2E2C</string>
-											<string>E2D2EE5A1249383E007E2E2C</string>
+											<string>E2E07BAB124E2EA900557225</string>
+											<string>E2BBC4D0124E30F7002BDDAC</string>
+											<string>E2BBC4DC124E3141002BDDAC</string>
+											<string>E2BBC4CF124E30F7002BDDAC</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -374,14 +371,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1081, 759}}</string>
+								<string>{{0, 0}, {1081, 744}}</string>
 								<key>RubberWindowFrame</key>
 								<string>13 143 1415 1023 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>759pt</string>
+							<string>744pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -394,14 +391,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 764}, {1081, 218}}</string>
+								<string>{{0, 749}, {1081, 233}}</string>
 								<key>RubberWindowFrame</key>
 								<string>13 143 1415 1023 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>218pt</string>
+							<string>233pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -420,9 +417,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E2D2EDBB1248BB66007E2E2C</string>
+				<string>E2BBC4DE124E3141002BDDAC</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>E2D2EDBC1248BB66007E2E2C</string>
+				<string>E2BBC4DF124E3141002BDDAC</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -560,9 +557,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>E2F26A221229B46900459857</string>
-		<string>/Users/lescoste/dev/iphototogallery3/iPhotoToGallery3.xcodeproj</string>
+		<string>/Users/lescoste/dev/iphotohelpers/iphototogallery3/iphototogallery3/iPhotoToGallery3.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>13 143 1415 1023 0 0 1920 1178 </string>
@@ -642,7 +638,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>E2F26A221229B46900459857</string>
-				<string>E2D2EDC01248BB66007E2E2C</string>
+				<string>E2BBC4E0124E3141002BDDAC</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

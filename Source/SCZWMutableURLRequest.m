@@ -1,10 +1,6 @@
 //
 //  SCZWMutableURLRequest.m
-<<<<<<< HEAD:Source/SCZWMutableURLRequest.m
-//  SCiPhotoToGallery
-=======
 //  iPhotoToGallery
->>>>>>> 569b6dee30bb64d45076:Source/SCZWMutableURLRequest.m
 //
 //  Created by Zach Wily on 7/1/05.
 //  Copyright 2005 __MyCompanyName__. All rights reserved.
