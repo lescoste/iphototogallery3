@@ -467,66 +467,94 @@
 	int batchSize = batchSizeMax;
 	
 	int nbmembers = [members count];
+	NSString *requestString = @"type=album&output=json&scope=all&urls=";
+	
 	NSLog ( @"getandparseAlbums: total albums = %d", nbmembers );
 	while (i < nbmembers) {
 		
-		// go get 100 members data in one request
-		NSString *requestString = @"type=album&output=json&scope=all&urls=";
+		SCZWGalleryRemoteStatusCode status = SCZW_GALLERY_COULD_NOT_CONNECT;
+		NSData *dataFound = nil;
+		int startI = i;
 		
-		// Create SBJSON object to write JSON
-		NSMutableArray *urslarray = [[NSMutableArray alloc] init];
-		int j =0;
-		for (j=0; j < 20 && i < nbmembers ; j++) {
-			NSString *member = [members objectAtIndex:i];
-			[urslarray addObject:member];
-			i++;
+		while(status != GR_STAT_SUCCESS) {
+			
+			// go get 100 members data in one request
+			// Create SBJSON object to write JSON
+			NSMutableArray *urslarray = [[NSMutableArray alloc] init];
+			int j =0;
+			for (j=0; j < batchSize && i < nbmembers ; j++) {
+				NSString *member = [members objectAtIndex:i];
+				[urslarray addObject:member];
+				i++;
+			}
+			
+			SBJsonWriter *jsonwriter = [SBJsonWriter new];
+			NSString *jsonParams = [jsonwriter stringWithObject:urslarray];
+			
+			NSString *requestbody = [NSString stringWithFormat:@"%@%@",requestString, jsonParams];
+			
+			fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items"]];
+			NSURL* fullReqURL = [[NSURL alloc] initWithString:[fullURL absoluteString]];
+			
+			NSLog ( @"getandparseAlbums: get %d albums starting at %d, url = %@", j, startI, [fullReqURL absoluteString] );
+			
+			NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
+																	  cachePolicy:NSURLRequestReloadIgnoringCacheData
+																  timeoutInterval:60.0];
+			[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
+			
+			NSLog ( @"getandparseAlbums: requestkey  = %@", requestkey );
+			
+			// This request is really a HTTP POST but for the REST API it is a GET !
+			[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
+			[theRequest setValue:requestkey forHTTPHeaderField:@"X-Gallery-Request-Key"];
+			[theRequest setHTTPMethod:@"POST"];
+			
+			NSData *requestData = [requestbody dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+			[theRequest setHTTPBody:requestData];
+			
+			
+			currentConnection = [SCZWURLConnection connectionWithRequest:theRequest];
+			while ([currentConnection isRunning]) 
+				[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
+			
+			if ([currentConnection isCancelled]) 
+				return SCZW_GALLERY_OPERATION_DID_CANCEL;
+			
+			// reponse from server
+			
+			NSData *data = [currentConnection data];
+			
+			if (data == nil) {
+				status = SCZW_GALLERY_COULD_NOT_CONNECT;
+				
+				if (batchSize <= batchSizeMin) {
+					// tried with min size but did'nt work so quit
+					break;
+				}
+				
+				// try again with less albums
+				// recalculate batchsize
+				batchSize = batchSize / 2;
+				if (batchSize < batchSizeMin) batchSize = batchSizeMin;
+				// reset starting album
+				i = startI;
+				NSLog ( @"getandparseAlbums: Error get %d albums starting at %d , retrying", j, startI );
+			} else {
+				dataFound = data;
+				status = GR_STAT_SUCCESS;
+				NSLog ( @"getandparseAlbums: Success get %d albums starting at %d ", j, startI );
+			}
 		}
 		
-		SBJsonWriter *jsonwriter = [SBJsonWriter new];
-		NSString *jsonParams = [jsonwriter stringWithObject:urslarray];
+		if (status != GR_STAT_SUCCESS) 
+			return status;
 		
-		NSString *requestbody = [NSString stringWithFormat:@"%@%@",requestString, jsonParams];
-		
-		fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items"]];
-		NSURL* fullReqURL = [[NSURL alloc] initWithString:[fullURL absoluteString]];
-		
-		NSLog ( @"getandparseAlbums: get %d albums, url = %@", j, [fullReqURL absoluteString] );
-		
-		NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
-																  cachePolicy:NSURLRequestReloadIgnoringCacheData
-															  timeoutInterval:60.0];
-		[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
-		
-		//NSLog ( @"getandparseAlbums: requestkey  = %@", requestkey );
-		
-		// This request is really a HTTP POST but for the REST API it is a GET !
-		[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
-		[theRequest setValue:requestkey forHTTPHeaderField:@"X-Gallery-Request-Key"];
-		[theRequest setHTTPMethod:@"POST"];
-		
-		NSData *requestData = [requestbody dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-		[theRequest setHTTPBody:requestData];
-		
-		
-		currentConnection = [SCZWURLConnection connectionWithRequest:theRequest];
-		while ([currentConnection isRunning]) 
-			[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
-		
-		if ([currentConnection isCancelled]) 
-			return SCZW_GALLERY_OPERATION_DID_CANCEL;
-		
-		// reponse from server
-		
-		NSData *data = [currentConnection data];
-		
-		if (data == nil) 
-			return SCZW_GALLERY_COULD_NOT_CONNECT;
-
-		NSArray *galleryResponse = [self parseResponseData:data];
+		NSArray *galleryResponse = [self parseResponseData:dataFound];
 		if (galleryResponse == nil) 
 			return SCZW_GALLERY_PROTOCOL_ERROR;
 		
-
+		NSLog ( @"getandparseAlbums galleryResponse size : %d", [galleryResponse count] );
 		
 		// for each album, get sub albums
 		for (NSDictionary *dict in galleryResponse) {
