@@ -320,7 +320,8 @@
 	 * reworking of the upload loop (below) than I have time or understanding to create.
 	 */
 	NSString *requestkey = [gallery requestkey];
-	NSLog(@"addItemSynchronously: album url=%@, requestkey=%@", fullURL,  requestkey);
+	//NSLog(@"addItemSynchronously: album url=%@, requestkey=%@", fullURL,  requestkey);
+	NSLog(@"addItemSynchronously: album url=%@", fullURL);
 
 	CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("X-Gallery-Request-Method"), CFSTR("post"));
 	CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("X-Gallery-Request-Key"), (CFStringRef)[NSString stringWithFormat:@"%@", requestkey]);

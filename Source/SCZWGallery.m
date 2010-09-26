@@ -312,7 +312,7 @@
 														  timeoutInterval:60.0];
 	[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
 	
-	NSLog ( @"doGetAlbums: requestkey = %@", requestkey );
+	//NSLog ( @"doGetItem: requestkey = %@", requestkey );
 	
 	[theRequest setHTTPMethod:@"GET"];
 	[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
@@ -463,7 +463,7 @@
 	
     int i =0;
 	int batchSizeMin = 1;
-	int batchSizeMax = 100;
+	int batchSizeMax = 200;
 	int batchSize = batchSizeMax;
 	
 	int nbmembers = [members count];
@@ -496,14 +496,14 @@
 			fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items"]];
 			NSURL* fullReqURL = [[NSURL alloc] initWithString:[fullURL absoluteString]];
 			
-			NSLog ( @"getandparseAlbums: get %d albums starting at %d, url = %@", j, startI, [fullReqURL absoluteString] );
+			//NSLog ( @"getandparseAlbums: get %d albums starting at %d, url = %@", j, startI, [fullReqURL absoluteString] );
 			
 			NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
 																	  cachePolicy:NSURLRequestReloadIgnoringCacheData
 																  timeoutInterval:60.0];
 			[theRequest setValue:@"SCiPhotoToGallery3" forHTTPHeaderField:@"User-Agent"];
 			
-			NSLog ( @"getandparseAlbums: requestkey  = %@", requestkey );
+			//NSLog ( @"getandparseAlbums: requestkey  = %@", requestkey );
 			
 			// This request is really a HTTP POST but for the REST API it is a GET !
 			[theRequest setValue:@"get" forHTTPHeaderField:@"X-Gallery-Request-Method"];
@@ -535,7 +535,7 @@
 				
 				// try again with less albums
 				// recalculate batchsize
-				batchSize = batchSize / 2;
+				batchSize = batchSize * 3 / 4;
 				if (batchSize < batchSizeMin) batchSize = batchSizeMin;
 				// reset starting album
 				i = startI;
@@ -554,7 +554,7 @@
 		if (galleryResponse == nil) 
 			return SCZW_GALLERY_PROTOCOL_ERROR;
 		
-		NSLog ( @"getandparseAlbums galleryResponse size : %d", [galleryResponse count] );
+		//NSLog ( @"getandparseAlbums galleryResponse size : %d", [galleryResponse count] );
 		
 		// for each album, get sub albums
 		for (NSDictionary *dict in galleryResponse) {
@@ -789,7 +789,7 @@
 	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/item/1?"]];
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[fullURL absoluteString] stringByAppendingString:escapedUrlString]];
 	
-	NSLog ( @"doGetAlbums: url = %@", [fullReqURL absoluteString] );
+	//NSLog ( @"doGetAlbums: url = %@", [fullReqURL absoluteString] );
 
 	NSDictionary * response = [self doGetItem:(NSURL *)fullReqURL];
 	SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
@@ -954,9 +954,9 @@
 	NSLog ( @"doCreateAlbumWithName: escapedJsonData : %@ ", escapedJsonData );
 	
 	NSData* requestData = [escapedJsonData dataUsingEncoding:[self sniffedEncoding]];
-	NSLog ( @"doCreateAlbumWithName: requestData : %@ ", requestData );
+	//NSLog ( @"doCreateAlbumWithName: requestData : %@ ", requestData );
 	NSString* requestDataLengthString = [[NSString alloc] initWithFormat:@"%d", [requestData length]];
-	NSLog ( @"doCreateAlbumWithName: requestDataLengthString : %@ ", requestDataLengthString );
+	//NSLog ( @"doCreateAlbumWithName: requestDataLengthString : %@ ", requestDataLengthString );
 	
 	NSLog ( @"doCreateAlbumWithName: url : %@ ", purl );
 
