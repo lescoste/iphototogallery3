@@ -147,6 +147,8 @@ static int loggingIn;
         [mainScaleImagesHeightField setIntValue:[[preferences objectForKey:@"scaleImagesHeight"] intValue]];
     if ([preferences objectForKey:@"exportComments"])
         [mainExportCommentsSwitch setState:[[preferences objectForKey:@"exportComments"] intValue]];
+    if ([preferences objectForKey:@"exportTags"])
+        [mainExportTagsSwitch setState:[[preferences objectForKey:@"exportTags"] intValue]];
     
     // if this is their first time, pop down the "add gallery" sheet
     if ([galleries count] == 0 && ![[preferences objectForKey:@"offeredToCreateGalleryOnFirstOpen"] boolValue]) {
@@ -201,6 +203,7 @@ static int loggingIn;
     }
     [preferences setObject:[NSNumber numberWithBool:[mainOpenBrowserSwitch state]] forKey:@"openBrowser"];
     [preferences setObject:[NSNumber numberWithBool:[mainExportCommentsSwitch state]] forKey:@"exportComments"];
+    [preferences setObject:[NSNumber numberWithBool:[mainExportTagsSwitch state]] forKey:@"exportTags"];
     [self savePreferences];
 
     [progressUploadingTextField setStringValue:@"Starting Export..."];
@@ -335,7 +338,8 @@ static int loggingIn;
     }
 	
     // Get defaults for the Title and Description fields (thx Nathaniel Gray)
-    NSString *currAlbum, *currComments = nil;
+    NSString *currAlbum = nil; 
+	NSString *currComments = nil;
     if ([exportManager respondsToSelector:@selector(albumName)]) {
         currAlbum = [exportManager albumName];
         if ([exportManager respondsToSelector:@selector(albumComments)])
@@ -872,6 +876,7 @@ static int loggingIn;
         [mainScaleImagesSwitch setEnabled:TRUE];
         [self setScaleImages];
         [mainExportCommentsSwitch setEnabled:TRUE];
+        [mainExportTagsSwitch setEnabled:TRUE];
     } else {
         [exportManager disableControls];
         
@@ -883,6 +888,7 @@ static int loggingIn;
         [mainScaleImagesHeightField setEnabled:FALSE];
         [mainScaleImagesWidthField setEnabled:FALSE];
         [mainExportCommentsSwitch setEnabled:FALSE];
+        [mainExportTagsSwitch setEnabled:FALSE];
     }
 }
 
@@ -985,6 +991,7 @@ static int loggingIn;
     if (album == nil) 
         return;
     
+	[album setCanAddTags:[mainExportTagsSwitch state]];
     currentAlbum = album;
     SCZWGalleryRemoteStatusCode status = 0;
     
@@ -999,7 +1006,7 @@ static int loggingIn;
             NSArray *imageKeywords = [exportManager imageKeywordsAtIndex:imageNum];
             int imageRating = [exportManager imageRatingAtIndex:imageNum];
 			
-			NSLog ( @"addItemsThread i= %d , image dict = %@", imageNum, imageDict );
+			//NSLog ( @"addItemsThread i= %d , image dict = %@", imageNum, imageDict );
 
 			
             SCZWGalleryItem *item = [SCZWGalleryItem itemWithAlbum:album];
@@ -1023,7 +1030,26 @@ static int loggingIn;
                 if ([imageDict objectForKey:@"Annotation"]) 
                     [item setDescription:[imageDict objectForKey:@"Annotation"]];
             }
-            
+            if ([mainExportTagsSwitch state]) {
+				NSMutableArray * keywords = [[NSMutableArray alloc] init];  
+                if (imageKeywords != nil && [imageKeywords count] > 0) {
+					[keywords addObjectsFromArray:imageKeywords];
+				}
+				// convert imageRating to keyword
+				if (imageRating > 0) {
+					int i = 1;
+					NSMutableString * ratingTag = [NSMutableString stringWithString: @"*"];
+					for (i = 1; i< imageRating; i++) {
+						[ratingTag appendString:@"*"];
+					}
+					[keywords addObject:ratingTag];
+				}
+				
+				//
+                if (keywords != nil && [keywords count] > 0){ 
+                    [item setKeywords:keywords];
+				}
+			}				
             // finally, add the image data
             NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
             NSImage *image = [[[NSImage alloc] initWithData:imageData] autorelease];

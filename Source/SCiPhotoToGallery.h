@@ -101,6 +101,7 @@ struct progressStruct {
     IBOutlet id mainAddToAlbumPopup;
     IBOutlet id mainCreateNewAlbumButton;
     IBOutlet id mainExportCommentsSwitch;
+    IBOutlet id mainExportTagsSwitch;
     IBOutlet id mainGalleryPopup;
     IBOutlet id mainOpenBrowserSwitch;
     IBOutlet id mainScaleImagesHeightField;

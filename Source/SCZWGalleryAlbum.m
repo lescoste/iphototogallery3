@@ -194,6 +194,13 @@
     return canAddItem;
 }
 
+- (void)setCanAddTags:(BOOL)newCanAddTags {
+    canAddTags = newCanAddTags;
+}
+- (BOOL)canAddTags {
+    return canAddTags;
+}
+
 #pragma mark -
 
 - (BOOL)canAddItemToAlbumOrSub {
@@ -321,7 +328,7 @@
 	 */
 	NSString *requestkey = [gallery requestkey];
 	//NSLog(@"addItemSynchronously: album url=%@, requestkey=%@", fullURL,  requestkey);
-	NSLog(@"addItemSynchronously: album url=%@", fullURL);
+	//NSLog(@"addItemSynchronously: album url=%@", fullURL);
 
 	CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("X-Gallery-Request-Method"), CFSTR("post"));
 	CFHTTPMessageSetHeaderFieldValue(messageRef, CFSTR("X-Gallery-Request-Key"), (CFStringRef)[NSString stringWithFormat:@"%@", requestkey]);
@@ -433,6 +440,32 @@
     
 	NSLog(@"addItemSynchronously: photo added url=%@", galleryResponse);
 
+	/*
+	 addItemSynchronously: photo added url={
+		url = "http://lescoste.net/gallery3/index.php/rest/item/5340";
+	}
+	*/
+	
+	if (canAddTags) {
+		// add tags
+		NSArray * photoTags = [item keywords];
+		
+		NSMutableDictionary *galleryTags = [[self gallery] tags];
+		
+		for (NSString *tag in photoTags) {
+			// if image tags not in gallery : add them
+			if ([galleryTags objectForKey:tag] == nil) {
+				// add tag
+				[[self gallery] doCreateTagWithName:tag];	
+			}
+			NSString * tagUrl = [galleryTags objectForKey:tag];
+			NSString * photoUrl = [galleryResponse objectForKey:@"url"];
+			
+			// add tags to image
+			status = [[self gallery] doLinkTag:tagUrl withPhoto:photoUrl];		
+		}
+	}
+	
     return status;
 }
 

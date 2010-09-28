@@ -47,6 +47,7 @@
     
     BOOL canAddItem;
     BOOL canAddSubAlbum;
+    BOOL canAddTags;
     
     id delegate;
     
@@ -71,6 +72,9 @@
 - (void)setCanAddItem:(BOOL)canAddItem;
 - (BOOL)canAddItem;
 - (BOOL)canAddItemToAlbumOrSub;
+
+- (void)setCanAddTags:(BOOL)canAddTags;
+- (BOOL)canAddTags;
 
 - (void)setCanAddSubAlbum:(BOOL)canAddSubAlbum;
 - (BOOL)canAddSubAlbum;

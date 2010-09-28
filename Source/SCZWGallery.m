@@ -46,6 +46,12 @@
 - (void)createAlbumThread:(NSDictionary *)threadDispatchInfo;
 - (SCZWGalleryRemoteStatusCode)doCreateAlbumWithName:(NSString *)name title:(NSString *)title summary:(NSString *)summary parent:(SCZWGalleryAlbum *)parent;
 
+- (SCZWGalleryRemoteStatusCode)doCreateTagWithName:(NSString *)name;
+
+- (id)doCreateObjectWithData:(NSMutableDictionary *)dict  url:(NSString *)aurl;
+
+- (SCZWGalleryRemoteStatusCode)doLinkTag:(NSString *)tagUrl withPhoto:(NSString *)photoUrl;
+
 @end
 
 @implementation SCZWGallery
@@ -96,6 +102,7 @@
     [password release];
     [albums release];
     [jsonalbums release];
+    [tags release];
     [lastCreatedAlbumName release];
     
     [super dealloc];
@@ -172,6 +179,10 @@
 
 - (NSMutableArray*)jsonalbums {
     return jsonalbums;
+}
+
+- (NSMutableDictionary*)tags {
+    return tags;
 }
 
 
@@ -305,7 +316,7 @@
 	
 	NSMutableDictionary * result = [[NSMutableDictionary alloc] init];
 	
-	NSLog ( @"doGetItem: url = %@", itemUrl );
+	//NSLog ( @"doGetItem: url = %@", itemUrl );
 	
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:itemUrl
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -365,10 +376,10 @@
 	return dict;
 }
 
-- (NSDictionary *) getGalleryTags {
+- (NSMutableDictionary *) getGalleryTags {
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/tags"]];
 	
-	NSLog ( @"getGalleryTags: url = %@", [fullReqURL absoluteString] );
+	//NSLog ( @"getGalleryTags: url = %@", [fullReqURL absoluteString] );
 	
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullReqURL
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -396,7 +407,7 @@
 	NSDictionary *galleryResponse = [self parseResponseData:data];
 	
 	//NSLog ( @"getGalleryTags: tags  = %@", galleryResponse);
-
+	
 	/*
 	 tags  = {
 	 members =     (
@@ -408,14 +419,14 @@
 	 }
 	 */
 	NSArray *members = [galleryResponse objectForKey:@"members"];
-	NSMutableDictionary *tags = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary * tagsDic = [[NSMutableDictionary alloc] init];
 	int i =0;
 	int nbmembers = [members count];
-	NSLog ( @"getGalleryTags: total tags = %d", nbmembers );
+	//NSLog ( @"getGalleryTags: total tags = %d", nbmembers );
 	while (i < nbmembers) {
 		NSString *tagUrl = [members objectAtIndex:i];
 		NSURL* fullReqURL = [[NSURL alloc] initWithString:tagUrl];
-
+		
 		NSDictionary * response = [self doGetItem:fullReqURL];
 		SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
 		
@@ -427,21 +438,21 @@
 			continue;
 		/*
 		 galleryResponse tag = {
-		 entity =     {
-		 count = 2;
-		 id = 3;
-		 name = fun;
-		 };
-		 relationships =     {
-		 items =         {
-		 members =             (
-		 "http://lescoste.net/gallery3/index.php/rest/tag_item/3,1550",
-		 "http://lescoste.net/gallery3/index.php/rest/tag_item/3,1551"
-		 );
-		 url = "http://lescoste.net/gallery3/index.php/rest/tag_items/3";
-		 };
-		 };
-		 url = "http://lescoste.net/gallery3/index.php/rest/tag/3";
+			entity =     {
+				count = 2;
+				id = 3;
+				name = fun;
+			};
+			relationships =     {
+				items =         {
+					members =             (
+						"http://lescoste.net/gallery3/index.php/rest/tag_item/3,1550",
+						"http://lescoste.net/gallery3/index.php/rest/tag_item/3,1551"
+					);
+					url = "http://lescoste.net/gallery3/index.php/rest/tag_items/3";
+				};
+			};
+			url = "http://lescoste.net/gallery3/index.php/rest/tag/3";
 		 }
 		 */
 		
@@ -449,14 +460,14 @@
 		NSString * tagName = [[galleryResponse objectForKey:@"entity"] objectForKey:@"name"];
 		
 		
-		[tags setObject:tagUrl forKey:tagName];
-
+		[tagsDic setObject:tagUrl forKey:tagName];
+		
 		i++;
 	}
 	
-	NSLog ( @"getGalleryTags: tags = %@", tags );
-
-	return tags;
+	NSLog ( @"getGalleryTags: total tags = %d", [tagsDic count] );
+	
+	return tagsDic;
 }
 
 - (SCZWGalleryRemoteStatusCode)getandparseAlbums:(NSArray*)members {
@@ -636,7 +647,7 @@
 	// try logging into Gallery v3
 	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest"]];
 	NSLog ( @"doLogin: url = %@", fullURL );
-
+	
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullURL
 															  cachePolicy:NSURLRequestReloadIgnoringCacheData
 														  timeoutInterval:60.0];
@@ -689,6 +700,8 @@
 		}
 		
 		NSLog ( @"doLogin: logged in :requestkey = %@",  requestkey );
+		
+		tags = [self getGalleryTags];
 		
 		return GR_STAT_SUCCESS;
 	}
@@ -778,8 +791,6 @@
 - (SCZWGalleryRemoteStatusCode)doGetAlbums
 {
 	
-//	[self getGalleryTags];
-	
 	// store all json albums from gallery
 	jsonalbums = [[NSMutableArray alloc] init];                                     
 	
@@ -790,10 +801,10 @@
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[fullURL absoluteString] stringByAppendingString:escapedUrlString]];
 	
 	//NSLog ( @"doGetAlbums: url = %@", [fullReqURL absoluteString] );
-
+	
 	NSDictionary * response = [self doGetItem:(NSURL *)fullReqURL];
 	SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
-
+	
 	if (status != GR_STAT_SUCCESS) 
 		return status;
 	
@@ -890,9 +901,9 @@
     NSThread *callingThread = [threadDispatchInfo objectForKey:@"CallingThread"];
     
     SCZWGalleryRemoteStatusCode status = [self doCreateAlbumWithName:[threadDispatchInfo objectForKey:@"AlbumName"]
-                                                             title:[threadDispatchInfo objectForKey:@"AlbumTitle"]
-                                                           summary:[threadDispatchInfo objectForKey:@"AlbumSummary"]
-                                                            parent:[threadDispatchInfo objectForKey:@"AlbumParent"]];
+															   title:[threadDispatchInfo objectForKey:@"AlbumTitle"]
+															 summary:[threadDispatchInfo objectForKey:@"AlbumSummary"]
+															  parent:[threadDispatchInfo objectForKey:@"AlbumParent"]];
     
     if (status == GR_STAT_SUCCESS)
         [delegate performSelector:@selector(galleryDidCreateAlbum:) 
@@ -935,9 +946,7 @@
         parentUrl = [aURL absoluteString]; 
     }
 	
-	NSLog ( @"doCreateAlbumWithName: title : %@ , parent url : %@", title, parentUrl );
-	
-	NSURL* purl = [[NSURL alloc] initWithString:parentUrl];
+	//NSLog ( @"doCreateAlbumWithName: title : %@ , parent url : %@", title, parentUrl );
 	
 	// Create SBJSON object to write JSON
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -946,20 +955,112 @@
 	[dict setObject:summary forKey:@"description"];
 	[dict setObject:@"album" forKey:@"type"];
 	
+	NSArray *galleryResponse = [self doCreateObjectWithData:dict url:parentUrl ];
+	
+	if (galleryResponse == nil) 
+        return SCZW_GALLERY_PROTOCOL_ERROR;
+	
+	[lastCreatedAlbumName release];
+	lastCreatedAlbumName = [name copy];
+	NSLog ( @"doCreateAlbumWithName: title : %@ , parent url : %@ album added : %@", title, parentUrl, galleryResponse );
+	
+    return GR_STAT_SUCCESS;
+}
+
+
+/*
+ POST /gallery3/index.php/rest/tags HTTP/1.1
+ Host: example.com
+ X-Gallery-Request-Method: post
+ X-Gallery-Request-Key: ...
+ Content-Type: application/x-www-form-urlencoded
+ Content-Length: 117
+ entity=%7B%22type%22%3A%22album%22%2C%22name%22%3A%22Sample+Album%22%2C%22title%22%3A%22  
+ This+is+my+Sample+Album%22%7D
+ 
+ entity {
+ name: "Sample tag"
+ }
+ 
+ */
+- (SCZWGalleryRemoteStatusCode)doCreateTagWithName:(NSString *)name
+{    
+	NSURL *aURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/tags"]];
+	
+	//NSLog ( @"doCreateTagWithName: name : %@", name );
+	
+	// Create SBJSON object to write JSON
+	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+	[dict setObject:name forKey:@"name"];
+	
+	id galleryResponse = [self doCreateObjectWithData:dict url:[aURL absoluteString] ];
+	
+	if (galleryResponse == nil) 
+        return SCZW_GALLERY_PROTOCOL_ERROR;
+	
+	// add tag in local memory
+	[tags setObject:[galleryResponse objectForKey:@"url"] forKey:name];
+	
+	/*
+	 28/09/10 09:07:31	iPhoto[24137]	doCreateTagWithName: tag added : {
+	 url = "http://lescoste.net/gallery3/index.php/rest/tag/4";
+	 }
+	 */
+	NSLog ( @"doCreateTagWithName: tag added :name=%@ %@", name, galleryResponse );
+	
+    return GR_STAT_SUCCESS;
+}
+
+- (SCZWGalleryRemoteStatusCode)doLinkTag:(NSString *)tagUrl withPhoto:(NSString *)photoUrl
+{    
+	NSURL *aURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/tag_items"]];
+	
+	//NSLog ( @"doLinkTag: tagUrl: %@ photoUrl: %@", tagUrl, photoUrl );
+	
+	// Create SBJSON object to write JSON
+	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+	[dict setObject:tagUrl forKey:@"tag"];
+	[dict setObject:photoUrl forKey:@"item"];
+	
+	NSMutableDictionary * galleryResponse = [self doCreateObjectWithData:dict url:[aURL absoluteString] ];
+	
+	if (galleryResponse == nil) 
+        return SCZW_GALLERY_PROTOCOL_ERROR;
+	
+	NSLog ( @"doLinkTag: tag linked : %@", [galleryResponse objectForKey:@"url"] );
+	
+	/*
+	 28/09/10 10:16:59	iPhoto[25079]	doLinkTag: tag linked : {
+		members =     {
+			item = "http://lescoste.net/gallery3/index.php/rest/item/5341";
+			tag = "http://lescoste.net/gallery3/index.php/rest/tag/4";
+		};
+		url = "http://lescoste.net/gallery3/index.php/rest/tag_item/4,5341";
+	 }
+	 */
+    return GR_STAT_SUCCESS;
+}
+
+
+- (id)doCreateObjectWithData:(NSMutableDictionary *)dict  url:(NSString *)aurl
+{    
+	
+	NSURL* purl = [[NSURL alloc] initWithString:aurl];
+	
 	SBJsonWriter *jsonwriter = [SBJsonWriter new];
 	NSString *jsonParams = [jsonwriter stringWithObject:dict];
-
+	
 	//NSString* escapedJsonData = [jsonData stringByAddingPercentEscapesUsingEncoding:[self sniffedEncoding]];
 	NSString* escapedJsonData = [[NSString alloc] initWithFormat:@"entity=%@", jsonParams];
-	NSLog ( @"doCreateAlbumWithName: escapedJsonData : %@ ", escapedJsonData );
+	//NSLog ( @"doCreateObjectWithData: escapedJsonData : %@ ", escapedJsonData );
 	
 	NSData* requestData = [escapedJsonData dataUsingEncoding:[self sniffedEncoding]];
 	//NSLog ( @"doCreateAlbumWithName: requestData : %@ ", requestData );
 	NSString* requestDataLengthString = [[NSString alloc] initWithFormat:@"%d", [requestData length]];
 	//NSLog ( @"doCreateAlbumWithName: requestDataLengthString : %@ ", requestDataLengthString );
 	
-	NSLog ( @"doCreateAlbumWithName: url : %@ ", purl );
-
+	//NSLog ( @"doCreateObjectWithData: url : %@ ", purl );
+	
 	NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:purl];
 	[request setHTTPMethod:@"POST"];
 	[request setHTTPBody:requestData];
@@ -975,28 +1076,26 @@
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
     
     if ([currentConnection isCancelled]) 
-        return SCZW_GALLERY_OPERATION_DID_CANCEL;
+        return nil;
     
     NSData *data = [currentConnection data];
 	
 	NSURLResponse *response = [currentConnection response];
 	
     if (data == nil) 
-        return SCZW_GALLERY_COULD_NOT_CONNECT;
+        return nil;
     
-    NSArray *galleryResponse = [self parseResponseData:data];
+    id galleryResponse = [self parseResponseData:data];
 	if (galleryResponse == nil) 
-        return SCZW_GALLERY_PROTOCOL_ERROR;
+        return nil;
 	
 	if ([(NSHTTPURLResponse *)response statusCode] != 200 ) {
-		NSLog ( @"doCreateAlbumWithName: status code : %d", [(NSHTTPURLResponse *)response statusCode] );
-        return SCZW_GALLERY_PROTOCOL_ERROR;
+		NSLog ( @"doCreateObjectWithData: status code : %d", [(NSHTTPURLResponse *)response statusCode] );
+        return nil;
 	}
-	[lastCreatedAlbumName release];
-	lastCreatedAlbumName = [name copy];
-	NSLog ( @"doCreateAlbumWithName: album added : %@", galleryResponse );
+	//NSLog ( @"doCreateObjectWithData:  added : %@", galleryResponse );
 	
-    return GR_STAT_SUCCESS;
+    return galleryResponse;
 }
 
 @end

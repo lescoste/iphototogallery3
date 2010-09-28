@@ -19,6 +19,9 @@ Version history :
 
 see http://github.com/lescoste/iphototogallery3/issues/
 
+2010/09/24 version 0.3.2
+   - issue 5 : add iphoto keywords and rating to the exported photo as tags ( ie: rating 3 becomes tag "***" )
+
 2010/09/24 version 0.3.1 
    - issue 7 fixed : when a new album is created with an empty shortname, it is still automatically selected on the export dialog.
    - issue 6 fixed : new compilation params for os X 10.5

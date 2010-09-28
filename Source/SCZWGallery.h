@@ -75,6 +75,7 @@ typedef enum
     int minorVersion;
     NSArray* albums;
     NSMutableArray* jsonalbums;
+	NSMutableDictionary* tags;
     NSString *lastCreatedAlbumName;
     
     NSStringEncoding sniffedEncoding;
@@ -94,6 +95,8 @@ typedef enum
 - (void)logout;
 - (void)createAlbumWithName:(NSString *)name title:(NSString *)title summary:(NSString *)summary parent:(SCZWGallery *)parent;
 - (void)getAlbums;
+- (SCZWGalleryRemoteStatusCode)doCreateTagWithName:(NSString *)name;
+- (SCZWGalleryRemoteStatusCode)doLinkTag:(NSString *)tagUrl withPhoto:(NSString *)photoUrl;
 
 // accessor methods
 - (NSURL *)url;
@@ -114,10 +117,11 @@ typedef enum
 - (void)setPassword:(NSString *)password;
 - (NSString *)lastCreatedAlbumName;
 - (NSStringEncoding)sniffedEncoding;
+- (NSMutableDictionary*)tags;
 
 // This helper method can be used by children too
 - (id)parseResponseData:(NSData*)responseData;
-- (NSDictionary *) getGalleryTags; 
+- (NSMutableDictionary *) getGalleryTags; 
 - (NSDictionary *) doGetItem:(NSURL*)itemUrl;
 - (SCZWGalleryRemoteStatusCode)getandparseAlbums:(NSArray*)member;
 - (NSString *)formNameWithName:(NSString *)paramName;
