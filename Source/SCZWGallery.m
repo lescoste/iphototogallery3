@@ -797,7 +797,8 @@
 	// initial album
 	NSString *requestString = @"type=album&output=json&scope=all";
 	NSString* escapedUrlString = [requestString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/item/1?"]];
+	NSString *rootAlbumUrl = [[url absoluteString] stringByAppendingString:@"rest/item/1"];
+	fullURL = [[NSURL alloc] initWithString:[rootAlbumUrl stringByAppendingString:@"?"]];
 	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[fullURL absoluteString] stringByAppendingString:escapedUrlString]];
 	
 	//NSLog ( @"doGetAlbums: url = %@", [fullReqURL absoluteString] );
@@ -828,7 +829,23 @@
     // add the albums to myself here...
     int numAlbums = [jsonalbums count];
     NSMutableArray *galleriesArray = [NSMutableArray array];
-    [galleriesArray addObject:[SCZWGalleryAlbum albumWithTitle:@"" name:@"" gallery:self]];
+	NSDictionary *entity = [galleryResponse objectForKey:@"entity"];
+	
+    SCZWGalleryAlbum *albumRoot = nil;
+	NSNumber *canEdit = [entity objectForKey:@"can_edit"];
+	
+	if ([canEdit intValue] == 1) {
+		albumRoot = [SCZWGalleryAlbum albumWithTitle:[entity objectForKey:@"title"] name:[entity objectForKey:@"name"] gallery:self];
+		[albumRoot setUrl:rootAlbumUrl];
+		BOOL a_can_add = YES;
+		[albumRoot setCanAddItem:a_can_add];
+		BOOL a_can_create_sub = YES;
+		[albumRoot setCanAddSubAlbum:a_can_create_sub];
+    } else {
+		albumRoot = [SCZWGalleryAlbum albumWithTitle:@"" name:@"" gallery:self];
+	}
+		
+	[galleriesArray addObject:albumRoot];
     int i;
 	
     NSMutableDictionary *galleriesPerUrl = [[NSMutableDictionary alloc] init];

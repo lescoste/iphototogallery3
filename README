@@ -19,7 +19,10 @@ Version history :
 
 see http://github.com/lescoste/iphototogallery3/issues/
 
-2010/09/24 version 0.3.2
+2010/09/29 version 0.3.3
+   - issue 10 : allows to add photos to the Root album
+
+2010/09/28 version 0.3.2
    - issue 5 : add iphoto keywords and rating to the exported photo as tags ( ie: rating 3 becomes tag "***" )
 
 2010/09/24 version 0.3.1 
