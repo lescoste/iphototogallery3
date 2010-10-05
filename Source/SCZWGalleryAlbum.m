@@ -298,34 +298,15 @@
 
 - (SCZWGalleryRemoteStatusCode)addItemSynchronously:(SCZWGalleryItem *)item 
 {
+	
+	NSDate *startUploadDate = [NSDate date];
+	
     cancelled = NO;
-    
-    /*
-    SCZWMutableURLRequest *theRequest = [SCZWMutableURLRequest requestWithURL:[gallery fullURL]
-                                                              cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                          timeoutInterval:60.0];
-    [theRequest setValue:@"iPhotoToGallery" forHTTPHeaderField:@"User-Agent"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setEncoding:[self sniffedEncoding]];
-    [theRequest setVariation:ZSURLMultipartVariation];
-    
-    if ([self isGalleryV2]) 
-        [theRequest addString:@"remote:GalleryRemote" forName:@"g2_controller"];
-    
-    [theRequest addString:@"add-item" forName:[
-    */
     
 	NSURL *fullURL = [[NSURL alloc] initWithString:[self url]];
 
     CFHTTPMessageRef messageRef = CFHTTPMessageCreateRequest(kCFAllocatorDefault, CFSTR("POST"), (CFURLRef)fullURL, kCFHTTPVersion1_1);
 
-    /*
-	*
-	 * Note the warning in the CF Network Programming Guide: "Do not apply credentials to the HTTP request
-	 * before receiving a server challenge. The server may have changed since the last time you authenticated
-	 * and you could create a security risk." Unfortunately, doing this right would require a more elaborate
-	 * reworking of the upload loop (below) than I have time or understanding to create.
-	 */
 	NSString *requestkey = [gallery requestkey];
 	//NSLog(@"addItemSynchronously: album url=%@, requestkey=%@", fullURL,  requestkey);
 	//NSLog(@"addItemSynchronously: album url=%@", fullURL);
@@ -394,7 +375,8 @@
     unsigned long bytesSentSoFar = 0;
     NSMutableData *data = [NSMutableData data];
     while (!done && !cancelled) {
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+		// commented to speed up upload time
+       // [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
         
         if (CFReadStreamHasBytesAvailable(readStream)) {
             UInt8 buf[BUFSIZE];
@@ -421,6 +403,7 @@
             bytesSentSoFar = bytesWritten;
             [delegate album:self item:item updateBytesSent:bytesWritten]; 
         }
+	  
     }
     
     CFRelease(messageRef);
@@ -438,8 +421,12 @@
     
     [items addObject:item];
     
-	NSLog(@"addItemSynchronously: photo added url=%@", galleryResponse);
 
+	NSDate *endUploadDate = [NSDate date];
+	
+	NSTimeInterval difference = [endUploadDate timeIntervalSinceDate:startUploadDate];
+	NSLog(@"addItemSynchronously: upload time: %f ,  photo added url=%@", difference, galleryResponse);
+	
 	/*
 	 addItemSynchronously: photo added url={
 		url = "http://lescoste.net/gallery3/index.php/rest/item/5340";

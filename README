@@ -19,6 +19,11 @@ Version history :
 
 see http://github.com/lescoste/iphototogallery3/issues/
 
+
+
+2010/10/05 version 0.3.4
+   - issue 11 : speed up x 10 the upload time (by removing a sleep loop !!! )
+
 2010/09/29 version 0.3.3
    - issue 10 : allows to add photos to the Root album
 
