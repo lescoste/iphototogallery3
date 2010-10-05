@@ -11,6 +11,12 @@ To install it, you need to :
 4) start iPhoto
 5) Activate the REST module in your Gallery server via the administration pages.
 
+When entering the Gallery URL be carefull to add "index.php/" if needed (depending on your .htaccess rewrite url params)
+ie : http://myhost/gallery3/index.php/
+or 
+ie : http://myhost/gallery3/
+
+ 
 
 That's it. Enjoy !
 
@@ -23,6 +29,7 @@ see http://github.com/lescoste/iphototogallery3/issues/
 
 2010/10/05 version 0.3.4
    - issue 11 : speed up x 10 the upload time (by removing a sleep loop !!! )
+   - plugin does not add automatically "index.php" to the gallery URL
 
 2010/09/29 version 0.3.3
    - issue 10 : allows to add photos to the Root album
