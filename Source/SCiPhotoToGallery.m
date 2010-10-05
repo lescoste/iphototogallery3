@@ -455,9 +455,9 @@ static int loggingIn;
     // add the rest
     [buildURLString appendString:tmpURLString];
     
-	if (![buildURLString isLike:@"*index.php/"]) {
+	/*if (![buildURLString isLike:@"*index.php/"]) {
 		[buildURLString appendString:@"index.php/"];
-	}
+	}*/
 	
     NSURL *url = [NSURL URLWithString:buildURLString];
     
