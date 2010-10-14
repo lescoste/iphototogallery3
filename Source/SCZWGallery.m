@@ -1033,6 +1033,10 @@
 	NSURL *aURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/tag_items"]];
 	
 	//NSLog ( @"doLinkTag: tagUrl: %@ photoUrl: %@", tagUrl, photoUrl );
+	if (tagUrl == nil || photoUrl == nil) {
+		NSLog ( @"doLinkTag: error :something is nil tagUrl: %@ photoUrl: %@", tagUrl, photoUrl );
+		return GR_STAT_SUCCESS;
+	}
 	
 	// Create SBJSON object to write JSON
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -1106,7 +1110,7 @@
 	if (galleryResponse == nil) 
         return nil;
 	
-	if ([(NSHTTPURLResponse *)response statusCode] != 200 ) {
+	if ([(NSHTTPURLResponse *)response statusCode] != 201 ) {
 		NSLog ( @"doCreateObjectWithData: status code : %d", [(NSHTTPURLResponse *)response statusCode] );
         return nil;
 	}
