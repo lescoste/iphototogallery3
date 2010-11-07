@@ -375,7 +375,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "rm -fr /Applications/iPhoto.app/Contents/PlugIns/iPhotoToGallery3.iPhotoExporter\n\ncp -R $BUILT_PRODUCTS_DIR/iPhotoToGallery3.iPhotoExporter /Applications/iPhoto.app/Contents/PlugIns/\nchmod -R g+w /Applications/iPhoto.app/Contents/PlugIns/iPhotoToGallery3.iPhotoExporter\n\n# shell script goes here\nexit 0";
+			shellScript = "rm -fr ~/Library/Application\\ Support/iPhoto/Plugins/iPhotoToGallery3.iPhotoExporter\n\ncp -R $BUILT_PRODUCTS_DIR/iPhotoToGallery3.iPhotoExporter ~/Library/Application\\ Support/iPhoto/Plugins/\nchmod -R g+w ~/Library/Application\\ Support/iPhoto/Plugins/iPhotoToGallery3.iPhotoExporter\n\n# shell script goes here\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 

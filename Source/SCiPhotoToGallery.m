@@ -957,7 +957,8 @@ static int loggingIn;
         return nil;
     }
     
-    NSString *password = [NSString stringWithCString:passwordData length:passwordLength];
+//    NSString *password = [NSString stringWithCString:passwordData length:passwordLength];
+    NSString *password = [NSString stringWithCString:passwordData encoding:[NSString defaultCStringEncoding]];
     if (passwordLength) 
         SecKeychainItemFreeContent(NULL, passwordData);
 
@@ -1006,10 +1007,12 @@ static int loggingIn;
         
             NSString *imagePath = [exportManager imagePathAtIndex:imageNum];
             NSDictionary *imageDict = [self exportManagerImageDictionaryAtIndex:imageNum];
+            NSDictionary *imageExifDict = [exportManager imageExifPropertiesAtIndex:imageNum];
             NSArray *imageKeywords = [exportManager imageKeywordsAtIndex:imageNum];
             int imageRating = [exportManager imageRatingAtIndex:imageNum];
 			
 			//NSLog ( @"addItemsThread i= %d , image dict = %@", imageNum, imageDict );
+			//NSLog ( @"addItemsThread i= %d , image imageExifDict = %@", imageNum, imageExifDict );
 
 			
             SCZWGalleryItem *item = [SCZWGalleryItem itemWithAlbum:album];
@@ -1076,6 +1079,162 @@ static int loggingIn;
                 currentImageSize = [imageData length];
             }
 
+			/*
+			 
+			 28/10/10 09:09:52	iPhoto[1529]	addItemsThread i= 0 , image imageExifDict = {
+			 Aperture = "f/6,7";
+			 CameraModel = "Canon IXY DIGITAL 800 IS";
+			 ExposureBias = "0,00";
+			 Flash = "D\U00e9sactiv\U00e9";
+			 FocalLength = "23,2mm";
+			 ISOSpeed = 400;
+			 Latitude = "53,546101\U02da N";
+			 Location = "Parc National Du Connemara, Connacht, Irlande";
+			 Longitude = "9,8889999\U02da W";
+			 MaxAperture = "f/5,5";
+			 Metering = "Mod\U00e8le";
+			 Shutter = "1/400";
+			 }
+			 
+			 05/11/10 22:43:42	iPhoto[28950]	
+			 "{GPS}" =     {
+			 Altitude = "29.4125";
+			 AltitudeRef = 0;
+			 ImgDirection = "334.6035";
+			 ImgDirectionRef = T;
+			 Latitude = "51.50016666666667";
+			 LatitudeRef = N;
+			 Longitude = "0.1261666666666667";
+			 LongitudeRef = W;
+			 TimeStamp = "13:37:42.30";
+			 };
+			}
+			 */
+			
+			////////////////////////////////////////////////////////////
+//			NSLog ( @"addItemsThread i= %d , deb currentImageSize=%d",imageNum,  currentImageSize );
+
+			// set up source ref 
+			CGImageSourceRef imageSource = CGImageSourceCreateWithData((CFDataRef)[item data],  NULL);
+			
+			// snag metadata
+			NSDictionary *metadata = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(imageSource,0,NULL);
+			//NSLog ( @"addItemsThread i= %d , metadata = %@", imageNum, metadata );
+			
+			// make metadata mutable
+			NSMutableDictionary *metadataAsMutable = [[metadata mutableCopy] autorelease];
+			[metadata release];			
+			
+			// grab gps
+			NSMutableDictionary *GPSDictionary = [[[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyGPSDictionary] mutableCopy] autorelease];
+			// grab iptc
+			NSMutableDictionary *IPTCDictionary = [[[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyIPTCDictionary] mutableCopy] autorelease];
+			
+			if(!GPSDictionary) {
+				//if the image does not have an GPS dictionary (not all images do), then create one for us to use
+				//NSLog(@"*** New GPSDictionary ***");
+				GPSDictionary = [NSMutableDictionary dictionary];
+			}
+			if(!IPTCDictionary) {
+				//if the image does not have an exif dictionary (not all images do), then create one for us to use
+				IPTCDictionary = [NSMutableDictionary dictionary];
+			}
+			
+			
+			if ([imageExifDict objectForKey:@"Latitude"] != nil 
+				&& [GPSDictionary objectForKey:(NSString *)kCGImagePropertyGPSLatitude] == nil) {
+				[GPSDictionary setObject:[self getCoord:[imageExifDict objectForKey:@"Latitude"]] forKey:(NSString *)kCGImagePropertyGPSLatitude];
+				[GPSDictionary setObject:(NSString *)[self getCoordRef:[imageExifDict objectForKey:@"Latitude"]] forKey:(NSString *)kCGImagePropertyGPSLatitudeRef];
+			}
+			if ([imageExifDict objectForKey:@"Longitude"] != nil 
+				&& [GPSDictionary objectForKey:(NSString *)kCGImagePropertyGPSLongitude] == nil) {
+				[GPSDictionary setObject:[self getCoord:[imageExifDict objectForKey:@"Longitude"]] forKey:(NSString *)kCGImagePropertyGPSLongitude];
+				[GPSDictionary setObject:(NSString *)[self getCoordRef:[imageExifDict objectForKey:@"Longitude"]] forKey:(NSString *)kCGImagePropertyGPSLongitudeRef];
+			}
+			if ([imageExifDict objectForKey:@"Location"] != nil 
+				&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCContentLocationName] == nil) {
+				//					[ExifDictionary setObject:(NSString *)[imageExifDict objectForKey:@"Location"] forKey:(NSString *)kCGImagePropertyExifSubjectLocation];
+				[IPTCDictionary setObject:(NSString *)[imageExifDict objectForKey:@"Location"] forKey:(NSString *)kCGImagePropertyIPTCContentLocationName];
+			}
+			if ([mainExportCommentsSwitch state]) {
+                if ([imageDict objectForKey:@"Caption"]!= nil 
+					&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCObjectName] == nil) {
+					[IPTCDictionary setObject:(NSString *)[imageDict objectForKey:@"Caption"] forKey:(NSString *)kCGImagePropertyIPTCObjectName];
+				}
+                if ([imageDict objectForKey:@"Annotation"] != nil 
+					&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCCaptionAbstract] == nil) {
+					[IPTCDictionary setObject:(NSString *)[imageDict objectForKey:@"Annotation"] forKey:(NSString *)kCGImagePropertyIPTCCaptionAbstract];
+				}
+			}
+			
+			if ([mainExportTagsSwitch state]) {
+                if (imageKeywords != nil && [imageKeywords count] > 0) {
+					NSMutableArray * keywords = [[NSMutableArray alloc] init];  
+					[keywords addObjectsFromArray:imageKeywords];
+					
+					[IPTCDictionary setObject:keywords forKey:(NSString *)kCGImagePropertyIPTCKeywords];
+					[keywords release];
+				}
+				// imageRating
+				if (imageRating > 0) {
+					[IPTCDictionary setObject:[NSString stringWithFormat:@"%d", imageRating] forKey:(NSString *)kCGImagePropertyIPTCStarRating];
+				}
+			}				
+	
+			//add our modified EXIF data back into the image’s metadata
+			[metadataAsMutable setObject:GPSDictionary forKey:(NSString *)kCGImagePropertyGPSDictionary];
+			[metadataAsMutable setObject:IPTCDictionary forKey:(NSString *)kCGImagePropertyIPTCDictionary];
+			
+			//NSLog ( @"addItemsThread i= %d , changes metadataAsMutable = %@", imageNum, metadataAsMutable );
+			
+			CFStringRef UTI = CGImageSourceGetType(imageSource); //this is the type of image (e.g., public.jpeg)
+			//NSLog ( @"addItemsThread i= %d , UTI = %@", imageNum, UTI );
+			
+			//this will be the data CGImageDestinationRef will write into
+			NSMutableData *dataImage = [NSMutableData data];
+			
+			CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)dataImage,UTI,1,NULL);
+			
+			if(!destination)
+			{
+				NSLog(@"***Could not create image destination ***");
+			} else {
+				
+				//add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+				CGImageDestinationAddImageFromSource(destination,imageSource,0, (CFDictionaryRef) metadataAsMutable);
+				CGImageDestinationSetProperties ( destination, (CFDictionaryRef) metadataAsMutable);
+				
+				//tell the destination to write the image data and metadata into our data object.
+				//It will return false if something goes wrong
+				BOOL success = NO;
+				success = CGImageDestinationFinalize(destination);
+				
+				if(!success)
+				{
+					NSLog(@"***Could not create data from image destination ***");
+				} else {
+					
+					
+					//NSLog ( @"addItemsThread i= %d , gps and location added ", imageNum );
+					
+					//now we have the data ready to go, so do whatever you want with it
+					[item setData:dataImage];
+					currentImageSize = [dataImage length];
+					
+					//	NSLog ( @"addItemsThread i= %d , fin currentImageSize=%d", imageNum, currentImageSize );
+						//CGImageSourceRef imageSource2 = CGImageSourceCreateWithData((CFDataRef)dataImage,  NULL);
+						//NSDictionary *metadata2 = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(imageSource2,0,NULL);
+						//NSLog ( @"addItemsThread i= %d , fin metadata2 = %@", imageNum, metadata2 );
+					
+				}
+				//cleanup
+				CFRelease(destination);
+			}
+			
+			
+			CFRelease(imageSource);
+			//////////////////////////////////////////////////////
+			
             NSDictionary *progressInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                 [NSString stringWithFormat:@"Uploading %@...", [imagePath lastPathComponent]], @"UploadingTextField",
                 [NSString stringWithFormat:@"(Photo %i of %i)", imageNum + 1, (int)[exportManager imageCount]], @"UploadingDetailField",
@@ -1158,6 +1317,51 @@ static int loggingIn;
     currentAlbum = nil;
         
     [pool release];
+}
+
+- (NSNumber *)getCoord:(NSString *)aMixedString {
+	@try {
+		int charIndex;
+		NSMutableString *result = [[NSMutableString alloc] initWithCapacity:[aMixedString length]];
+		
+		for (charIndex = 0; charIndex < [aMixedString length]; charIndex++) {
+			unichar testChar = [aMixedString characterAtIndex:charIndex];
+			
+			if (testChar == '0' 
+				|| testChar == '1'
+				|| testChar == '2'
+				|| testChar == '3'
+				|| testChar == '4'
+				|| testChar == '5'
+				|| testChar == '6'
+				|| testChar == '7'
+				|| testChar == '8'
+				|| testChar == '9'
+				|| testChar == '.') {
+				[result appendFormat:@"%C",testChar];
+			} else if (testChar == ',') {
+				[result appendFormat:@"."];
+			} else {
+				break;
+			}
+		}
+		//NSLog ( @"getCoord inputstring : %@ , coord:[%@] ", aMixedString, result );
+		
+		return [NSNumber numberWithFloat:[result floatValue]];
+    } @catch ( NSException *e ) {
+		NSLog ( @"getCoord inputstring : %@ , error %@ %@ ", aMixedString, [e name], [e reason]  );
+		return [NSNumber numberWithInt:0];
+    }
+	return [NSNumber numberWithInt:0];
+}
+- (NSString *)getCoordRef:(NSString *)aMixedString {
+	if ([aMixedString length] > 0) {
+		int posRef = [aMixedString length] - 1;
+		NSString * result = [aMixedString substringFromIndex:posRef] ;
+		//NSLog ( @"getCoordRef inputstring : %@ , coordref:[%@] ", aMixedString, result );
+		return result;
+	}
+	return @"";
 }
 
 #pragma mark -

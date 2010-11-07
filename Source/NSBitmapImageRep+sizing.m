@@ -26,7 +26,7 @@
 
 - (NSBitmapImageRep *)representationScaledTo:(NSSize)size
 {
-    NSSize originalSize = [self size];
+   // NSSize originalSize = [self size];
     
     int old_x = [self pixelsWide];
     int old_y = [self pixelsHigh];

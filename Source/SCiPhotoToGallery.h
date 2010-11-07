@@ -181,7 +181,8 @@ struct progressStruct {
 - (void)setScaleImages;
 - (NSString*)lookupPasswordForCurrentGallery;
 - (void)loginToSelectedGallery;
-
+- (NSNumber *)getCoord:(NSString *)aMixedString ;
+- (NSString *)getCoordRef:(NSString *)aMixedString;
 - (void)addItemsThread:(id)target;
 
 - (id)exportManager;

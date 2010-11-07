@@ -234,9 +234,6 @@
 
 - (void)createAlbumWithName:(NSString *)name title:(NSString *)title summary:(NSString *)summary parent:(SCZWGallery *)parent
 {
-    if (parent == nil) 
-        (id)parent = (id)[NSNull null];
-	
 	
 	NSString *albumname = nil;
 	if (name == nil || [name isEqualToString:@""]) {
@@ -245,16 +242,24 @@
 		albumname = name;
 	}
 	
-	
-	
-    NSDictionary *threadDispatchInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-										albumname, @"AlbumName",
-										title, @"AlbumTitle",
-										summary, @"AlbumSummary",
-										parent, @"AlbumParent",
-										[NSThread currentThread], @"CallingThread",
-										nil];
-	
+	NSDictionary *threadDispatchInfo;
+    if (parent == nil) {
+		threadDispatchInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  albumname, @"AlbumName",
+							  title, @"AlbumTitle",
+							  summary, @"AlbumSummary",
+							  [NSNull null], @"AlbumParent",
+							  [NSThread currentThread], @"CallingThread",
+							  nil];
+	} else {
+		threadDispatchInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  albumname, @"AlbumName",
+							  title, @"AlbumTitle",
+							  summary, @"AlbumSummary",
+							  parent, @"AlbumParent",
+							  [NSThread currentThread], @"CallingThread",
+							  nil];
+	}
     [NSThread detachNewThreadSelector:@selector(createAlbumThread:) toTarget:self withObject:threadDispatchInfo];
 }
 

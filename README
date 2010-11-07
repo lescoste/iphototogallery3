@@ -28,6 +28,22 @@ Version history :
 see http://github.com/lescoste/iphototogallery3/issues/
 
 
+2010/11/07 version 0.4
+   - issue 13 : add location to photo's Exif GPS and title, description, keywords and rating to photo's IPTC  
+    "{GPS}" =     {
+        Latitude = "53.54616666666666";
+        LatitudeRef = N;
+        Longitude = "9.888999999999999";
+        LongitudeRef = W;
+    };
+    "{IPTC}" =     {
+        "Caption/Abstract" = "ile au loin";
+        ContentLocationName =         ( "Parc National Du Connemara, Connacht, Irlande");
+        Keywords =         ( "Favori, Publiques, ");
+        ObjectName = Connemara;
+        StarRating = 2;
+    };
+
 2010/10/14 version 0.3.5
    - issue 12 : fixed error when creating a new tag in gallery
 
