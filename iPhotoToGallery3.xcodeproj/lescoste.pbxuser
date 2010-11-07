@@ -81,8 +81,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 310853190;
-			PBXWorkspaceStateSaveDate = 310853190;
+			PBXPerProjectTemplateStateSaveDate = 310856761;
+			PBXWorkspaceStateSaveDate = 310856761;
 		};
 		perUserProjectItems = {
 			E2039120124D064600E23FE1 /* PBXTextBookmark */ = E2039120124D064600E23FE1 /* PBXTextBookmark */;
@@ -101,7 +101,7 @@
 			E215092C128484650073F1D4 /* PBXTextBookmark */ = E215092C128484650073F1D4 /* PBXTextBookmark */;
 			E21C3C801287392200105C26 /* PBXTextBookmark */ = E21C3C801287392200105C26 /* PBXTextBookmark */;
 			E21C3CA912873BF700105C26 /* PBXTextBookmark */ = E21C3CA912873BF700105C26 /* PBXTextBookmark */;
-			E21C3CB212873C6F00105C26 /* PBXTextBookmark */ = E21C3CB212873C6F00105C26 /* PBXTextBookmark */;
+			E21F566912874DBD00F73E38 /* PBXTextBookmark */ = E21F566912874DBD00F73E38 /* PBXTextBookmark */;
 			E2413A511267877F00B55F2B /* PBXTextBookmark */ = E2413A511267877F00B55F2B /* PBXTextBookmark */;
 			E295E2F41253CDAF00AD4FE1 /* PBXTextBookmark */ = E295E2F41253CDAF00AD4FE1 /* PBXTextBookmark */;
 			E2C835EF124E4DDA00A43D3D /* PBXTextBookmark */ = E2C835EF124E4DDA00A43D3D /* PBXTextBookmark */;
@@ -220,9 +220,9 @@
 	};
 	E20B0345124B34D300AAB3CF /* SCiPhotoToGallery.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1405, 19370}}";
-			sepNavSelRange = "{41083, 0}";
-			sepNavVisRange = "{46088, 2400}";
+			sepNavIntBoundsRect = "{{0, 0}, {1433, 19526}}";
+			sepNavSelRange = "{44764, 0}";
+			sepNavVisRange = "{45381, 2635}";
 		};
 	};
 	E20B0346124B34D300AAB3CF /* SCiPhotoToGalleryExportPluginBox.h */ = {
@@ -427,15 +427,15 @@
 		vrLen = 283;
 		vrLoc = 0;
 	};
-	E21C3CB212873C6F00105C26 /* PBXTextBookmark */ = {
+	E21F566912874DBD00F73E38 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E20B0345124B34D300AAB3CF /* SCiPhotoToGallery.m */;
-		name = "SCiPhotoToGallery.m: 1219";
+		name = "SCiPhotoToGallery.m: 1143";
 		rLen = 0;
-		rLoc = 48836;
+		rLoc = 44764;
 		rType = 0;
-		vrLen = 2138;
-		vrLoc = 47988;
+		vrLen = 2635;
+		vrLoc = 45381;
 	};
 	E2211FA5123FFA6900EED2BB /* JSON.h */ = {
 		uiCtxt = {

@@ -1140,97 +1140,107 @@ static int loggingIn;
 				IPTCDictionary = [NSMutableDictionary dictionary];
 			}
 			
-			
+			BOOL changes = FALSE;
 			if ([imageExifDict objectForKey:@"Latitude"] != nil 
 				&& [GPSDictionary objectForKey:(NSString *)kCGImagePropertyGPSLatitude] == nil) {
 				[GPSDictionary setObject:[self getCoord:[imageExifDict objectForKey:@"Latitude"]] forKey:(NSString *)kCGImagePropertyGPSLatitude];
 				[GPSDictionary setObject:(NSString *)[self getCoordRef:[imageExifDict objectForKey:@"Latitude"]] forKey:(NSString *)kCGImagePropertyGPSLatitudeRef];
+				changes = TRUE;
 			}
 			if ([imageExifDict objectForKey:@"Longitude"] != nil 
 				&& [GPSDictionary objectForKey:(NSString *)kCGImagePropertyGPSLongitude] == nil) {
 				[GPSDictionary setObject:[self getCoord:[imageExifDict objectForKey:@"Longitude"]] forKey:(NSString *)kCGImagePropertyGPSLongitude];
 				[GPSDictionary setObject:(NSString *)[self getCoordRef:[imageExifDict objectForKey:@"Longitude"]] forKey:(NSString *)kCGImagePropertyGPSLongitudeRef];
+				changes = TRUE;
 			}
 			if ([imageExifDict objectForKey:@"Location"] != nil 
 				&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCContentLocationName] == nil) {
 				//					[ExifDictionary setObject:(NSString *)[imageExifDict objectForKey:@"Location"] forKey:(NSString *)kCGImagePropertyExifSubjectLocation];
 				[IPTCDictionary setObject:(NSString *)[imageExifDict objectForKey:@"Location"] forKey:(NSString *)kCGImagePropertyIPTCContentLocationName];
+				changes = TRUE;
 			}
 			if ([mainExportCommentsSwitch state]) {
                 if ([imageDict objectForKey:@"Caption"]!= nil 
 					&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCObjectName] == nil) {
 					[IPTCDictionary setObject:(NSString *)[imageDict objectForKey:@"Caption"] forKey:(NSString *)kCGImagePropertyIPTCObjectName];
+					changes = TRUE;
 				}
                 if ([imageDict objectForKey:@"Annotation"] != nil 
 					&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCCaptionAbstract] == nil) {
 					[IPTCDictionary setObject:(NSString *)[imageDict objectForKey:@"Annotation"] forKey:(NSString *)kCGImagePropertyIPTCCaptionAbstract];
+					changes = TRUE;
 				}
 			}
 			
 			if ([mainExportTagsSwitch state]) {
-                if (imageKeywords != nil && [imageKeywords count] > 0) {
+                if (imageKeywords != nil && [imageKeywords count] > 0 
+					&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCKeywords] == nil) {
 					NSMutableArray * keywords = [[NSMutableArray alloc] init];  
 					[keywords addObjectsFromArray:imageKeywords];
 					
 					[IPTCDictionary setObject:keywords forKey:(NSString *)kCGImagePropertyIPTCKeywords];
 					[keywords release];
+					changes = TRUE;
 				}
 				// imageRating
-				if (imageRating > 0) {
+				if (imageRating > 0
+					&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCStarRating] == nil) {
 					[IPTCDictionary setObject:[NSString stringWithFormat:@"%d", imageRating] forKey:(NSString *)kCGImagePropertyIPTCStarRating];
+					changes = TRUE;
 				}
 			}				
 	
-			//add our modified EXIF data back into the image’s metadata
-			[metadataAsMutable setObject:GPSDictionary forKey:(NSString *)kCGImagePropertyGPSDictionary];
-			[metadataAsMutable setObject:IPTCDictionary forKey:(NSString *)kCGImagePropertyIPTCDictionary];
-			
-			//NSLog ( @"addItemsThread i= %d , changes metadataAsMutable = %@", imageNum, metadataAsMutable );
-			
-			CFStringRef UTI = CGImageSourceGetType(imageSource); //this is the type of image (e.g., public.jpeg)
-			//NSLog ( @"addItemsThread i= %d , UTI = %@", imageNum, UTI );
-			
-			//this will be the data CGImageDestinationRef will write into
-			NSMutableData *dataImage = [NSMutableData data];
-			
-			CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)dataImage,UTI,1,NULL);
-			
-			if(!destination)
-			{
-				NSLog(@"***Could not create image destination ***");
-			} else {
+			if (changes) {
+				//add our modified EXIF data back into the image’s metadata
+				[metadataAsMutable setObject:GPSDictionary forKey:(NSString *)kCGImagePropertyGPSDictionary];
+				[metadataAsMutable setObject:IPTCDictionary forKey:(NSString *)kCGImagePropertyIPTCDictionary];
 				
-				//add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
-				CGImageDestinationAddImageFromSource(destination,imageSource,0, (CFDictionaryRef) metadataAsMutable);
-				CGImageDestinationSetProperties ( destination, (CFDictionaryRef) metadataAsMutable);
+				//NSLog ( @"addItemsThread i= %d , changes metadataAsMutable = %@", imageNum, metadataAsMutable );
 				
-				//tell the destination to write the image data and metadata into our data object.
-				//It will return false if something goes wrong
-				BOOL success = NO;
-				success = CGImageDestinationFinalize(destination);
+				CFStringRef UTI = CGImageSourceGetType(imageSource); //this is the type of image (e.g., public.jpeg)
+				//NSLog ( @"addItemsThread i= %d , UTI = %@", imageNum, UTI );
 				
-				if(!success)
+				//this will be the data CGImageDestinationRef will write into
+				NSMutableData *dataImage = [NSMutableData data];
+				
+				CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)dataImage,UTI,1,NULL);
+				
+				if(!destination)
 				{
-					NSLog(@"***Could not create data from image destination ***");
+					NSLog(@"***Could not create image destination ***");
 				} else {
 					
+					//add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+					CGImageDestinationAddImageFromSource(destination,imageSource,0, (CFDictionaryRef) metadataAsMutable);
+					CGImageDestinationSetProperties ( destination, (CFDictionaryRef) metadataAsMutable);
 					
-					//NSLog ( @"addItemsThread i= %d , gps and location added ", imageNum );
+					//tell the destination to write the image data and metadata into our data object.
+					//It will return false if something goes wrong
+					BOOL success = NO;
+					success = CGImageDestinationFinalize(destination);
 					
-					//now we have the data ready to go, so do whatever you want with it
-					[item setData:dataImage];
-					currentImageSize = [dataImage length];
-					
-					//	NSLog ( @"addItemsThread i= %d , fin currentImageSize=%d", imageNum, currentImageSize );
+					if(!success)
+					{
+						NSLog(@"***Could not create data from image destination ***");
+					} else {
+						
+						
+						//NSLog ( @"addItemsThread i= %d , gps and location added ", imageNum );
+						
+						//now we have the data ready to go, so do whatever you want with it
+						[item setData:dataImage];
+						currentImageSize = [dataImage length];
+						
+						//	NSLog ( @"addItemsThread i= %d , fin currentImageSize=%d", imageNum, currentImageSize );
 						//CGImageSourceRef imageSource2 = CGImageSourceCreateWithData((CFDataRef)dataImage,  NULL);
 						//NSDictionary *metadata2 = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(imageSource2,0,NULL);
 						//NSLog ( @"addItemsThread i= %d , fin metadata2 = %@", imageNum, metadata2 );
-					
+						
+					}
+					//cleanup
+					CFRelease(destination);
 				}
-				//cleanup
-				CFRelease(destination);
 			}
-			
 			
 			CFRelease(imageSource);
 			//////////////////////////////////////////////////////
