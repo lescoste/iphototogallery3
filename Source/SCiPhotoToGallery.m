@@ -1141,40 +1141,34 @@ static int loggingIn;
 			}
 			
 			BOOL changes = FALSE;
-			if ([imageExifDict objectForKey:@"Latitude"] != nil 
-				&& [GPSDictionary objectForKey:(NSString *)kCGImagePropertyGPSLatitude] == nil) {
-				[GPSDictionary setObject:[self getCoord:[imageExifDict objectForKey:@"Latitude"]] forKey:(NSString *)kCGImagePropertyGPSLatitude];
-				[GPSDictionary setObject:(NSString *)[self getCoordRef:[imageExifDict objectForKey:@"Latitude"]] forKey:(NSString *)kCGImagePropertyGPSLatitudeRef];
-				changes = TRUE;
-			}
-			if ([imageExifDict objectForKey:@"Longitude"] != nil 
-				&& [GPSDictionary objectForKey:(NSString *)kCGImagePropertyGPSLongitude] == nil) {
-				[GPSDictionary setObject:[self getCoord:[imageExifDict objectForKey:@"Longitude"]] forKey:(NSString *)kCGImagePropertyGPSLongitude];
-				[GPSDictionary setObject:(NSString *)[self getCoordRef:[imageExifDict objectForKey:@"Longitude"]] forKey:(NSString *)kCGImagePropertyGPSLongitudeRef];
-				changes = TRUE;
-			}
-			if ([imageExifDict objectForKey:@"Location"] != nil 
-				&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCContentLocationName] == nil) {
-				//					[ExifDictionary setObject:(NSString *)[imageExifDict objectForKey:@"Location"] forKey:(NSString *)kCGImagePropertyExifSubjectLocation];
-				[IPTCDictionary setObject:(NSString *)[imageExifDict objectForKey:@"Location"] forKey:(NSString *)kCGImagePropertyIPTCContentLocationName];
-				changes = TRUE;
-			}
 			if ([mainExportCommentsSwitch state]) {
-                if ([imageDict objectForKey:@"Caption"]!= nil 
-					&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCObjectName] == nil) {
+                if ([imageDict objectForKey:@"Caption"]!= nil) {
 					[IPTCDictionary setObject:(NSString *)[imageDict objectForKey:@"Caption"] forKey:(NSString *)kCGImagePropertyIPTCObjectName];
 					changes = TRUE;
 				}
-                if ([imageDict objectForKey:@"Annotation"] != nil 
-					&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCCaptionAbstract] == nil) {
+                if ([imageDict objectForKey:@"Annotation"] != nil) {
 					[IPTCDictionary setObject:(NSString *)[imageDict objectForKey:@"Annotation"] forKey:(NSString *)kCGImagePropertyIPTCCaptionAbstract];
 					changes = TRUE;
 				}
 			}
 			
 			if ([mainExportTagsSwitch state]) {
-                if (imageKeywords != nil && [imageKeywords count] > 0 
-					&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCKeywords] == nil) {
+				if ([imageExifDict objectForKey:@"Latitude"] != nil) {
+					[GPSDictionary setObject:[self getCoord:[imageExifDict objectForKey:@"Latitude"]] forKey:(NSString *)kCGImagePropertyGPSLatitude];
+					[GPSDictionary setObject:(NSString *)[self getCoordRef:[imageExifDict objectForKey:@"Latitude"]] forKey:(NSString *)kCGImagePropertyGPSLatitudeRef];
+					changes = TRUE;
+				}
+				if ([imageExifDict objectForKey:@"Longitude"] != nil) {
+					[GPSDictionary setObject:[self getCoord:[imageExifDict objectForKey:@"Longitude"]] forKey:(NSString *)kCGImagePropertyGPSLongitude];
+					[GPSDictionary setObject:(NSString *)[self getCoordRef:[imageExifDict objectForKey:@"Longitude"]] forKey:(NSString *)kCGImagePropertyGPSLongitudeRef];
+					changes = TRUE;
+				}
+				if ([imageExifDict objectForKey:@"Location"] != nil) {
+					//					[ExifDictionary setObject:(NSString *)[imageExifDict objectForKey:@"Location"] forKey:(NSString *)kCGImagePropertyExifSubjectLocation];
+					[IPTCDictionary setObject:(NSString *)[imageExifDict objectForKey:@"Location"] forKey:(NSString *)kCGImagePropertyIPTCContentLocationName];
+					changes = TRUE;
+				}
+                if (imageKeywords != nil && [imageKeywords count] > 0) {
 					NSMutableArray * keywords = [[NSMutableArray alloc] init];  
 					[keywords addObjectsFromArray:imageKeywords];
 					
@@ -1183,8 +1177,7 @@ static int loggingIn;
 					changes = TRUE;
 				}
 				// imageRating
-				if (imageRating > 0
-					&& [IPTCDictionary objectForKey:(NSString *)kCGImagePropertyIPTCStarRating] == nil) {
+				if (imageRating > 0) {
 					[IPTCDictionary setObject:[NSString stringWithFormat:@"%d", imageRating] forKey:(NSString *)kCGImagePropertyIPTCStarRating];
 					changes = TRUE;
 				}
