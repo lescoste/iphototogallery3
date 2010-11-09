@@ -12,12 +12,12 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="182"/>
 			<integer value="204"/>
-			<integer value="5"/>
-			<integer value="165"/>
 			<integer value="527"/>
 			<integer value="546"/>
+			<integer value="182"/>
+			<integer value="165"/>
+			<integer value="8"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -443,7 +443,7 @@
 											<object class="NSTextFieldCell" key="NSCell" id="805026348">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4194304</int>
-												<string key="NSContents">iPhotoToGallery3 0.4, by S. Coste</string>
+												<string key="NSContents">iPhotoToGallery3 0.4.1, by S. Coste</string>
 												<reference key="NSSupport" ref="26"/>
 												<reference key="NSControlView" ref="222494838"/>
 												<reference key="NSBackgroundColor" ref="438118409"/>

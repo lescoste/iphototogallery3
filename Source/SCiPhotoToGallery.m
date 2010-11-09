@@ -957,8 +957,8 @@ static int loggingIn;
         return nil;
     }
     
-//    NSString *password = [NSString stringWithCString:passwordData length:passwordLength];
-    NSString *password = [NSString stringWithCString:passwordData encoding:[NSString defaultCStringEncoding]];
+    NSString *password = [NSString stringWithCString:passwordData length:passwordLength];
+//    NSString *password = [NSString stringWithCString:passwordData encoding:[NSString defaultCStringEncoding]];
     if (passwordLength) 
         SecKeychainItemFreeContent(NULL, passwordData);
 
