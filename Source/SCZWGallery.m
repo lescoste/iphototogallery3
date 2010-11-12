@@ -341,6 +341,7 @@
 	
 	if ([currentConnection isCancelled]){
 		[result setObject: [NSNumber numberWithInt:SCZW_GALLERY_OPERATION_DID_CANCEL] forKey:@"status"];
+		NSLog ( @"doGetItem: cancelled, url = %@", itemUrl);
 		return result;
 	} 
 	
@@ -350,12 +351,14 @@
 	
 	if (data == nil) {
 		[result setObject:[NSNumber numberWithInt:SCZW_GALLERY_COULD_NOT_CONNECT] forKey:@"status"];
+		NSLog ( @"doGetItem: error no response, url = %@", itemUrl);
 		return result;
 	}
 	
 	id galleryResponse = [self parseResponseData:data];
 	if (galleryResponse == nil) {
 		[result setObject:[NSNumber numberWithInt:SCZW_GALLERY_PROTOCOL_ERROR] forKey:@"status"];
+		NSLog ( @"doGetItem: error wrong response, url = %@, data=%@", itemUrl , data);
 		return result;
 	}
 	
@@ -534,8 +537,10 @@
 			while ([currentConnection isRunning]) 
 				[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
 			
-			if ([currentConnection isCancelled]) 
+			if ([currentConnection isCancelled]) {
+				NSLog ( @"getandparseAlbums: canceled" );
 				return SCZW_GALLERY_OPERATION_DID_CANCEL;
+			}
 			
 			// reponse from server
 			
@@ -563,12 +568,16 @@
 			}
 		}
 		
-		if (status != GR_STAT_SUCCESS) 
+		if (status != GR_STAT_SUCCESS) {
+			NSLog ( @"getandparseAlbums: Error response status=%@", status );
 			return status;
+		}
 		
 		NSArray *galleryResponse = [self parseResponseData:dataFound];
-		if (galleryResponse == nil) 
+		if (galleryResponse == nil) {
+			NSLog ( @"getandparseAlbums: Error parsing data=%@", dataFound );
 			return SCZW_GALLERY_PROTOCOL_ERROR;
+		}
 		
 		//NSLog ( @"getandparseAlbums galleryResponse size : %d", [galleryResponse count] );
 		
@@ -811,12 +820,17 @@
 	NSDictionary * response = [self doGetItem:(NSURL *)fullReqURL];
 	SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
 	
-	if (status != GR_STAT_SUCCESS) 
+	if (status != GR_STAT_SUCCESS) {
+		NSLog ( @"doGetAlbums: error status= %@", status );
 		return status;
+	}
 	
 	NSDictionary * galleryResponse = [response objectForKey:@"data"];
-	if (galleryResponse == nil) 
+	if (galleryResponse == nil) {
+		NSLog ( @"doGetAlbums: error parsing response= %@", response );
 		return SCZW_GALLERY_PROTOCOL_ERROR;
+	}
+	
 	
 	NSArray *members = [galleryResponse objectForKey:@"members"];
 	//NSLog ( @"parseResponseData members = %@", members );
@@ -828,8 +842,10 @@
     [albums release];
     albums = nil;
     
-    if (status != GR_STAT_SUCCESS)
-        return status;
+	if (status != GR_STAT_SUCCESS) {
+		NSLog ( @"doGetAlbums: error status getandparseAlbums = %@", status );
+		return status;
+	}
     
     // add the albums to myself here...
     int numAlbums = [jsonalbums count];
@@ -979,8 +995,10 @@
 	
 	NSArray *galleryResponse = [self doCreateObjectWithData:dict url:parentUrl ];
 	
-	if (galleryResponse == nil) 
-        return SCZW_GALLERY_PROTOCOL_ERROR;
+	if (galleryResponse == nil) {
+		NSLog ( @"doCreateAlbumWithName: error no response title : %@ , parent url : %@", title, parentUrl );
+	    return SCZW_GALLERY_PROTOCOL_ERROR;
+	}
 	
 	[lastCreatedAlbumName release];
 	lastCreatedAlbumName = [name copy];
@@ -1017,8 +1035,10 @@
 	
 	id galleryResponse = [self doCreateObjectWithData:dict url:[aURL absoluteString] ];
 	
-	if (galleryResponse == nil) 
-        return SCZW_GALLERY_PROTOCOL_ERROR;
+	if (galleryResponse == nil) {
+		NSLog ( @"doCreateTagWithName: error no response name : %@", name );
+	    return SCZW_GALLERY_PROTOCOL_ERROR;
+	}
 	
 	// add tag in local memory
 	[tags setObject:[galleryResponse objectForKey:@"url"] forKey:name];
@@ -1050,8 +1070,10 @@
 	
 	NSMutableDictionary * galleryResponse = [self doCreateObjectWithData:dict url:[aURL absoluteString] ];
 	
-	if (galleryResponse == nil) 
-        return SCZW_GALLERY_PROTOCOL_ERROR;
+	if (galleryResponse == nil) {
+		NSLog ( @"doLinkTag: error no response tagUrl: %@ photoUrl: %@", tagUrl, photoUrl );
+	    return SCZW_GALLERY_PROTOCOL_ERROR;
+	}
 	
 	NSLog ( @"doLinkTag: tag linked : %@", [galleryResponse objectForKey:@"url"] );
 	

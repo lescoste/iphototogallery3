@@ -12,12 +12,12 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="204"/>
 			<integer value="527"/>
 			<integer value="546"/>
+			<integer value="5"/>
+			<integer value="204"/>
 			<integer value="182"/>
 			<integer value="165"/>
-			<integer value="8"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -443,7 +443,7 @@
 											<object class="NSTextFieldCell" key="NSCell" id="805026348">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4194304</int>
-												<string key="NSContents">iPhotoToGallery3 0.4.1, by S. Coste</string>
+												<string key="NSContents">iPhotoToGallery3 0.4.2, by S. Coste</string>
 												<reference key="NSSupport" ref="26"/>
 												<reference key="NSControlView" ref="222494838"/>
 												<reference key="NSBackgroundColor" ref="438118409"/>
@@ -809,7 +809,7 @@
 									<reference key="NSSuperview" ref="904604331"/>
 								</object>
 							</object>
-							<string key="NSFrame">{{0, 23}, {444, 493}}</string>
+							<string key="NSFrame">{{15, 23}, {444, 493}}</string>
 							<reference key="NSSuperview" ref="985863093"/>
 							<string key="NSOffsets">{0, 0}</string>
 							<object class="NSTextFieldCell" key="NSTitleCell">
@@ -842,7 +842,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{557, 473}, {360, 349}}</string>
 				<int key="NSWTFlags">-260571136</int>
-				<string key="NSWindowTitle">Gallery Settings</string>
+				<string key="NSWindowTitle">Gallery3 Settings</string>
 				<string key="NSWindowClass">NSPanel</string>
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
@@ -1190,7 +1190,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{206, 127}, {422, 216}}</string>
 				<int key="NSWTFlags">-260571136</int>
-				<string key="NSWindowTitle">Gallery List</string>
+				<string key="NSWindowTitle">Gallery3 List</string>
 				<string key="NSWindowClass">NSPanel</string>
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
@@ -4313,9 +4313,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{329, 954}, {409, 168}}</string>
+					<string>{{872, 551}, {409, 168}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{329, 954}, {409, 168}}</string>
+					<string>{{872, 551}, {409, 168}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>

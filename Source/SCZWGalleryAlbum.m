@@ -383,6 +383,7 @@
             CFIndex bytesRead = CFReadStreamRead(readStream, buf, BUFSIZE);
             if (bytesRead < 0) {
                 // uh-oh - this returns without releasing our CF objects
+				NSLog(@"addItemSynchronously: photo '%@' upload to album %@ error bytes read < 0", itemname, fullURL);
                 return SCZW_GALLERY_UNKNOWN_ERROR;
             } else if (bytesRead == 0) {
                 done = YES;
@@ -409,11 +410,14 @@
     CFRelease(messageRef);
     CFRelease(readStream);
     
-    if (cancelled)
+    if (cancelled) {
+		NSLog(@"addItemSynchronously: photo '%@' upload to album %@ canceled", itemname, fullURL);
         return SCZW_GALLERY_OPERATION_DID_CANCEL;
-    
+    }
+		
     NSDictionary *galleryResponse = [[self gallery] parseResponseData:data];
     if (galleryResponse == nil) {
+		NSLog(@"addItemSynchronously: photo '%@' upload to album %@ failed, response=%@", itemname, fullURL, data);
         return SCZW_GALLERY_PROTOCOL_ERROR;
     }
     
@@ -425,7 +429,7 @@
 	NSDate *endUploadDate = [NSDate date];
 	
 	NSTimeInterval difference = [endUploadDate timeIntervalSinceDate:startUploadDate];
-	NSLog(@"addItemSynchronously: upload time: %f ,  photo added url=%@", difference, galleryResponse);
+	NSLog(@"addItemSynchronously: upload runtime: %f ,  photo added url=%@", difference, galleryResponse);
 	
 	/*
 	 addItemSynchronously: photo added url={

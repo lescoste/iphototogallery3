@@ -42,9 +42,13 @@
 		E2211FB2123FFA6900EED2BB /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E2211FAB123FFA6900EED2BB /* SBJsonBase.m */; };
 		E2211FB3123FFA6900EED2BB /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E2211FAD123FFA6900EED2BB /* SBJsonParser.m */; };
 		E2211FB4123FFA6900EED2BB /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = E2211FAF123FFA6900EED2BB /* SBJsonWriter.m */; };
+		E285305812892F89007A3563 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E285305212892F89007A3563 /* InfoPlist.strings */; };
+		E285305912892F89007A3563 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = E285305412892F89007A3563 /* locversion.plist */; };
+		E285305A12892F89007A3563 /* Panel.nib in Resources */ = {isa = PBXBuildFile; fileRef = E285305612892F89007A3563 /* Panel.nib */; };
+		E285306612892FC7007A3563 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E285306012892FC7007A3563 /* InfoPlist.strings */; };
+		E285306712892FC7007A3563 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = E285306212892FC7007A3563 /* locversion.plist */; };
+		E285306812892FC7007A3563 /* Panel.nib in Resources */ = {isa = PBXBuildFile; fileRef = E285306412892FC7007A3563 /* Panel.nib */; };
 		FF1F7C520577F3280000D2DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1F7C510577F3280000D2DB /* Security.framework */; };
-		FF64F5B40874F0C30057A0FC /* Panel.nib in Resources */ = {isa = PBXBuildFile; fileRef = FF64F5AE0874F0C30057A0FC /* Panel.nib */; };
-		FF64F5EB0874F2CD0057A0FC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF64F5E90874F2CD0057A0FC /* InfoPlist.strings */; };
 		FF89399B085B77E500404828 /* iPhotoPluginIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = FF89399A085B77E500404828 /* iPhotoPluginIcon.tif */; };
 		FF8939E0085B79AD00404828 /* iPhotoPluginIcon_80.tif in Resources */ = {isa = PBXBuildFile; fileRef = FF8939DF085B79AD00404828 /* iPhotoPluginIcon_80.tif */; };
 		FF893DA2085D7EE300404828 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF893D90085D7EE300404828 /* SystemConfiguration.framework */; };
@@ -137,13 +141,17 @@
 		E2211FAD123FFA6900EED2BB /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		E2211FAE123FFA6900EED2BB /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		E2211FAF123FFA6900EED2BB /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		E285305312892F89007A3563 /* en */ = {isa = PBXFileReference; fileEncoding = 2415919360; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
+		E285305512892F89007A3563 /* en */ = {isa = PBXFileReference; fileEncoding = 2415919360; lastKnownFileType = text.plist.xml; name = en; path = locversion.plist; sourceTree = "<group>"; };
+		E285305712892F89007A3563 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = Panel.nib; sourceTree = "<group>"; };
+		E285306112892FC7007A3563 /* fr */ = {isa = PBXFileReference; fileEncoding = 2415919360; lastKnownFileType = text.plist.strings; name = fr; path = InfoPlist.strings; sourceTree = "<group>"; };
+		E285306312892FC7007A3563 /* fr */ = {isa = PBXFileReference; fileEncoding = 2415919360; lastKnownFileType = text.plist.xml; name = fr; path = locversion.plist; sourceTree = "<group>"; };
+		E285306512892FC7007A3563 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = Panel.nib; sourceTree = "<group>"; };
 		E2C934EF12436F7800B882AE /* iPhotoToGallery3_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhotoToGallery3_Prefix.pch; sourceTree = "<group>"; };
 		FF0FDA04086A3ACB00C17F70 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
 		FF1578F005DAEB31009C952D /* iPhotoExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPhotoExporter.h; path = Source/iPhotoExporter.h; sourceTree = "<group>"; };
 		FF1F7C510577F3280000D2DB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		FF640A61086220F70013291B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		FF64F5AF0874F0C30057A0FC /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/Panel.nib; sourceTree = "<group>"; };
-		FF64F5EA0874F2CD0057A0FC /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF89399A085B77E500404828 /* iPhotoPluginIcon.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = iPhotoPluginIcon.tif; path = Resources/iPhotoPluginIcon.tif; sourceTree = "<group>"; };
 		FF89399C085B77EA00404828 /* iPhotoPluginIcon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; name = iPhotoPluginIcon.psd; path = Resources/iPhotoPluginIcon.psd; sourceTree = "<group>"; };
 		FF8939DF085B79AD00404828 /* iPhotoPluginIcon_80.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = iPhotoPluginIcon_80.tif; path = Resources/iPhotoPluginIcon_80.tif; sourceTree = "<group>"; };
@@ -192,8 +200,8 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FF64F5E90874F2CD0057A0FC /* InfoPlist.strings */,
-				FF64F5AE0874F0C30057A0FC /* Panel.nib */,
+				E285305F12892FC7007A3563 /* fr.lproj */,
+				E285305112892F89007A3563 /* en.lproj */,
 				FF893AFC085CDBC500404828 /* restrictedshine.tiff */,
 				FF8939DF085B79AD00404828 /* iPhotoPluginIcon_80.tif */,
 				FF89399C085B77EA00404828 /* iPhotoPluginIcon.psd */,
@@ -263,6 +271,28 @@
 				E2211FAF123FFA6900EED2BB /* SBJsonWriter.m */,
 			);
 			path = json;
+			sourceTree = "<group>";
+		};
+		E285305112892F89007A3563 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				E285305212892F89007A3563 /* InfoPlist.strings */,
+				E285305412892F89007A3563 /* locversion.plist */,
+				E285305612892F89007A3563 /* Panel.nib */,
+			);
+			name = en.lproj;
+			path = Resources/en.lproj;
+			sourceTree = "<group>";
+		};
+		E285305F12892FC7007A3563 /* fr.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				E285306012892FC7007A3563 /* InfoPlist.strings */,
+				E285306212892FC7007A3563 /* locversion.plist */,
+				E285306412892FC7007A3563 /* Panel.nib */,
+			);
+			name = fr.lproj;
+			path = Resources/fr.lproj;
 			sourceTree = "<group>";
 		};
 		FF50BBE7085617350073F0E4 /* Gallery */ = {
@@ -339,6 +369,14 @@
 			buildConfigurationList = FF93797D08553AA800831A51 /* Build configuration list for PBXProject "iPhotoToGallery3" */;
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				fr,
+			);
 			mainGroup = 089C166AFE841209C02AAC07 /* iPhotoToGallery */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -356,8 +394,12 @@
 			files = (
 				FF89399B085B77E500404828 /* iPhotoPluginIcon.tif in Resources */,
 				FF8939E0085B79AD00404828 /* iPhotoPluginIcon_80.tif in Resources */,
-				FF64F5B40874F0C30057A0FC /* Panel.nib in Resources */,
-				FF64F5EB0874F2CD0057A0FC /* InfoPlist.strings in Resources */,
+				E285305812892F89007A3563 /* InfoPlist.strings in Resources */,
+				E285305912892F89007A3563 /* locversion.plist in Resources */,
+				E285305A12892F89007A3563 /* Panel.nib in Resources */,
+				E285306612892FC7007A3563 /* InfoPlist.strings in Resources */,
+				E285306712892FC7007A3563 /* locversion.plist in Resources */,
+				E285306812892FC7007A3563 /* Panel.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,20 +459,52 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		FF64F5AE0874F0C30057A0FC /* Panel.nib */ = {
+		E285305212892F89007A3563 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FF64F5AF0874F0C30057A0FC /* English */,
+				E285305312892F89007A3563 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E285305412892F89007A3563 /* locversion.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E285305512892F89007A3563 /* en */,
+			);
+			name = locversion.plist;
+			sourceTree = "<group>";
+		};
+		E285305612892F89007A3563 /* Panel.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E285305712892F89007A3563 /* en */,
 			);
 			name = Panel.nib;
 			sourceTree = "<group>";
 		};
-		FF64F5E90874F2CD0057A0FC /* InfoPlist.strings */ = {
+		E285306012892FC7007A3563 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FF64F5EA0874F2CD0057A0FC /* English */,
+				E285306112892FC7007A3563 /* fr */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E285306212892FC7007A3563 /* locversion.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E285306312892FC7007A3563 /* fr */,
+			);
+			name = locversion.plist;
+			sourceTree = "<group>";
+		};
+		E285306412892FC7007A3563 /* Panel.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E285306512892FC7007A3563 /* fr */,
+			);
+			name = Panel.nib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
