@@ -893,12 +893,26 @@
         NSString *a_name = [entity objectForKey:@"name"];
         NSString *a_title = [entity objectForKey:@"title"];
 		NSString *parent = [entity objectForKey:@"parent"];
+
+		NSString *parentUrlWithAuth = parent;
+		if (addBasicAuth) {
+			// add basic http authent if needed
+			NSString *galleryURLWithAuth = [url absoluteString];
+			NSRange restRange = [parent rangeOfString:@"rest"];
+			//	NSLog ( @"doGetAlbums test : %d %@ restRange = loc %d  lenght %d", i, albumurl, restRange.location, restRange.length );
+			int debRest = restRange.location;
+			if (debRest > 0) {
+				NSRange range = NSMakeRange(0, debRest);
+				parentUrlWithAuth = [parent stringByReplacingCharactersInRange:range withString:galleryURLWithAuth];
+				//		NSLog ( @"doGetAlbums added : %d %@ httpauth = %@", i, albumurl, albumUrlWithAuth );
+			}
+		}
 		
 		[galleriesPerUrl setValue:[NSNumber numberWithInt:i+1] forKey:albumUrlWithAuth];
 		
 		SCZWGalleryAlbum *album = [SCZWGalleryAlbum albumWithTitle:a_title name:a_name gallery:self];
 		[album setUrl:albumUrlWithAuth];
-		[album setParenturl:parent];
+		[album setParenturl:parentUrlWithAuth];
 		
         // this album will use the delegate of the gallery we're on
         [album setDelegate:[self delegate]];
