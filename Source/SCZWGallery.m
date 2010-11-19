@@ -512,8 +512,7 @@
 			
 			NSString *requestbody = [NSString stringWithFormat:@"%@%@",requestString, jsonParams];
 			
-			fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items"]];
-			NSURL* fullReqURL = [[NSURL alloc] initWithString:[fullURL absoluteString]];
+			NSURL* fullReqURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/items"]];
 			
 			//NSLog ( @"getandparseAlbums: get %d albums starting at %d, url = %@", j, startI, [fullReqURL absoluteString] );
 			
@@ -659,7 +658,6 @@
     
     // Now try to log in 
 	// try logging into Gallery v3
-	fullURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest"]];
 	NSLog ( @"doLogin: url = %@", fullURL );
 	
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:fullURL
@@ -812,8 +810,7 @@
 	NSString *requestString = @"type=album&output=json&scope=all";
 	NSString* escapedUrlString = [requestString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 	NSString *rootAlbumUrl = [[url absoluteString] stringByAppendingString:@"rest/item/1"];
-	fullURL = [[NSURL alloc] initWithString:[rootAlbumUrl stringByAppendingString:@"?"]];
-	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[fullURL absoluteString] stringByAppendingString:escapedUrlString]];
+	NSURL* fullReqURL = [[NSURL alloc] initWithString:[[rootAlbumUrl stringByAppendingString:@"?"] stringByAppendingString:escapedUrlString]];
 	
 	//NSLog ( @"doGetAlbums: url = %@", [fullReqURL absoluteString] );
 	
@@ -868,7 +865,8 @@
 		
 	[galleriesArray addObject:albumRoot];
     int i;
-	
+	Boolean addBasicAuth = ([url user] != nil);
+		
     NSMutableDictionary *galleriesPerUrl = [[NSMutableDictionary alloc] init];
     // first we'll iterate through to create the objects, since we don't know if they'll be in an order
     // where parents will always come before children
@@ -877,15 +875,29 @@
 		NSDictionary *galleryAlbum =  [jsonalbums objectAtIndex:i];
 		NSDictionary *entity = [galleryAlbum objectForKey:@"entity"];
 		NSString *albumurl = [galleryAlbum objectForKey:@"url"];
+
+		NSString *albumUrlWithAuth = albumurl;
+		if (addBasicAuth) {
+			// add basic http authent if needed
+			NSString *galleryURLWithAuth = [url absoluteString];
+			NSRange restRange = [albumurl rangeOfString:@"rest"];
+			//	NSLog ( @"doGetAlbums test : %d %@ restRange = loc %d  lenght %d", i, albumurl, restRange.location, restRange.length );
+			int debRest = restRange.location;
+			if (debRest > 0) {
+				NSRange range = NSMakeRange(0, debRest);
+				albumUrlWithAuth = [albumurl stringByReplacingCharactersInRange:range withString:galleryURLWithAuth];
+				//		NSLog ( @"doGetAlbums added : %d %@ httpauth = %@", i, albumurl, albumUrlWithAuth );
+			}
+		}
 		
         NSString *a_name = [entity objectForKey:@"name"];
         NSString *a_title = [entity objectForKey:@"title"];
 		NSString *parent = [entity objectForKey:@"parent"];
 		
-		[galleriesPerUrl setValue:[NSNumber numberWithInt:i+1] forKey:albumurl];
+		[galleriesPerUrl setValue:[NSNumber numberWithInt:i+1] forKey:albumUrlWithAuth];
 		
 		SCZWGalleryAlbum *album = [SCZWGalleryAlbum albumWithTitle:a_title name:a_name gallery:self];
-		[album setUrl:albumurl];
+		[album setUrl:albumUrlWithAuth];
 		[album setParenturl:parent];
 		
         // this album will use the delegate of the gallery we're on

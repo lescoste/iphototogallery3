@@ -28,6 +28,9 @@ Version history :
 
 see http://github.com/lescoste/iphototogallery3/issues/
 
+2010/11/19 version 0.4.3
+   - issue 14 : fix http basic authentication
+
 2010/11/10 version 0.4.2
    - added french localization
 

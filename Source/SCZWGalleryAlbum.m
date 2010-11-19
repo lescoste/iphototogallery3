@@ -307,6 +307,34 @@
 
     CFHTTPMessageRef messageRef = CFHTTPMessageCreateRequest(kCFAllocatorDefault, CFSTR("POST"), (CFURLRef)fullURL, kCFHTTPVersion1_1);
 
+	/*
+	 * gf: 2/27/2008: The initial login to a gallery (ZWGallery doLogin) uses NSURLRequest. Since this
+	 * connection uses CFHTTPMessage (in order to monitor progress; see below), and since CFHTTPMessage
+	 * (apparently) doesn't handle user@pass in URLs automagically, we may need to add authentication
+	 * credentials. We have to pull them out of the URL (if they're there).
+	 *
+	 * Note the warning in the CF Network Programming Guide: "Do not apply credentials to the HTTP request
+	 * before receiving a server challenge. The server may have changed since the last time you authenticated
+	 * and you could create a security risk." Unfortunately, doing this right would require a more elaborate
+	 * reworking of the upload loop (below) than I have time or understanding to create.
+	 */
+	NSString *user = [fullURL user];
+	NSString *password = [fullURL password];
+	//NSLog(@"addItemSynchronously: user=%@, password=%@", user, password);
+	if (user != nil) {
+		//NSLog(@"addItemSynchronously: adding authentication");
+		Boolean result = CFHTTPMessageAddAuthentication(messageRef,		// request
+														nil,			// authenticationFailureResponse
+														(CFStringRef)user,
+														(CFStringRef)password,
+														kCFHTTPAuthenticationSchemeBasic,
+														FALSE);			// forProxy
+		if (!result) {
+			NSLog(@"addItemSynchronously: failed to add authentication!");
+		}
+	}
+	
+	
 	NSString *requestkey = [gallery requestkey];
 	//NSLog(@"addItemSynchronously: album url=%@, requestkey=%@", fullURL,  requestkey);
 	//NSLog(@"addItemSynchronously: album url=%@", fullURL);
