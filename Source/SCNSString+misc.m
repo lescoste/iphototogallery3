@@ -99,27 +99,6 @@ static inline BOOL isToBeEscaped(unsigned char _c) {
     return (isUrlAlphaNum(_c) || (_c == '_')) ? NO : YES;
 }
 
-static void
-NGEscapeUrlBuffer(const unsigned char *_source, unsigned char *_dest)
-{
-    register const unsigned char *src = (void*)_source;
-    while (*src) {
-        //if (*src == ' ') { // a ' ' becomes a '+'
-        //  *_dest = '+'; _dest++;
-        //}
-        if (!isToBeEscaped(*src)) {
-            *_dest = *src;
-            _dest++;
-        }
-        else { // any other char is escaped ..
-            *_dest = '%'; _dest++;
-            sprintf(_dest, "%02X", (unsigned)*src);
-            _dest += 2;
-        }
-        src++;
-    }
-*_dest = '\0';
-}
 
 static inline int _valueOfHexChar(register unichar _c) {
     switch (_c) {
@@ -154,41 +133,6 @@ static inline BOOL _isHexDigit(register unichar _c) {
     }
 }
 
-static void
-NGUnescapeUrlBuffer(const unsigned char *_source, unsigned char *_dest)
-{
-    BOOL done = NO;
-
-    while (!done && (*_source != '\0')) {
-        char c = *_source;
-
-        if (c == '+') // '+' stands for a space
-          *_dest = ' ';
-        else if (c == '%') {
-            _source++; c = *_source;
-
-            if (c == '\0') {
-                *_dest = '%';
-                done = YES;
-            }
-            else if (_isHexDigit(c)) { // hex-escaped char, like '%F3'
-                int decChar = _valueOfHexChar(c);
-                _source++;
-                c = *_source;
-                decChar = decChar * 16 + _valueOfHexChar(c);
-                *_dest = (unsigned char)decChar;
-            }
-            else // escaped char, like '%%' -> '%'
-                *_dest = c;
-        }
-        else // char passed through
-            *_dest = c;
-
-        _dest++;
-        _source++;
-    }
-    *_dest = '\0';
-}
 
 - (BOOL)containsURLEscapeCharacters {
     register unsigned i, len;
@@ -219,30 +163,6 @@ NGUnescapeUrlBuffer(const unsigned char *_source, unsigned char *_dest)
     return NO;
 }
 
-- (NSString *)stringByUnescapingURL {
-    unsigned len;
-    char     *cstr;
-    char     *buffer = NULL;
-    NSString *s;
-
-    if (![self containsURLEscapeCharacters])
-        return [[self copy] autorelease];
-
-    if ((len = [self cStringLength]) == 0) return @"";
-
-    cstr = malloc(len + 10);
-    [self getCString:cstr];
-    cstr[len] = '\0';
-
-    buffer = malloc(len + 2);
-    NGUnescapeUrlBuffer(cstr, buffer);
-    s = [[NSString alloc]
-                 initWithCStringNoCopy:buffer
-                                length:strlen(buffer)
-                          freeWhenDone:YES];
-    if (cstr) free(cstr);
-    return [s autorelease];
-}
 
 NSString *URLEscapeString(NSString *str) 
 {
@@ -250,36 +170,12 @@ NSString *URLEscapeString(NSString *str)
                                                                                   (CFStringRef)str,
                                                                                   NULL,
                                                                                   NULL,
-                                                                                  kCFStringEncodingISOLatin1);
+                                                                                  kCFStringEncodingUTF8);
     return [escapedString autorelease];    
 }
 
 - (NSString *)stringByEscapingURL {
     return URLEscapeString(self);
-    
-    unsigned len;
-    char     *cstr;
-    NSString *s;
-    char     *buffer = NULL;
-
-    if ((len = [self cStringLength]) == 0) return @"";
-
-    if (![self containsURLInvalidCharacters]) // needs to be escaped ?
-        return [[self copy] autorelease];
-
-    cstr = malloc(len + 1);
-    [self getCString:cstr];
-    cstr[len] = '\0';
-
-    buffer = malloc([self cStringLength] * 3 + 2);
-    NGEscapeUrlBuffer(cstr, buffer);
-
-    s = [[NSString alloc]
-                 initWithCStringNoCopy:buffer
-                                length:strlen(buffer)
-                          freeWhenDone:YES];
-    free(cstr);
-    return [s autorelease];
-}
+  }
 
 @end

@@ -45,7 +45,6 @@
  */
 
 - (BOOL)containsURLEscapeCharacters;
-- (NSString *)stringByUnescapingURL;
 - (NSString *)stringByEscapingURL;
 
 @end

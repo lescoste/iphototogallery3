@@ -929,40 +929,54 @@ static int loggingIn;
     if (currentGallery == nil) 
         return nil;
     NSString *username = [currentGallery username];
-    NSString *host = [[currentGallery url] host];
+    NSString *hostString = [[currentGallery url] host];
     NSString *path = [[currentGallery url] path];
     
-    UInt32 passwordLength;
-    void *passwordData;
-    
-    OSStatus status =
-        SecKeychainFindInternetPassword (NULL,
-                                         strlen([host UTF8String]),
-                                         [host UTF8String],
-                                         0,
-                                         NULL,
-                                         strlen([username UTF8String]),
-                                         [username UTF8String],
-                                         strlen([path UTF8String]),
-                                         [path UTF8String],
-                                         80,
-                                         kSecProtocolTypeHTTP,
-                                         kSecAuthenticationTypeDefault,
-                                         &passwordLength,
-                                         &passwordData,
-                                         NULL);
-    if (status != noErr) {
-        // TODO: Pop up password dialog here.
-        NSLog(@"iPhotoToGallery: Error retrieving password from keychain: %i", (int)status);
-        return nil;
-    }
-    
-    NSString *password = [NSString stringWithCString:passwordData length:passwordLength];
-//    NSString *password = [NSString stringWithCString:passwordData encoding:[NSString defaultCStringEncoding]];
-    if (passwordLength) 
-        SecKeychainItemFreeContent(NULL, passwordData);
-
-    return password;
+   	OSStatus didFind = noErr;
+	SecKeychainItemRef itemRef = NULL;
+	CFStringRef password = NULL;
+	
+	// Find the Keychain item based upon the criteria.
+	didFind = SecKeychainFindInternetPassword(NULL,
+											  strlen([(NSString*)hostString UTF8String]), [(NSString*)hostString UTF8String],	/* serverName */
+											  0, NULL,																			/* securityDomain */
+											  strlen([username UTF8String]),[username UTF8String],								/* accountName */
+											  strlen([path UTF8String]),[path UTF8String],										/* path */
+											  80,																				/* port */
+											  kSecProtocolTypeHTTP,																/* protocol */
+											  kSecAuthenticationTypeDefault,													/* authType */
+											  0, NULL,																			/* no password */
+											  &itemRef);
+	if (didFind == noErr) {
+		
+		SecKeychainAttribute		attr;
+		SecKeychainAttributeList	attrList;
+		UInt32						length; 
+		void						*outData;
+		
+		// We want the account name attribute
+		attr.tag = kSecAccountItemAttr;
+		attr.length = 0;
+		attr.data = NULL;
+		
+		attrList.count = 1;
+		attrList.attr = &attr;
+		
+		if (SecKeychainItemCopyContent(itemRef, NULL, &attrList, &length, &outData) == noErr) {
+			// attr.data is the account (username) and outdata is the password
+			password = CFStringCreateWithBytes(kCFAllocatorDefault, outData, length, kCFStringEncodingUTF8, false);
+			SecKeychainItemFreeContent(&attrList, outData);
+		}
+		CFRelease(itemRef);
+	} else {
+		NSLog(@" getPassword error %@ ", didFind);
+		
+	}
+		
+	
+	//NSLog(@" getPassword %@ ", password);
+	
+    return (NSString *)password;
 }
 
 // This method is always called in the main thread and updates the UI of the progress sheet

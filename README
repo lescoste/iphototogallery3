@@ -6,7 +6,7 @@ You can download it from the Download section.
 To install it, you need to :
 
 0) check that your gallery3 server php.ini memory_limit is at 32MB at least (see http://codex.gallery2.org/Gallery3:Requirements)
-1) decompress the zip file
+1) open the dmg file
 2) stop iPhoto
 3) copy the "iPhotoToGallery3.iPhotoExporter" folder to the "~/Library/Application Support/iPhoto/Plugins" folder. If this folder doesn't exist then create it.
 4) start iPhoto
@@ -27,6 +27,9 @@ That's it. Enjoy !
 Version history :
 
 see http://github.com/lescoste/iphototogallery3/issues/
+
+2010/11/23 version 0.4.4
+   - issue 16 : allow utf-8 chars in password
 
 2010/11/19 version 0.4.3
    - issue 14 : fix http basic authentication
