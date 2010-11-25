@@ -19,6 +19,8 @@ ie : http://myhost/gallery3/index.php/
 or 
 ie : http://myhost/gallery3/
 
+Limitations: 
+ - Do not include '@' or ':' in your HTTP basic authentication login or password
  
 
 That's it. Enjoy !
@@ -27,6 +29,9 @@ That's it. Enjoy !
 Version history :
 
 see http://github.com/lescoste/iphototogallery3/issues/
+
+2010/11/25 version 0.4.5
+   - issue 19 : fix album url generation
 
 2010/11/23 version 0.4.4
    - issue 16 : allow utf-8 chars in password

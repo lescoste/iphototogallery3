@@ -33,6 +33,7 @@
 #import "SCZWAlbumNameFormatter.h"
 #import "SCInterThreadMessaging.h"
 #import "SCNSView+Fading.h"
+#import "SCNSString+misc.h"
 #import "SCZWGallery.h"
 #import "SCZWGalleryAlbum.h"
 #import "SCZWGalleryItem.h"
@@ -1298,22 +1299,46 @@ static int loggingIn;
             NSString * parentName = [acurrentAlbum name];
 			[parentsArray addObject:parentName];
 			
-			while (parentName != nil && ![parentName isEqualToString:@""]) {				
+			//NSLog ( @"mainOpenBrowserSwitch parentName 3: %@", parentName );
+			
+			while (parentName != nil && ![parentName isEqual: [NSNull null]] && ![parentName isEqualToString:@""]) {				
 				parent = [acurrentAlbum parent];
+				//NSLog ( @"mainOpenBrowserSwitch parent 3: %@", parent );
 				if (parent == nil) {
+					//NSLog ( @"mainOpenBrowserSwitch parent nil 3: ");
 					parentName = @"";
 				} else {
 					parentName = [parent name];
-					if (parentName != nil && ![parentName isEqualToString:@""])
+					//NSLog ( @"mainOpenBrowserSwitch parent parentName 3: %@", parentName );
+					if (parentName != nil && ![parentName isEqual: [NSNull null]] && ![parentName isEqualToString:@""])
 						[parentsArray addObject:parentName];
 					acurrentAlbum = parent;
 				}
   			}
-//			NSLog ( @"mainOpenBrowserSwitch parentsArray 3: %@", parentsArray );
+			//NSLog ( @"mainOpenBrowserSwitch parentsArray 3: %@", parentsArray );
 
-			// URLs look like this: http://example.com/gallery3/index.php/parentname/parentname/albumname
+			// URLs look like this: http://login:password@example.com/gallery3/index.php/parentname/parentname/albumname
             NSMutableString *albumURLString = nil;
-			albumURLString = [NSMutableString stringWithString:[[currentGallery url] absoluteString]];
+			
+			NSURL *galleryUrl = [currentGallery url];
+			if ([galleryUrl password] != nil && ![[galleryUrl password] isEqualToString:@""]) {
+				// remove the http auth/password from the url
+				NSString *gallerystring = [galleryUrl absoluteString];
+				NSRange protocolRange = [gallerystring rangeOfString:@"://"];
+				NSRange hostRange = [gallerystring rangeOfString:@"@"];
+				int startLogin = protocolRange.location + 3;
+				int endLoginPos = hostRange.location + 1;
+				if (startLogin > 0 && startLogin < endLoginPos) {
+					int endLogin = endLoginPos - startLogin;
+					NSRange range = NSMakeRange(startLogin, endLogin);
+					gallerystring = [gallerystring stringByReplacingCharactersInRange:range withString:@""];
+				}
+				
+				galleryUrl = [NSURL URLWithString:gallerystring];
+			}
+			
+			
+			albumURLString = [NSMutableString stringWithString:[galleryUrl absoluteString]];
 			NSEnumerator *enumerator = [parentsArray reverseObjectEnumerator];
 			int i = 0;
 			for (id parentName in enumerator) {

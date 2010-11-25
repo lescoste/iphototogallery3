@@ -231,8 +231,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -287,8 +285,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>12</integer>
-									<integer>10</integer>
+									<integer>5</integer>
 									<integer>2</integer>
 									<integer>0</integer>
 								</array>
@@ -324,12 +321,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>SCZWGallery.m</string>
+								<string>SCiPhotoToGallery.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -337,11 +336,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>SCZWGallery.m</string>
+										<string>SCiPhotoToGallery.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E2F9990C129BF2D700C63853</string>
+										<string>E2F9E9D9129F08990084A49A</string>
 										<key>history</key>
 										<array>
 											<string>E2C934E812436EE600B882AE</string>
@@ -361,7 +360,6 @@
 											<string>E21508CA127953D60073F1D4</string>
 											<string>E21508CB127953D60073F1D4</string>
 											<string>E21508CD127953D60073F1D4</string>
-											<string>E215092C128484650073F1D4</string>
 											<string>E285307A12893A2F007A3563</string>
 											<string>E285307C12893A2F007A3563</string>
 											<string>E2777C8412893D3B007760E0</string>
@@ -370,11 +368,13 @@
 											<string>E2042221128D25E4002F7FAA</string>
 											<string>E2BBD1071295BFBE0089AE65</string>
 											<string>E2BBD1081295BFBE0089AE65</string>
-											<string>E28BA4B1129688F5009FF2D4</string>
 											<string>E28BA50312969A5D009FF2D4</string>
-											<string>E2DF6B4F12969D6000AC70B0</string>
-											<string>E2369CFE129BF14A0096E9B2</string>
-											<string>E2F9990B129BF2D700C63853</string>
+											<string>E2C5354D129F01D800BD8BEF</string>
+											<string>E2C5354E129F01D800BD8BEF</string>
+											<string>E2C53567129F06F900BD8BEF</string>
+											<string>E2C53573129F082200BD8BEF</string>
+											<string>E2F9E9D3129F08990084A49A</string>
+											<string>E2F9E9D4129F08990084A49A</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -386,14 +386,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1138, 789}}</string>
+								<string>{{0, 0}, {1138, 777}}</string>
 								<key>RubberWindowFrame</key>
 								<string>6 139 1415 1023 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>789pt</string>
+							<string>777pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -406,14 +406,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 794}, {1138, 188}}</string>
+								<string>{{0, 782}, {1138, 200}}</string>
 								<key>RubberWindowFrame</key>
 								<string>6 139 1415 1023 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>188pt</string>
+							<string>200pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -432,9 +432,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E2F9990D129BF2D700C63853</string>
+				<string>E2F9E9D6129F08990084A49A</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>E2F9990E129BF2D700C63853</string>
+				<string>E2F9E9D7129F08990084A49A</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -653,7 +653,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>E2F26A221229B46900459857</string>
-				<string>E2F9990F129BF2D700C63853</string>
+				<string>E2F9E9D8129F08990084A49A</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -786,12 +786,14 @@
 							<key>Dock</key>
 							<array>
 								<dict>
+									<key>BecomeActive</key>
+									<true/>
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>1CDD528C0622207200134675</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>SCZWGallery.m</string>
+										<string>SCiPhotoToGallery.m</string>
 										<key>StatusBarVisibility</key>
 										<true/>
 									</dict>
@@ -812,8 +814,6 @@
 							<string>702pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -849,8 +849,8 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D57069F1CE1000CFCEE</string>
-				<string>E2369CD7129BED4D0096E9B2</string>
-				<string>E2369CD8129BED4D0096E9B2</string>
+				<string>E2C53555129F01D800BD8BEF</string>
+				<string>E2C53556129F01D800BD8BEF</string>
 				<string>1CDD528C0622207200134675</string>
 				<string>1CD0528E0623707200166675</string>
 			</array>
