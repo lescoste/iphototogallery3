@@ -1,5 +1,5 @@
 iPhotoToGallery3 plugin allows you to upload your iPhoto photos to a Gallery 3 site.
-Works with iPhoto 9 of iLife 11 and with the previous iLife too.
+Works with iPhoto of iLife '11 and iLife '09.
 
 You can download it from the Download section.
 
@@ -29,6 +29,10 @@ That's it. Enjoy !
 Version history :
 
 see http://github.com/lescoste/iphototogallery3/issues/
+
+2010/12/03 version 0.4.6
+   - fix export when "export title and description" is not checked
+   - fix export and open web page when exporting to root album
 
 2010/11/25 version 0.4.5
    - issue 19 : fix album url generation

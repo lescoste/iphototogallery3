@@ -1297,19 +1297,23 @@ static int loggingIn;
 			SCZWGalleryAlbum *acurrentAlbum = album;
 			// add first name : album name
             NSString * parentName = [acurrentAlbum name];
-			[parentsArray addObject:parentName];
+
+			if (parentName != nil && ![parentName isEqual:[NSNull null]] && ![parentName isEqualToString:@""]) {
+				[parentsArray addObject:parentName];
+			//	NSLog ( @"mainOpenBrowserSwitch parentName is not null : %@", parentName );
+			}
 			
 			//NSLog ( @"mainOpenBrowserSwitch parentName 3: %@", parentName );
 			
-			while (parentName != nil && ![parentName isEqual: [NSNull null]] && ![parentName isEqualToString:@""]) {				
+			while (parentName != nil && ![parentName isEqual:[NSNull null]] && ![parentName isEqualToString:@""]) {				
 				parent = [acurrentAlbum parent];
-				//NSLog ( @"mainOpenBrowserSwitch parent 3: %@", parent );
+			//	NSLog ( @"mainOpenBrowserSwitch parent 3: %@", parent );
 				if (parent == nil) {
-					//NSLog ( @"mainOpenBrowserSwitch parent nil 3: ");
+			//		NSLog ( @"mainOpenBrowserSwitch parent nil 3: ");
 					parentName = @"";
 				} else {
 					parentName = [parent name];
-					//NSLog ( @"mainOpenBrowserSwitch parent parentName 3: %@", parentName );
+			//		NSLog ( @"mainOpenBrowserSwitch parent parentName 3: %@", parentName );
 					if (parentName != nil && ![parentName isEqual: [NSNull null]] && ![parentName isEqualToString:@""])
 						[parentsArray addObject:parentName];
 					acurrentAlbum = parent;

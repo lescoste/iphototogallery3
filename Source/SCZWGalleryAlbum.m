@@ -371,7 +371,9 @@
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 	[dict setObject:[item filename] forKey:@"name"];
 	[dict setObject:itemname forKey:@"title"];
-	[dict setObject:[item description] forKey:@"description"];
+	if ([item description] != nil) {
+		[dict setObject:[item description] forKey:@"description"];
+	}
 	[dict setObject:@"photo" forKey:@"type"];
 
 	SBJsonWriter *jsonwriter = [SBJsonWriter new];

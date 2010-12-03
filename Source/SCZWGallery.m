@@ -426,54 +426,60 @@
 	 url = "http://lescoste.net/gallery3/index.php/rest/tags";
 	 }
 	 */
-	NSArray *members = [galleryResponse objectForKey:@"members"];
 	NSMutableDictionary * tagsDic = [[NSMutableDictionary alloc] init];
-	int i =0;
-	int nbmembers = [members count];
-	//NSLog ( @"getGalleryTags: total tags = %d", nbmembers );
-	while (i < nbmembers) {
-		NSString *tagUrl = [members objectAtIndex:i];
-		NSURL* fullReqURL = [[NSURL alloc] initWithString:tagUrl];
+	@try {
+		NSArray *members = [galleryResponse objectForKey:@"members"];
+		int i =0;
+		int nbmembers = [members count];
+	//	NSLog ( @"getGalleryTags: total tags = %d, galleryResponse=%@", nbmembers , galleryResponse);
+		while (i < nbmembers) {
+			NSString *tagUrl = [members objectAtIndex:i];
+			NSURL* fullReqURL = [[NSURL alloc] initWithString:tagUrl];
+			
+			NSDictionary * response = [self doGetItem:fullReqURL];
+	//		NSLog ( @"getGalleryTags: response  = %@", response );
+			SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
+			
+			if (status != GR_STAT_SUCCESS) 
+				continue;
+			
+			NSDictionary * galleryResponse = [response objectForKey:@"data"];
+			if (galleryResponse == nil) 
+				continue;
+			/*
+			 galleryResponse tag = {
+			 entity =     {
+			 count = 2;
+			 id = 3;
+			 name = fun;
+			 };
+			 relationships =     {
+			 items =         {
+			 members =             (
+			 "http://lescoste.net/gallery3/index.php/rest/tag_item/3,1550",
+			 "http://lescoste.net/gallery3/index.php/rest/tag_item/3,1551"
+			 );
+			 url = "http://lescoste.net/gallery3/index.php/rest/tag_items/3";
+			 };
+			 };
+			 url = "http://lescoste.net/gallery3/index.php/rest/tag/3";
+			 }
+			 */
+			
+	//		NSLog ( @"getGalleryTags: galleryResponse tag = %@", galleryResponse );
+			NSString * tagName = [[galleryResponse objectForKey:@"entity"] objectForKey:@"name"];
+	//		NSLog ( @"getGalleryTags: galleryResponse add tag = %@", tagName );
+			
+			
+			[tagsDic setObject:tagUrl forKey:tagName];
+			
+			i++;
+		}
 		
-		NSDictionary * response = [self doGetItem:fullReqURL];
-		SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
-		
-		if (status != GR_STAT_SUCCESS) 
-			continue;
-		
-		NSDictionary * galleryResponse = [response objectForKey:@"data"];
-		if (galleryResponse == nil) 
-			continue;
-		/*
-		 galleryResponse tag = {
-			entity =     {
-				count = 2;
-				id = 3;
-				name = fun;
-			};
-			relationships =     {
-				items =         {
-					members =             (
-						"http://lescoste.net/gallery3/index.php/rest/tag_item/3,1550",
-						"http://lescoste.net/gallery3/index.php/rest/tag_item/3,1551"
-					);
-					url = "http://lescoste.net/gallery3/index.php/rest/tag_items/3";
-				};
-			};
-			url = "http://lescoste.net/gallery3/index.php/rest/tag/3";
-		 }
-		 */
-		
-		//NSLog ( @"getGalleryTags: galleryResponse tag = %@", galleryResponse );
-		NSString * tagName = [[galleryResponse objectForKey:@"entity"] objectForKey:@"name"];
-		
-		
-		[tagsDic setObject:tagUrl forKey:tagName];
-		
-		i++;
+		NSLog ( @"getGalleryTags: total tags = %d", [tagsDic count] );
+	} @catch (NSException *exception) {
+		NSLog(@"getGalleryTags : Caught %@: %@", [exception name], [exception reason]);
 	}
-	
-	NSLog ( @"getGalleryTags: total tags = %d", [tagsDic count] );
 	
 	return tagsDic;
 }
