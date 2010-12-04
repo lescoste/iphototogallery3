@@ -75,6 +75,7 @@ typedef enum
     int minorVersion;
     NSArray* albums;
     NSMutableArray* jsonalbums;
+    BOOL tagsActivated;
 	NSMutableDictionary* tags;
     NSString *lastCreatedAlbumName;
     
@@ -117,6 +118,7 @@ typedef enum
 - (void)setPassword:(NSString *)password;
 - (NSString *)lastCreatedAlbumName;
 - (NSStringEncoding)sniffedEncoding;
+- (BOOL)tagsActivated;
 - (NSMutableDictionary*)tags;
 
 // This helper method can be used by children too

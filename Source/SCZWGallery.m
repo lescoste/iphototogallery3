@@ -68,6 +68,7 @@
     username = [newUsername retain];
     delegate = self;
     loggedIn = FALSE;
+    tagsActivated = FALSE;
     majorVersion = 0;
     minorVersion = 0;
     type = GalleryTypeG1;
@@ -179,6 +180,10 @@
 
 - (NSMutableArray*)jsonalbums {
     return jsonalbums;
+}
+
+- (BOOL)tagsActivated {
+    return tagsActivated;
 }
 
 - (NSMutableDictionary*)tags {
@@ -428,56 +433,63 @@
 	 */
 	NSMutableDictionary * tagsDic = [[NSMutableDictionary alloc] init];
 	@try {
-		NSArray *members = [galleryResponse objectForKey:@"members"];
-		int i =0;
-		int nbmembers = [members count];
-	//	NSLog ( @"getGalleryTags: total tags = %d, galleryResponse=%@", nbmembers , galleryResponse);
-		while (i < nbmembers) {
-			NSString *tagUrl = [members objectAtIndex:i];
-			NSURL* fullReqURL = [[NSURL alloc] initWithString:tagUrl];
+		if ([galleryResponse isKindOfClass:[NSArray class]]) {
+			tagsActivated = FALSE;
+			NSLog ( @"getGalleryTags: 'Tags' module may not be activated, galleryResponse=%@" , galleryResponse);
+		} else {
+			tagsActivated = TRUE;
+			NSArray *members = [galleryResponse objectForKey:@"members"];
+			int i =0;
+			int nbmembers = [members count];
+			//	NSLog ( @"getGalleryTags: total tags = %d, galleryResponse=%@", nbmembers , galleryResponse);
+			while (i < nbmembers) {
+				NSString *tagUrl = [members objectAtIndex:i];
+				NSURL* fullReqURL = [[NSURL alloc] initWithString:tagUrl];
+				
+				NSDictionary * response = [self doGetItem:fullReqURL];
+				//		NSLog ( @"getGalleryTags: response  = %@", response );
+				SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
+				
+				if (status != GR_STAT_SUCCESS) 
+					continue;
+				
+				NSDictionary * galleryResponse = [response objectForKey:@"data"];
+				if (galleryResponse == nil) 
+					continue;
+				/*
+				 galleryResponse tag = {
+				 entity =     {
+				 count = 2;
+				 id = 3;
+				 name = fun;
+				 };
+				 relationships =     {
+				 items =         {
+				 members =             (
+				 "http://lescoste.net/gallery3/index.php/rest/tag_item/3,1550",
+				 "http://lescoste.net/gallery3/index.php/rest/tag_item/3,1551"
+				 );
+				 url = "http://lescoste.net/gallery3/index.php/rest/tag_items/3";
+				 };
+				 };
+				 url = "http://lescoste.net/gallery3/index.php/rest/tag/3";
+				 }
+				 */
+				
+				//		NSLog ( @"getGalleryTags: galleryResponse tag = %@", galleryResponse );
+				NSString * tagName = [[galleryResponse objectForKey:@"entity"] objectForKey:@"name"];
+				//		NSLog ( @"getGalleryTags: galleryResponse add tag = %@", tagName );
+				
+				
+				[tagsDic setObject:tagUrl forKey:tagName];
+				
+				i++;
+			}
 			
-			NSDictionary * response = [self doGetItem:fullReqURL];
-	//		NSLog ( @"getGalleryTags: response  = %@", response );
-			SCZWGalleryRemoteStatusCode status = [[response objectForKey:@"status"] intValue];
-			
-			if (status != GR_STAT_SUCCESS) 
-				continue;
-			
-			NSDictionary * galleryResponse = [response objectForKey:@"data"];
-			if (galleryResponse == nil) 
-				continue;
-			/*
-			 galleryResponse tag = {
-			 entity =     {
-			 count = 2;
-			 id = 3;
-			 name = fun;
-			 };
-			 relationships =     {
-			 items =         {
-			 members =             (
-			 "http://lescoste.net/gallery3/index.php/rest/tag_item/3,1550",
-			 "http://lescoste.net/gallery3/index.php/rest/tag_item/3,1551"
-			 );
-			 url = "http://lescoste.net/gallery3/index.php/rest/tag_items/3";
-			 };
-			 };
-			 url = "http://lescoste.net/gallery3/index.php/rest/tag/3";
-			 }
-			 */
-			
-	//		NSLog ( @"getGalleryTags: galleryResponse tag = %@", galleryResponse );
-			NSString * tagName = [[galleryResponse objectForKey:@"entity"] objectForKey:@"name"];
-	//		NSLog ( @"getGalleryTags: galleryResponse add tag = %@", tagName );
-			
-			
-			[tagsDic setObject:tagUrl forKey:tagName];
-			
-			i++;
+			NSLog ( @"getGalleryTags: total tags = %d", [tagsDic count] );
 		}
-		
-		NSLog ( @"getGalleryTags: total tags = %d", [tagsDic count] );
 	} @catch (NSException *exception) {
+		tagsActivated = FALSE;
 		NSLog(@"getGalleryTags : Caught %@: %@", [exception name], [exception reason]);
 	}
 	
@@ -1057,6 +1069,8 @@
  */
 - (SCZWGalleryRemoteStatusCode)doCreateTagWithName:(NSString *)name
 {    
+	if (!tagsActivated) return GR_STAT_SUCCESS;
+	
 	NSURL *aURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/tags"]];
 	
 	//NSLog ( @"doCreateTagWithName: name : %@", name );
@@ -1087,6 +1101,8 @@
 
 - (SCZWGalleryRemoteStatusCode)doLinkTag:(NSString *)tagUrl withPhoto:(NSString *)photoUrl
 {    
+	if (!tagsActivated) return GR_STAT_SUCCESS;
+
 	NSURL *aURL = [[NSURL alloc] initWithString:[[url absoluteString] stringByAppendingString:@"rest/tag_items"]];
 	
 	//NSLog ( @"doLinkTag: tagUrl: %@ photoUrl: %@", tagUrl, photoUrl );

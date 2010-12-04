@@ -12,12 +12,12 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="182"/>
-			<integer value="546"/>
-			<integer value="527"/>
-			<integer value="204"/>
 			<integer value="8"/>
 			<integer value="165"/>
+			<integer value="527"/>
+			<integer value="182"/>
+			<integer value="204"/>
+			<integer value="546"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -443,7 +443,7 @@
 											<object class="NSTextFieldCell" key="NSCell" id="805026348">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4194304</int>
-												<string key="NSContents">iPhotoToGallery3 0.4.5, by S. Coste</string>
+												<string key="NSContents">iPhotoToGallery3 0.4.7, by S. Coste</string>
 												<reference key="NSSupport" ref="26"/>
 												<reference key="NSControlView" ref="222494838"/>
 												<reference key="NSBackgroundColor" ref="438118409"/>
@@ -4174,9 +4174,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{607, 564}, {360, 349}}</string>
+					<string>{{475, 564}, {360, 349}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{607, 564}, {360, 349}}</string>
+					<string>{{475, 564}, {360, 349}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -4184,9 +4184,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{555, 769}, {422, 216}}</string>
+					<string>{{413, 769}, {422, 216}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{555, 769}, {422, 216}}</string>
+					<string>{{413, 769}, {422, 216}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -4313,9 +4313,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{872, 551}, {409, 168}}</string>
+					<string>{{1172, 551}, {409, 168}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{872, 551}, {409, 168}}</string>
+					<string>{{1172, 551}, {409, 168}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
@@ -4367,9 +4367,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{491, 266}, {476, 523}}</string>
+					<string>{{359, 266}, {476, 523}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{491, 266}, {476, 523}}</string>
+					<string>{{359, 266}, {476, 523}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{213, 107}</string>
