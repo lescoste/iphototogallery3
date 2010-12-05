@@ -970,10 +970,8 @@ static int loggingIn;
 		}
 		CFRelease(itemRef);
 	} else {
-		NSLog(@" getPassword error %@ ", didFind);
-		
-	}
-		
+		NSLog(@" getPassword error: %@ .", SecCopyErrorMessageString(didFind, NULL));
+	}		
 	
 	//NSLog(@" getPassword %@ ", password);
 	

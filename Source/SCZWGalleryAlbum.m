@@ -450,44 +450,55 @@
 		NSLog(@"addItemSynchronously: photo '%@' upload to album %@ failed, response=%@", itemname, fullURL, data);
         return SCZW_GALLERY_PROTOCOL_ERROR;
     }
-    
-    SCZWGalleryRemoteStatusCode status = (SCZWGalleryRemoteStatusCode)[[galleryResponse objectForKey:@"statusCode"] intValue];
-    
-    [items addObject:item];
-    
-
-	NSDate *endUploadDate = [NSDate date];
-	
-	NSTimeInterval difference = [endUploadDate timeIntervalSinceDate:startUploadDate];
-	NSLog(@"addItemSynchronously: upload runtime: %f ,  photo added url=%@", difference, galleryResponse);
-	
-	/*
-	 addItemSynchronously: photo added url={
-		url = "http://lescoste.net/gallery3/index.php/rest/item/5340";
-	}
-	*/
-	
-	if (canAddTags) {
-		// add tags
-		NSArray * photoTags = [item keywords];
-		
-		NSMutableDictionary *galleryTags = [[self gallery] tags];
-		
-		for (NSString *tag in photoTags) {
-			// if image tags not in gallery : add them
-			if ([galleryTags objectForKey:tag] == nil) {
-				// add tag
-				[[self gallery] doCreateTagWithName:tag];	
-			}
-			NSString * tagUrl = [galleryTags objectForKey:tag];
-			NSString * photoUrl = [galleryResponse objectForKey:@"url"];
+	@try {
+		if ([galleryResponse isKindOfClass:[NSArray class]]) {
+			NSLog ( @"addItemSynchronously: error uploading photo galleryResponse=%@" , galleryResponse);
+			return SCZW_GALLERY_PROTOCOL_ERROR;
+		} else {
 			
-			// add tags to image
-			status = [[self gallery] doLinkTag:tagUrl withPhoto:photoUrl];		
-		}
+			SCZWGalleryRemoteStatusCode status = (SCZWGalleryRemoteStatusCode)[[galleryResponse objectForKey:@"statusCode"] intValue];
+			
+			[items addObject:item];
+			
+			
+			NSDate *endUploadDate = [NSDate date];
+			
+			NSTimeInterval difference = [endUploadDate timeIntervalSinceDate:startUploadDate];
+			NSLog(@"addItemSynchronously: upload runtime: %f ,  photo added url=%@", difference, galleryResponse);
+			
+			/*
+			 addItemSynchronously: photo added url={
+			 url = "http://lescoste.net/gallery3/index.php/rest/item/5340";
+			 }
+			 */
+			
+			if (canAddTags) {
+				// add tags
+				NSArray * photoTags = [item keywords];
+				
+				NSMutableDictionary *galleryTags = [[self gallery] tags];
+				
+				NSLog(@"addItemSynchronously: galleryTags= %@", galleryTags);
+				for (NSString *tag in photoTags) {
+					// if image tags not in gallery : add them
+					if ([galleryTags objectForKey:tag] == nil) {
+						// add tag
+						[[self gallery] doCreateTagWithName:tag];	
+					}
+					NSString * tagUrl = [galleryTags objectForKey:tag];
+					NSString * photoUrl = [galleryResponse objectForKey:@"url"];
+					
+					// add tags to image
+					status = [[self gallery] doLinkTag:tagUrl withPhoto:photoUrl];		
+				}
+			}
+			return status;
+		}	
+	} @catch (NSException *exception) {
+		NSLog(@"addItemSynchronously : Caught %@: %@", [exception name], [exception reason]);
+		return SCZW_GALLERY_UNKNOWN_ERROR;
 	}
-	
-    return status;
+	return SCZW_GALLERY_UNKNOWN_ERROR;	
 }
 
 @end

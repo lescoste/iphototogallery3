@@ -32,6 +32,7 @@ see http://github.com/lescoste/iphototogallery3/issues/
 
 2010/12/04 version 0.4.7
    - fix plugin crash when "Tags" Gallery module is not activated 
+   - fix error log when reading password from Keychain
 
 2010/12/03 version 0.4.6
    - fix export when "export title and description" is not checked
