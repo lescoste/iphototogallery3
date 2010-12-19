@@ -291,7 +291,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {255, 964}}</string>
+							<string>{{0, 28}, {255, 964}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -328,7 +328,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>SCZWGalleryAlbum.m</string>
+								<string>SCiPhotoToGallery.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -336,11 +336,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>SCZWGalleryAlbum.m</string>
+										<string>SCiPhotoToGallery.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E220475912AC1BC3009571B4</string>
+										<string>E2FA106A12BE575F00B7F3FD</string>
 										<key>history</key>
 										<array>
 											<string>E2C934E812436EE600B882AE</string>
@@ -368,13 +368,14 @@
 											<string>E2042221128D25E4002F7FAA</string>
 											<string>E2BBD1071295BFBE0089AE65</string>
 											<string>E28BA50312969A5D009FF2D4</string>
-											<string>E2C5354D129F01D800BD8BEF</string>
 											<string>E2C53567129F06F900BD8BEF</string>
-											<string>E20DECE412A38D380057DD09</string>
 											<string>E2DE309312AAB31D00477DAB</string>
-											<string>E220472012ABF98F009571B4</string>
-											<string>E220474B12AC00E5009571B4</string>
-											<string>E220474C12AC00E5009571B4</string>
+											<string>E20BC36012B6B72600D1AF20</string>
+											<string>E20BC36112B6B72600D1AF20</string>
+											<string>E21EC2B412B7B7490072E436</string>
+											<string>E23AACBD12B9689C008C0450</string>
+											<string>E23AACBE12B9689C008C0450</string>
+											<string>E23AACCE12B96A40008C0450</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -386,14 +387,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1138, 750}}</string>
+								<string>{{0, 0}, {1138, 725}}</string>
 								<key>RubberWindowFrame</key>
 								<string>162 142 1415 1023 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>750pt</string>
+							<string>725pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -406,14 +407,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 755}, {1138, 227}}</string>
+								<string>{{0, 730}, {1138, 252}}</string>
 								<key>RubberWindowFrame</key>
 								<string>162 142 1415 1023 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>227pt</string>
+							<string>252pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -432,9 +433,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E220472312ABF98F009571B4</string>
+				<string>E2FA105D12BE26E900B7F3FD</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>E220472412ABF98F009571B4</string>
+				<string>E2FA105E12BE26E900B7F3FD</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -572,7 +573,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>E2F26A221229B46900459857</string>
 		<string>/Users/lescoste/dev/iphotohelpers/iphototogallery3/iphototogallery3/iPhotoToGallery3.xcodeproj</string>
 	</array>
@@ -654,7 +654,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>E2F26A221229B46900459857</string>
-				<string>E220472512ABF98F009571B4</string>
+				<string>E2FA105F12BE26E900B7F3FD</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

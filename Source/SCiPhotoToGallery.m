@@ -1125,14 +1125,14 @@ static int loggingIn;
 			 */
 			
 			////////////////////////////////////////////////////////////
-//			NSLog ( @"addItemsThread i= %d , deb currentImageSize=%d",imageNum,  currentImageSize );
+		//	NSLog ( @"addItemsThread i= %d , deb currentImageSize=%d",imageNum,  currentImageSize );
 
 			// set up source ref 
 			CGImageSourceRef imageSource = CGImageSourceCreateWithData((CFDataRef)[item data],  NULL);
 			
 			// snag metadata
 			NSDictionary *metadata = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(imageSource,0,NULL);
-			//NSLog ( @"addItemsThread i= %d , metadata = %@", imageNum, metadata );
+		//	NSLog ( @"addItemsThread i= %d , metadata = %@", imageNum, metadata );
 			
 			// make metadata mutable
 			NSMutableDictionary *metadataAsMutable = [[metadata mutableCopy] autorelease];
@@ -1201,10 +1201,10 @@ static int loggingIn;
 				[metadataAsMutable setObject:GPSDictionary forKey:(NSString *)kCGImagePropertyGPSDictionary];
 				[metadataAsMutable setObject:IPTCDictionary forKey:(NSString *)kCGImagePropertyIPTCDictionary];
 				
-				//NSLog ( @"addItemsThread i= %d , changes metadataAsMutable = %@", imageNum, metadataAsMutable );
+			//	NSLog ( @"addItemsThread i= %d , changes metadataAsMutable = %@", imageNum, metadataAsMutable );
 				
 				CFStringRef UTI = CGImageSourceGetType(imageSource); //this is the type of image (e.g., public.jpeg)
-				//NSLog ( @"addItemsThread i= %d , UTI = %@", imageNum, UTI );
+		//		NSLog ( @"addItemsThread i= %d , UTI = %@", imageNum, UTI );
 				
 				//this will be the data CGImageDestinationRef will write into
 				NSMutableData *dataImage = [NSMutableData data];
@@ -1213,36 +1213,55 @@ static int loggingIn;
 				
 				if(!destination)
 				{
-					NSLog(@"***Could not create image destination ***");
+					NSLog(@"***Could not create image destination %i ***", imageNum + 1);
 				} else {
-					
-					//add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
-					CGImageDestinationAddImageFromSource(destination,imageSource,0, (CFDictionaryRef) metadataAsMutable);
-					CGImageDestinationSetProperties ( destination, (CFDictionaryRef) metadataAsMutable);
-					
-					//tell the destination to write the image data and metadata into our data object.
-					//It will return false if something goes wrong
-					BOOL success = NO;
-					success = CGImageDestinationFinalize(destination);
-					
-					if(!success)
-					{
-						NSLog(@"***Could not create data from image destination ***");
-					} else {
+					@try {
+						//add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
 						
+						if (destination == nil) {
+							NSLog(@"destination is null");
+						}
+						if (metadataAsMutable == nil) {
+							NSLog(@"metadataAsMutable is null");
+						}
+
+						//	NSLog ( @"addItemsThread i= %d , 2 changes metadataAsMutable = %@", imageNum, metadataAsMutable );
+						CGImageSourceRef imageSource2 = CGImageSourceCreateWithData((CFDataRef)[item data],  NULL);
+						CGImageDestinationAddImageFromSource(destination,imageSource2, 0, (CFDictionaryRef) metadataAsMutable);
+						CGImageDestinationSetProperties ( destination, (CFDictionaryRef) metadataAsMutable);
 						
-						//NSLog ( @"addItemsThread i= %d , gps and location added ", imageNum );
+						//tell the destination to write the image data and metadata into our data object.
+						//It will return false if something goes wrong
+						BOOL success = NO;
+						success = CGImageDestinationFinalize(destination);
 						
-						//now we have the data ready to go, so do whatever you want with it
-						[item setData:dataImage];
-						currentImageSize = [dataImage length];
-						
-						//	NSLog ( @"addItemsThread i= %d , fin currentImageSize=%d", imageNum, currentImageSize );
-						//CGImageSourceRef imageSource2 = CGImageSourceCreateWithData((CFDataRef)dataImage,  NULL);
-						//NSDictionary *metadata2 = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(imageSource2,0,NULL);
-						//NSLog ( @"addItemsThread i= %d , fin metadata2 = %@", imageNum, metadata2 );
-						
+						if(!success)
+						{
+							NSLog(@"***Could not create data from image destination %i ***", imageNum + 1);
+						} else {
+							
+							
+							//NSLog ( @"addItemsThread i= %d , gps and location added ", imageNum );
+							
+							//now we have the data ready to go, so do whatever you want with it
+							[item setData:dataImage];
+							currentImageSize = [dataImage length];
+							
+							//	NSLog ( @"addItemsThread i= %d , fin currentImageSize=%d", imageNum, currentImageSize );
+							//CGImageSourceRef imageSource2 = CGImageSourceCreateWithData((CFDataRef)dataImage,  NULL);
+							//NSDictionary *metadata2 = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(imageSource2,0,NULL);
+							//NSLog ( @"addItemsThread i= %d , fin metadata2 = %@", imageNum, metadata2 );
+							
+						}
+						CFRelease(imageSource2);
+
+					} @catch ( NSException *e ) {
+						NSLog(@"*** Exception CGImageDestinationAddImageFromSource destination, %i error %@ %@ ", imageNum + 1, [e name], [e reason]  );
+						NSLog ( @"Exception CGImageDestinationAddImageFromSource i= %d , changes metadataAsMutable = %@", imageNum + 1 , metadataAsMutable );
+					} @catch (id ue) {
+						NSLog ( @"other Exception CGImageDestinationAddImageFromSource i= %d , changes metadataAsMutable = %@", imageNum + 1 , metadataAsMutable );
 					}
+					
 					//cleanup
 					CFRelease(destination);
 				}

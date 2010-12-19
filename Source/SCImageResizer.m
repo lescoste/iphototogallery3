@@ -251,5 +251,41 @@ bail:
     return nil;
 }
 
++ (NSData*) resize:(NSImage*)inputImage  toSize:(NSSize)size  {
+	
+	NSRect  outputBounds = {NSZeroPoint, [inputImage size]};
+	
+	outputBounds.size.width = floor(NSWidth(outputBounds) / 2);
+	outputBounds.size.height = floor(NSHeight(outputBounds) / 2);
+	
+	NSImage* outputImage = [[NSImage alloc] initWithSize:outputBounds.size];
+	NSBitmapImageRep* outputBitmap = [[NSBitmapImageRep alloc]
+									  initWithBitmapDataPlanes:NULL
+									  pixelsWide:NSWidth(outputBounds)
+									  pixelsHigh:NSHeight(outputBounds)
+									  bitsPerSample:8
+									  samplesPerPixel:4
+									  hasAlpha:NO
+									  isPlanar:NO
+									  colorSpaceName:NSCalibratedRGBColorSpace
+									  bytesPerRow:0
+									  bitsPerPixel:0];
+	
+	[outputImage addRepresentation:outputBitmap];
+	[outputImage lockFocusOnRepresentation:outputBitmap];
+	[inputImage drawInRect: outputBounds fromRect:NSZeroRect
+				 operation:NSCompositeCopy fraction:1.0];
+	[outputImage unlockFocus];
+	
+	NSDictionary* imageProps = [NSDictionary dictionaryWithObject:
+								[NSNumber numberWithFloat:0.9] forKey:NSImageCompressionFactor];
+	NSData* outputImageData = [outputBitmap
+							   representationUsingType:NSJPEGFileType properties:imageProps];
+	
+	return outputImageData;
+}
+
+
+
 
 @end

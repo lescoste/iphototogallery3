@@ -81,8 +81,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 313259564;
-			PBXWorkspaceStateSaveDate = 313259564;
+			PBXPerProjectTemplateStateSaveDate = 314451661;
+			PBXWorkspaceStateSaveDate = 314451661;
 		};
 		perUserProjectItems = {
 			E2039120124D064600E23FE1 /* PBXTextBookmark */ = E2039120124D064600E23FE1 /* PBXTextBookmark */;
@@ -94,22 +94,22 @@
 			E209D4D612450ECE007A24A3 /* PBXTextBookmark */ = E209D4D612450ECE007A24A3 /* PBXTextBookmark */;
 			E209D4D712450ECE007A24A3 /* PBXTextBookmark */ = E209D4D712450ECE007A24A3 /* PBXTextBookmark */;
 			E209D4D812450ECE007A24A3 /* PBXTextBookmark */ = E209D4D812450ECE007A24A3 /* PBXTextBookmark */;
-			E20DECE412A38D380057DD09 /* PBXTextBookmark */ = E20DECE412A38D380057DD09 /* PBXTextBookmark */;
+			E20BC36012B6B72600D1AF20 /* PBXTextBookmark */ = E20BC36012B6B72600D1AF20 /* PBXTextBookmark */;
+			E20BC36112B6B72600D1AF20 /* PBXTextBookmark */ = E20BC36112B6B72600D1AF20 /* PBXTextBookmark */;
 			E20FC17B124BD7670032E661 /* PBXTextBookmark */ = E20FC17B124BD7670032E661 /* PBXTextBookmark */;
 			E21508CA127953D60073F1D4 /* PBXTextBookmark */ = E21508CA127953D60073F1D4 /* PBXTextBookmark */;
 			E21508CB127953D60073F1D4 /* PBXTextBookmark */ = E21508CB127953D60073F1D4 /* PBXTextBookmark */;
 			E21508CD127953D60073F1D4 /* PBXTextBookmark */ = E21508CD127953D60073F1D4 /* PBXTextBookmark */;
-			E220472012ABF98F009571B4 /* PBXTextBookmark */ = E220472012ABF98F009571B4 /* PBXTextBookmark */;
-			E220474B12AC00E5009571B4 /* PBXTextBookmark */ = E220474B12AC00E5009571B4 /* PBXTextBookmark */;
-			E220474C12AC00E5009571B4 /* PBXTextBookmark */ = E220474C12AC00E5009571B4 /* PBXTextBookmark */;
-			E220475912AC1BC3009571B4 /* PBXTextBookmark */ = E220475912AC1BC3009571B4 /* PBXTextBookmark */;
+			E21EC2B412B7B7490072E436 /* PBXTextBookmark */ = E21EC2B412B7B7490072E436 /* PBXTextBookmark */;
+			E23AACBD12B9689C008C0450 /* PBXTextBookmark */ = E23AACBD12B9689C008C0450 /* PBXTextBookmark */;
+			E23AACBE12B9689C008C0450 /* PBXTextBookmark */ = E23AACBE12B9689C008C0450 /* PBXTextBookmark */;
+			E23AACCE12B96A40008C0450 /* PBXTextBookmark */ = E23AACCE12B96A40008C0450 /* PBXTextBookmark */;
 			E2777C8412893D3B007760E0 /* PBXTextBookmark */ = E2777C8412893D3B007760E0 /* PBXTextBookmark */;
 			E2777C8512893D3B007760E0 /* PlistBookmark */ = E2777C8512893D3B007760E0 /* PlistBookmark */;
 			E285307A12893A2F007A3563 /* PBXBookmark */ = E285307A12893A2F007A3563 /* PBXBookmark */;
 			E285307C12893A2F007A3563 /* PlistBookmark */ = E285307C12893A2F007A3563 /* PlistBookmark */;
 			E28BA50312969A5D009FF2D4 /* PBXTextBookmark */ = E28BA50312969A5D009FF2D4 /* PBXTextBookmark */;
 			E2BBD1071295BFBE0089AE65 /* PBXTextBookmark */ = E2BBD1071295BFBE0089AE65 /* PBXTextBookmark */;
-			E2C5354D129F01D800BD8BEF /* PBXTextBookmark */ = E2C5354D129F01D800BD8BEF /* PBXTextBookmark */;
 			E2C53567129F06F900BD8BEF /* PBXTextBookmark */ = E2C53567129F06F900BD8BEF /* PBXTextBookmark */;
 			E2C835EF124E4DDA00A43D3D /* PBXTextBookmark */ = E2C835EF124E4DDA00A43D3D /* PBXTextBookmark */;
 			E2C934E812436EE600B882AE /* PBXTextBookmark */ = E2C934E812436EE600B882AE /* PBXTextBookmark */;
@@ -118,6 +118,7 @@
 			E2E13E351251292A009227FA /* PBXTextBookmark */ = E2E13E351251292A009227FA /* PBXTextBookmark */;
 			E2E13E3A1251292A009227FA /* PBXBookmark */ = E2E13E3A1251292A009227FA /* PBXBookmark */;
 			E2E13E3C1251292A009227FA /* PBXBookmark */ = E2E13E3C1251292A009227FA /* PBXBookmark */;
+			E2FA106A12BE575F00B7F3FD /* PBXTextBookmark */ = E2FA106A12BE575F00B7F3FD /* PBXTextBookmark */;
 		};
 		sourceControlManager = E2F26A241229B46900459857 /* Source Control */;
 		userBuildSettings = {
@@ -232,9 +233,9 @@
 	};
 	E20B0341124B34D300AAB3CF /* SCImageResizer.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 3094}}";
-			sepNavSelRange = "{3855, 4}";
-			sepNavVisRange = "{3008, 1740}";
+			sepNavIntBoundsRect = "{{0, 0}, {1077, 3796}}";
+			sepNavSelRange = "{4072, 16}";
+			sepNavVisRange = "{4843, 1475}";
 			sepNavWindowFrame = "{{15, 402}, {832, 771}}";
 		};
 	};
@@ -242,14 +243,14 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1077, 2509}}";
 			sepNavSelRange = "{5922, 31}";
-			sepNavVisRange = "{868, 2031}";
+			sepNavVisRange = "{1027, 1872}";
 		};
 	};
 	E20B0345124B34D300AAB3CF /* SCiPhotoToGallery.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1048, 20371}}";
-			sepNavSelRange = "{37184, 0}";
-			sepNavVisRange = "{36512, 1669}";
+			sepNavIntBoundsRect = "{{0, 0}, {1405, 20176}}";
+			sepNavSelRange = "{48382, 0}";
+			sepNavVisRange = "{48581, 2705}";
 			sepNavWindowFrame = "{{38, 65}, {1090, 1087}}";
 		};
 	};
@@ -314,9 +315,9 @@
 	};
 	E20B0351124B34D300AAB3CF /* SCZWGallery.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1031, 15782}}";
-			sepNavSelRange = "{14727, 146}";
-			sepNavVisRange = "{8005, 2799}";
+			sepNavIntBoundsRect = "{{0, 0}, {1104, 15197}}";
+			sepNavSelRange = "{23203, 26}";
+			sepNavVisRange = "{21980, 1723}";
 			sepNavWindowFrame = "{{15, 86}, {1090, 1087}}";
 		};
 	};
@@ -330,9 +331,9 @@
 	};
 	E20B0353124B34D300AAB3CF /* SCZWGalleryAlbum.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1846, 6149}}";
-			sepNavSelRange = "{16426, 0}";
-			sepNavVisRange = "{15000, 1660}";
+			sepNavIntBoundsRect = "{{0, 0}, {1846, 5668}}";
+			sepNavSelRange = "{16428, 0}";
+			sepNavVisRange = "{6878, 2303}";
 			sepNavWindowFrame = "{{407, 134}, {1217, 1042}}";
 		};
 	};
@@ -347,7 +348,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1077, 1950}}";
 			sepNavSelRange = "{2865, 7}";
-			sepNavVisRange = "{2596, 729}";
+			sepNavVisRange = "{1363, 1030}";
 			sepNavWindowFrame = "{{38, 381}, {832, 771}}";
 		};
 	};
@@ -366,15 +367,25 @@
 			sepNavWindowFrame = "{{15, 402}, {832, 771}}";
 		};
 	};
-	E20DECE412A38D380057DD09 /* PBXTextBookmark */ = {
+	E20BC36012B6B72600D1AF20 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E20B0344124B34D300AAB3CF /* SCiPhotoToGallery.h */;
 		name = "SCiPhotoToGallery.h: 165";
 		rLen = 31;
 		rLoc = 5922;
 		rType = 0;
-		vrLen = 2031;
-		vrLoc = 868;
+		vrLen = 1872;
+		vrLoc = 1027;
+	};
+	E20BC36112B6B72600D1AF20 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E20B0351124B34D300AAB3CF /* SCZWGallery.m */;
+		name = "SCZWGallery.m: 743";
+		rLen = 26;
+		rLoc = 23203;
+		rType = 0;
+		vrLen = 1723;
+		vrLoc = 21980;
 	};
 	E20FC17B124BD7670032E661 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -423,45 +434,15 @@
 		vrLen = 1903;
 		vrLoc = 143;
 	};
-	E220472012ABF98F009571B4 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E20B0351124B34D300AAB3CF /* SCZWGallery.m */;
-		name = "SCZWGallery.m: 743";
-		rLen = 26;
-		rLoc = 23203;
-		rType = 0;
-		vrLen = 1773;
-		vrLoc = 21980;
-	};
-	E220474B12AC00E5009571B4 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E20B0345124B34D300AAB3CF /* SCiPhotoToGallery.m */;
-		name = "SCiPhotoToGallery.m: 929";
-		rLen = 31;
-		rLoc = 35434;
-		rType = 0;
-		vrLen = 2463;
-		vrLoc = 33806;
-	};
-	E220474C12AC00E5009571B4 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E20B0353124B34D300AAB3CF /* SCZWGalleryAlbum.m */;
-		name = "SCZWGalleryAlbum.m: 470";
-		rLen = 10;
-		rLoc = 15770;
-		rType = 0;
-		vrLen = 1025;
-		vrLoc = 4543;
-	};
-	E220475912AC1BC3009571B4 /* PBXTextBookmark */ = {
+	E21EC2B412B7B7490072E436 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E20B0353124B34D300AAB3CF /* SCZWGalleryAlbum.m */;
 		name = "SCZWGalleryAlbum.m: 494";
 		rLen = 0;
-		rLoc = 16426;
+		rLoc = 16428;
 		rType = 0;
-		vrLen = 1660;
-		vrLoc = 15000;
+		vrLen = 2303;
+		vrLoc = 6878;
 	};
 	E2211FA5123FFA6900EED2BB /* JSON.h */ = {
 		uiCtxt = {
@@ -500,6 +481,36 @@
 			sepNavWindowFrame = "{{38, 381}, {832, 771}}";
 		};
 	};
+	E23AACBD12B9689C008C0450 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E20B0355124B34D300AAB3CF /* SCZWGalleryItem.m */;
+		name = "SCZWGalleryItem.m: 114";
+		rLen = 7;
+		rLoc = 2865;
+		rType = 0;
+		vrLen = 1030;
+		vrLoc = 1363;
+	};
+	E23AACBE12B9689C008C0450 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E20B0341124B34D300AAB3CF /* SCImageResizer.m */;
+		name = "SCImageResizer.m: 91";
+		rLen = 16;
+		rLoc = 4072;
+		rType = 0;
+		vrLen = 1475;
+		vrLoc = 4843;
+	};
+	E23AACCE12B96A40008C0450 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E20B0345124B34D300AAB3CF /* SCiPhotoToGallery.m */;
+		name = "SCiPhotoToGallery.m: 1232";
+		rLen = 0;
+		rLoc = 48679;
+		rType = 0;
+		vrLen = 2445;
+		vrLoc = 48038;
+	};
 	E2777C8412893D3B007760E0 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E285306112892FC7007A3563 /* fr */;
@@ -524,7 +535,7 @@
 	E285305312892F89007A3563 /* en */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1158, 914}}";
-			sepNavSelRange = "{174, 0}";
+			sepNavSelRange = "{116, 0}";
 			sepNavVisRange = "{0, 288}";
 			sepNavWindowFrame = "{{38, 110}, {1217, 1042}}";
 		};
@@ -532,7 +543,7 @@
 	E285306112892FC7007A3563 /* fr */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1158, 914}}";
-			sepNavSelRange = "{116, 0}";
+			sepNavSelRange = "{174, 0}";
 			sepNavVisRange = "{0, 288}";
 			sepNavWindowFrame = "{{15, 131}, {1217, 1042}}";
 		};
@@ -578,16 +589,6 @@
 		rType = 0;
 		vrLen = 963;
 		vrLoc = 2171;
-	};
-	E2C5354D129F01D800BD8BEF /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E20B0355124B34D300AAB3CF /* SCZWGalleryItem.m */;
-		name = "SCZWGalleryItem.m: 114";
-		rLen = 7;
-		rLoc = 2865;
-		rType = 0;
-		vrLen = 729;
-		vrLoc = 2596;
 	};
 	E2C53567129F06F900BD8BEF /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -677,6 +678,16 @@
 	E2F26A251229B46900459857 /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
+	};
+	E2FA106A12BE575F00B7F3FD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E20B0345124B34D300AAB3CF /* SCiPhotoToGallery.m */;
+		name = "SCiPhotoToGallery.m: 1224";
+		rLen = 0;
+		rLoc = 48382;
+		rType = 0;
+		vrLen = 2705;
+		vrLoc = 48581;
 	};
 	FF1578F005DAEB31009C952D /* iPhotoExporter.h */ = {
 		uiCtxt = {

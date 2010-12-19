@@ -478,7 +478,7 @@
 				
 				NSMutableDictionary *galleryTags = [[self gallery] tags];
 				
-				NSLog(@"addItemSynchronously: galleryTags= %@", galleryTags);
+				//NSLog(@"addItemSynchronously: galleryTags= %@", galleryTags);
 				for (NSString *tag in photoTags) {
 					// if image tags not in gallery : add them
 					if ([galleryTags objectForKey:tag] == nil) {
